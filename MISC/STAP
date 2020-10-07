@@ -1,0 +1,19 @@
+STAP:		OR BYTE PTR [SI], 0
+		JZ STAP0
+		PUSH CX
+		PUSH SI
+		PUSH DI
+		MOV CL, [DI]
+		XOR CH, CH
+		ADD DI, CX
+		MOV CL, [SI]
+		ADD [DI], CL
+		INC SI
+		INC DI
+		CLD
+	REPZ	MOVSB
+		POP DI
+		POP SI
+		POP CX
+STAP0:		RET
+

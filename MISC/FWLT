@@ -1,0 +1,15 @@
+FWLT:		PUSH AX
+		PUSH CX
+		PUSH DX
+		PUSH BX
+		MOV AH, 40H
+		MOV CL, [SI]
+		XOR CH, CH
+		MOV DX, SI
+		INC DX
+		INT 21H
+		POP BX
+		POP DX
+		POP CX
+		POP AX
+		RET

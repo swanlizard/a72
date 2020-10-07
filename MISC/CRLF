@@ -1,0 +1,6 @@
+CRLF:		MOV AH, 2
+		MOV DL, 13
+		INT 21H
+		MOV DL, 10
+		INT 21H
+		RET
