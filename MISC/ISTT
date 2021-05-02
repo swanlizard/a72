@@ -1,9 +1,0 @@
-ISTT:		PUSH AX
-		XOR CX, CX
-		CMP AX, 1
-		JZ $+7
-		INC CX
-		ROR AX, 1
-		JNZ $-8
-		POP AX
-		RET
