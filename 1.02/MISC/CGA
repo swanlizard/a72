@@ -1,0 +1,6 @@
+CGA:		MOV AX, 4
+		INT 10H
+		MOV AH, 0BH
+		MOV BX, 100H
+		INT 10H
+		RET

@@ -1,0 +1,14 @@
+DBIT:		PUSH CX
+		PUSH DX
+		MOV CX, 8
+DBITL:		RCL AL, 1
+		RCL DX, 1
+		SHL DX, 1
+		LOOP DBITL
+		MOV AX, DX
+		SHR AX, 1
+		OR AX, DX
+		POP DX
+		POP CX
+		RET
+
