@@ -1,0 +1,18 @@
+SW:		CMP BL, [DI]
+		JNZ SW0
+		PUSH CX
+		PUSH SI
+		MOV CX, BX
+		INC DI
+		CLD
+	REPZ	CMPSB
+		POP SI
+		POP CX
+		JNZ SW0
+		ADD SI, BX
+		MOV AX, BX
+		CLC
+		RET
+SW0:		XOR AX, AX
+		STC
+		RET
