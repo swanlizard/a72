@@ -1,3 +1,0 @@
-G2CH:		MOV AL, 0FH
-		MOV [FPREF], AL
-		JMP G8

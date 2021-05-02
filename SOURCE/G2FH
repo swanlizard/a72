@@ -1,2 +1,0 @@
-G2FH:		MOV AH, 1
-		JMP G2EH
