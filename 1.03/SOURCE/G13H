@@ -1,0 +1,5 @@
+G13H:		CALL RE
+		MOV [VORG], AX
+		XOR AL, AL
+		MOV [FLAGS], AL
+		RET
