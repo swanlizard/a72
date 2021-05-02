@@ -1,0 +1,25 @@
+PXLR:		MOV BX, 0B800H
+		MOV ES, BX
+		MOV BX, CX
+		SHR BX, 1
+		SHR BX, 1
+		INC CX
+		AND CL, 3
+		SHL CL, 1
+		XOR AH, AH
+		MOV SI, AX
+		RCR AL, 1
+		SBB AX, AX
+		AND AX, 8152
+		ADD BX, AX
+		SHL SI, 1
+		SHL SI, 1
+		SHL SI, 1
+		MOV AX, SI
+		SHL SI, 1
+		SHL SI, 1
+		ADD SI, AX
+		MOV AL, ES:[BX+SI]
+		ROL AL, CL
+		AND AX, 0FFFCH
+		RET

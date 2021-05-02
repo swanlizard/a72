@@ -1,0 +1,16 @@
+TNDX:		XOR AX, AX
+		MOV CX, [DI]
+		INC DI
+		INC DI
+		XOR BH, BH
+		PUSH SI
+TNDX1:		INC AX
+		INC SI
+		INC SI
+		MOV [SI], DI
+		MOV BL, [DI]
+		LEA DI, [BX+DI+3]
+		LOOP TNDX1
+		POP SI
+		MOV [SI], AX
+		RET

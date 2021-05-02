@@ -1,0 +1,60 @@
+TKAD:		MOV CL, [DI]
+		XOR CH, CH
+		OR AX, AX
+		JZ TKAD0
+		INC CX
+		CMP AX, CX
+		JA TKAD0
+		DEC CX
+		PUSH DI
+		INC DI
+		JCXZ TKAD1
+		PUSH AX
+		PUSH SI
+		MOV SI, DI
+		XOR AH, AH
+		CLD
+TKAD2:		LODSB
+		ADD SI, AX
+		LOOP TKAD2
+		MOV BX, SI
+		MOV DX, SI
+		POP SI
+		MOV AL, [SI]
+		ADD BX, AX
+		INC BX
+		POP CX
+		DEC CX
+		JZ TKAD4
+TKAD3:		MOV AL, [DI]
+		ADD DI, AX
+		INC DI
+		LOOP TKAD3
+TKAD4:		CMP BX, DI
+		JZ TKAD1
+;BX points past the end of new sequence
+;DX points past the end of old sequence
+;DI points to first character of required spot
+		PUSH SI
+		PUSH DI
+		MOV SI, DX
+		MOV CX, DX
+		SUB CX, DI
+		MOV DI, BX
+		DEC SI
+		DEC DI
+		STD
+	REPZ	MOVSB
+		POP DI
+		POP SI
+TKAD1:		MOV CL, [SI]
+		XOR CH, CH
+		INC CX
+		CLD
+	REPZ	MOVSB
+		POP DI
+		INC BYTE PTR [DI]
+		CLC
+		RET
+TKAD0:		STC
+		RET

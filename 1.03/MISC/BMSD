@@ -1,0 +1,73 @@
+BMSD:		MOV DX, 0B800H
+		MOV ES, DX
+		AND AH, 3
+		MOV DH, AH
+		SHL AH, 1
+		SHL AH, 1
+		OR AH, DH
+		MOV DH, AH
+		SHL AH, 1
+		SHL AH, 1
+		SHL AH, 1
+		SHL AH, 1
+		OR DH, AH
+		XOR AH, AH
+		RCR AL, 1
+		SBB BP, BP
+		XCHG AL, AH
+		MOV DI, AX
+		SHR DI, 1
+		SHR DI, 1
+		ADD DI, AX
+		ADD DI, CX
+		SHR DI, 1
+		SHR DI, 1
+		MOV AX, 2000H
+		AND AX, BP
+		AND BP, 80
+		ADD DI, AX
+		XCHG DH, BH
+		TEST BL, 3
+		LAHF
+		SHR BL, 1
+		SHR BL, 1
+		ROL AH, 1
+		RCL AH, 1
+		CMC
+		ADC BL, 0
+		CLD
+		AND CL, 3
+		SHL CL, 1
+BMSDLV:		MOV DL, BL
+BMSDLH:		MOV AL, DS:[SI]
+		XOR AL, BH
+		MOV AH, AL
+		SHR AH, 1
+		AND AX, 5555H
+		OR AL, AH
+		MOV AH, AL
+		SHL AH, 1
+		OR AL, AH
+		XOR AH, AH
+		MOV CH, AL
+		NOT AX
+		ROR AX, CL
+		AND ES:[DI], AX
+		LODSB
+		AND AL, CH
+		XOR AH, AH
+		ROR AX, CL
+		OR ES:[DI], AX
+		INC DI
+		DEC DL
+		JNZ BMSDLH
+		XOR DI, 2000H
+		XOR AH, AH
+		MOV AL, BL
+		ADD DI, BP
+		SUB DI, AX
+		XOR BP, 80
+		DEC DH
+		JNZ BMSDLV
+		RET
+
