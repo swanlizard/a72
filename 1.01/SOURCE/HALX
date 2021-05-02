@@ -1,0 +1,16 @@
+halx:	mov	ah,al
+	and	al,0Fh
+	cmp	al,9
+	jna	halx1
+	add	al,7
+halx1:	add	al,30h
+	xchg	ah,al
+	shr	al,1
+	shr	al,1
+	shr	al,1
+	shr	al,1
+	cmp	al,9
+	jna	halx2
+	add	al,7
+halx2:	add	al,30h
+	ret

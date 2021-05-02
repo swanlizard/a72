@@ -1,0 +1,13 @@
+maccd:	call	wspr
+	mov	ax,5B09h
+	stosw
+	lodsw
+	call	whax
+	mov	ax,2C5Dh
+	stosw
+	push	si
+	mov	si,offset regs
+	add	si,word ptr [wadj]
+	movsw
+	pop	si
+	jmp	endl

@@ -1,0 +1,11 @@
+segofd:	mov	al,9
+	stosb
+	lodsw
+	push	ax
+	lodsw
+	call	whax
+	mov	al,3Ah
+	stosb
+	pop	ax
+	call	whax
+	jmp	endl

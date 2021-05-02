@@ -1,0 +1,13 @@
+psrd:	mov	al,9
+	stosb
+	mov	al,[opcode]
+	shr	al,1
+	shr	al,1
+	and	al,6
+	xor	ah,ah
+	add	ax,offset regs+20h
+	push	si
+	mov	si,ax
+	movsw
+	pop	si
+	jmp	endl

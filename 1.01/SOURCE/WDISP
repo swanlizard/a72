@@ -1,0 +1,65 @@
+wdisp:	cld
+	cmp	al,0C0h
+	jc	wdrm
+	push	si
+	mov	si,ax
+	and	si,7
+	shl	si,1
+	add	si,offset regs
+	add	si,word ptr [wadj]
+	movsw
+	pop	si
+	ret
+wdrm:	push	ax
+	xor	ch,ch
+	call	wspr
+	mov	ax,5Bh
+	stosb
+	pop	ax
+	push	ax
+	and	al,0C7h
+	cmp	al,6
+	jnz	wdr
+	lodsw
+	call	whax
+	jmp	short wdx
+wdr:	push	si
+	mov	si,ax
+	and	si,7
+	shl	si,1
+	add	si,offset _disp
+	mov	dx,[si]
+	mov	si,[si]
+	and	si,0FFh
+	add	si,offset regs
+	movsw
+	or	dh,dh
+	jz	wd1r
+	mov	al,2Bh
+	stosb
+	xor	dl,dl
+	xchg	dl,dh
+	mov	si,dx
+	add	si,offset regs
+	movsw
+wd1r:	pop	si
+	pop	ax
+	push	ax
+	cmp	al,40h
+	jc	wdx
+	cmp	al,80h
+	jc	wd01
+	lodsw
+	jmp	short wdpm
+wd01:	lodsb
+	cbw
+wdpm:	or	ax,ax
+	js	wdm
+	jz	wdx
+	mov	byte ptr [di],2Bh
+	inc	di
+wdm:	call	whaxs
+wdx:	mov	al,5Dh
+	stosb
+	pop	ax
+	ret

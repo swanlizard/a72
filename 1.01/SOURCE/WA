@@ -1,0 +1,22 @@
+wa:	mov	al,[args+2]
+	mov	ah,al
+	mov	cl,4
+	shr	ah,cl
+	and	ax,0F0Fh
+	jz	waz
+	or	al,al
+	jz	walz
+	or	ah,ah
+	jz	wahz
+	cmp	al,ah
+	jz	wahz
+wa0:	mov	al,6
+	jmp	fail
+walz:	cmp	al,ah
+	jz	waz
+	mov	al,ah
+wahz:	cmp	al,2
+	ja	wa0
+	dec	ax
+waz:	mov	[wadj],al
+	ret

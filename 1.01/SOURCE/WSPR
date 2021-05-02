@@ -1,0 +1,17 @@
+wspr:	cld
+	mov	al,[segpref]
+	or	al,al
+	jz	wspr0
+	xor	ah,ah
+	sub	al,26h
+	shr	ax,1
+	shr	ax,1
+	add	ax,offset regs+20h
+	push	si
+	mov	si,ax
+	movsw
+	pop	si
+	mov	byte ptr [segpref],0
+	mov	al,3Ah
+	stosb
+wspr0:	ret

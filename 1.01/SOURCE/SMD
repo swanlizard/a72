@@ -1,0 +1,18 @@
+smd:	mov	al,9
+	stosb
+	mov	word ptr [wadj],10h
+	lodsb
+	push	ax
+	shr	al,1
+	shr	al,1
+	and	ax,6
+	add	ax,offset regs+20h
+	push	si
+	mov	si,ax
+	movsw
+	pop	si
+	mov	al,2Ch
+	stosb
+	pop	ax
+	call	wdisp
+	jmp	endl

@@ -1,0 +1,24 @@
+sl:	mov	cx,[di]
+	jcxz	sl0
+	cld
+	xor	ax,ax
+sll:	add	di,ax
+	add	di,2
+	push	di
+	mov	al,[di]
+	inc	al
+	push	cx
+	mov	cx,ax
+	push	si
+	rep	cmpsb
+	pop	si
+	pop	cx
+	pop	di
+	jz	sl1
+	loop	sll
+sl0:	stc
+	ret
+sl1:	add	di,ax
+	mov	ax,[di]
+	clc
+	ret

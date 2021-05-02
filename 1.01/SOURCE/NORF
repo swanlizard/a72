@@ -1,0 +1,24 @@
+norf:	mov	ax,[si]
+	cmp	ax,6603h
+	jz	norff
+	cmp	ax,6E04h
+	jz	norfn
+	cmp	ax,7305h
+	jz	norfs
+norfe:	xor	ax,ax
+	ret
+norff:	mov	di,offset _far
+	jmp	short norfl
+norfn:	mov	di,offset _near
+	jmp	short norfl
+norfs:	mov	di,offset _short
+norfl:	mov	al,[di]
+	xor	ah,ah
+	mov	cx,ax
+	inc	cx
+	push	si
+	cld
+	rep	cmpsb
+	pop	si
+	jnz	norfe
+	ret

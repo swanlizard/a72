@@ -1,0 +1,8 @@
+rmd:	mov	al,9
+	stosb
+	lodsb
+	call	wreg
+	mov	byte ptr [di],2Ch
+	inc	di
+	call	wdisp
+	jmp	endl

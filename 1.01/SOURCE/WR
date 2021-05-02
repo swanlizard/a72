@@ -1,0 +1,57 @@
+wr:	test	byte ptr [func],2
+	jnz	wr1
+	mov	word ptr [usize],0
+	ret
+wr1:	mov	cx,word ptr [index]
+	jcxz	wlx
+	mov	si,offset index+2
+wroutl:	lodsw
+	push	si
+	mov	si,ax
+	lodsb
+	test	al,80h
+	jz	wle
+	test	al,40h
+	jz	wrou
+wrbin:	or	word ptr [usize],0
+	jz	wrnbin
+	mov	byte ptr [wadj],0
+wrul:	mov	ah,40h
+	mov	cx,1
+	mov	dx,offset wadj
+	mov	bx,[outfile]
+	int	21h
+	dec	word ptr [usize]
+	jnz	wrul
+wrnbin:	push	cx
+	and	al,0Fh
+	mov	cl,al
+	lodsw
+	mov	di,ax
+	lodsb
+	xor	ah,ah
+	shl	ax,cl
+	mov	bp,ax
+wrbl:	mov	ah,40h
+	mov	cx,bp
+	mov	dx,si
+	mov	bx,[outfile]
+	int	21h
+	dec	di
+	jnz	wrbl
+	pop	cx
+	jmp	short wle
+wrou:	push	cx
+	and	al,0Fh
+	mov	cl,al
+	lodsw
+	shl	ax,cl
+	mov	cx,ax
+	lodsb
+	xor	ah,ah
+	mul	cx
+	add	[usize],ax
+	pop	cx
+wle:	pop	si
+	loop	wroutl
+wlx:	ret

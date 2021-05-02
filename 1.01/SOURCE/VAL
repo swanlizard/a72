@@ -1,0 +1,86 @@
+val:	cld
+	xor	ah,ah
+	lodsb
+	cmp	al,1
+	ja	val1
+	lodsb
+	sub	al,30h
+	ret
+val1:	dec	si
+	push	si
+	add	si,ax
+	lodsb
+	pop	si
+	call	isnum
+	jnc	val10
+	cmp	al,68h
+	jz	val16
+	cmp	al,62h
+	jz	val2
+	xor	ax,ax
+	ret
+val2:	cld
+	push	cx
+	push	dx
+	lodsb
+	xor	ah,ah
+	xor	dx,dx
+	mov	cx,ax
+val2l:	lodsb
+	cmp	al,31h
+	ja	val2x
+	sub	al,30h
+	shl	dx,1
+	or	dl,al
+	loop	val2l
+val2x:	mov	ax,dx
+	pop	dx
+	pop	cx
+	ret
+val10:	push	cx
+	push	dx
+	push	bx
+	xor	ch,ch
+	mov	cl,[si]
+	xor	ax,ax
+val10l:	mov	bx,0Ah
+	mul	bx
+	inc	si
+	mov	bl,[si]
+	sub	bl,30h
+	add	ax,bx
+	loop	val10l
+	pop	bx
+	pop	dx
+	pop	cx
+	ret
+val16:	push	cx
+	push	dx
+	push	si
+	xor	dx,dx
+	xor	ch,ch
+	mov	cl,[si]
+	inc	si
+	cld
+val16l:	lodsb
+	cmp	al,30h
+	jc	vend
+	cmp	al,39h
+	jna	vnum
+	cmp	al,61h
+	jc	vend
+	cmp	al,66h
+	ja	vend
+	sub	al,27h
+vnum:	sub	al,30h
+	shl	dx,1
+	shl	dx,1
+	shl	dx,1
+	shl	dx,1
+	or	dl,al
+	loop	val16l
+vend:	pop	si
+	mov	ax,dx
+	pop	dx
+	pop	cx
+	ret

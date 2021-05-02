@@ -1,0 +1,6 @@
+tgn:	mov	si,[next]
+	mov	di,offset element
+	push	di
+	call	cc
+	pop	si
+	ret

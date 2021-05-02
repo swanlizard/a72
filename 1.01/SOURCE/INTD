@@ -1,0 +1,8 @@
+intd:	mov	al,9
+	stosb
+	lodsb
+	cmp	byte ptr [opcode],0CCh
+	jnz	intdb
+	mov	al,3
+intdb:	call	whal
+	jmp	endl

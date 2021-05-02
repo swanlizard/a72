@@ -1,0 +1,7 @@
+invd:	mov	ax,6264h
+	stosw
+	mov	al,9
+	stosb
+	mov	al,[opcode]
+	call	whal
+	jmp	endl

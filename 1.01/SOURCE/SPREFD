@@ -1,0 +1,5 @@
+sprefd:	mov	al,[opcode]
+	mov	[segpref],al
+	mov	sp,[stk]
+	dec	di
+	jmp	dsas

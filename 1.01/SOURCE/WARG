@@ -1,0 +1,22 @@
+warg:	mov	cl,4
+	mov	al,[wadj]
+	test	byte ptr [args],0Fh
+	jz	warg1
+	shl	al,cl
+	shl	dx,cl
+warg1:	or	[args+2],al
+	or	word ptr [args],dx
+	mov	ax,[disp]
+	or	ax,ax
+	jns	warg2
+	cmp	ax,0FF80h
+	salc
+	and	al,4
+	or	[flags],al
+	ret
+warg2:	cmp	ax,80h
+	cmc
+	salc
+	and	al,4
+	or	[flags],al
+	ret

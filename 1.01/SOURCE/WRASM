@@ -1,0 +1,8 @@
+wrasm:	mov	cl,[output]
+	xor	ch,ch
+	jcxz	wrasm0
+	mov	ah,40h
+	mov	dx,offset output+1
+	mov	bx,[outfile]
+	int	21h
+wrasm0:	ret

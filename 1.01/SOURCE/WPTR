@@ -1,0 +1,23 @@
+wptr:	cmp	al,0C0h
+	jc	wptr1
+	ret
+wptr1:	push	ax
+	or	byte ptr [wadj],0
+	jz	wptrb
+	mov	ax,6F77h
+	stosw
+	mov	ax,6472h
+	stosw
+	jmp	short wptrw
+wptrb:	mov	ax,7962h
+	stosw
+	mov	ax,6574h
+	stosw
+wptrw:	mov	ax,7020h
+	stosw
+	mov	ax,7274h
+	stosw
+	mov	al,20h
+	stosb
+	pop	ax
+	ret

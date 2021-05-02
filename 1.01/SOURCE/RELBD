@@ -1,0 +1,18 @@
+relbd:	mov	al,9
+	stosb
+	cmp	byte ptr [opcode],0EBh
+	jnz	relbdl
+	mov	ax,6873h
+	stosw
+	mov	ax,726Fh
+	stosw
+	mov	ax,2074h
+	stosw
+relbdl:	mov	ax,2B24h
+	stosw
+	lodsb
+	or	al,al
+	jns	rbnans
+	dec	di
+rbnans:	call	whals
+	jmp	endl

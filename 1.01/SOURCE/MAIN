@@ -1,0 +1,85 @@
+main:	mov	ah,9
+	mov	dx,offset amsg
+	int	21h
+	call	init
+	call	cmdlin
+	jnc	ginf
+	mov	ah,9
+	mov	dx,offset usage
+	int	21h
+	ret
+ginf:	mov	ah,9
+	mov	dx,offset asmm1
+	int	21h
+	mov	si,offset infn
+	call	wfn
+	mov	ax,3D00h
+	mov	dx,offset infn
+	int	21h
+	jc	mierr
+	mov	[infile],ax
+	test	byte ptr [func],10h
+	jz	unasm1
+	call	asmf
+	or	word ptr [errs],0
+	jnz	errnum
+	mov	ax,4200h
+	xor	cx,cx
+	xor	dx,dx
+	mov	bx,[infile]
+	int	21h
+unasm1:	mov	ah,9
+	mov	dx,offset asmm3
+	int	21h
+	mov	si,offset outfn
+	call	wfn
+	mov	ah,3Ch
+	xor	cx,cx
+	mov	dx,offset outfn
+	int	21h
+	jc	moerr
+	mov	[outfile],ax
+	test	byte ptr [func],10h
+	jz	unasm2
+	xor	byte ptr [func],0Eh
+	call	asmf
+	or	word ptr [errs],0
+	jnz	errnum
+	jmp	short over
+unasm2:	call	disf
+over:	mov	ah,3Eh
+	mov	bx,[infile]
+	int	21h
+	mov	ah,3Eh
+	mov	bx,[outfile]
+	int	21h
+	mov	ah,9
+	mov	dx,offset done
+	int	21h
+	ret
+mioerr:	mov	ah,3Eh
+	mov	bx,[outfile]
+	int	21h
+moerr:	mov	ah,3Eh
+	mov	bx,[infile]
+	int	21h
+mierr:	mov	ah,9
+	mov	dx,offset emB
+	int	21h
+	mov	ah,9
+	mov	dx,offset done+4
+	int	21h
+	ret
+errnum:	mov	ah,3Eh
+	mov	bx,[infile]
+	int	21h
+	mov	ah,9
+	mov	dx,offset errf
+	int	21h
+	mov	ax,[errs]
+	mov	di,offset errn
+	call	decim
+	mov	ah,9
+	mov	dx,offset errn
+	int	21h
+	ret

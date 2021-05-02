@@ -1,0 +1,17 @@
+retd:	cmp	byte ptr [opcode],0CAh
+	jc	retnd
+	mov	ax,6609h
+	stosw
+	mov	ax,7261h
+	stosw
+	test	byte ptr [opcode],1
+	jnz	retdna
+	mov	al,20h
+	jmp	short retsp
+retnd:	test	byte ptr [opcode],1
+	jnz	retdna
+	mov	al,9
+retsp:	stosb
+	lodsw
+	call	whax
+retdna:	jmp	endl

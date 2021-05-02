@@ -1,0 +1,25 @@
+rq:	cmp	ah,22h
+	jz	rqm
+	cmp	ah,27h
+	jz	rqm
+	stc
+	ret
+rqm:	cmp	al,2
+	jna	rq8
+	mov	cl,al
+	xor	ch,ch
+	push	si
+	add	si,cx
+	mov	cl,[si]
+	pop	si
+	cmp	cl,ah
+	jnz	rq1
+	inc	si
+	sub	al,2
+	mov	[si],al
+	clc
+	ret
+rq1:	mov	al,1
+	jmp	fail
+rq8:	mov	al,8
+	jmp	fail

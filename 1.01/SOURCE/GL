@@ -1,0 +1,11 @@
+gl:	test	byte ptr [func],4
+	jnz	gl1
+	mov	ax,[pc]
+	add	ax,[vorg]
+	clc
+	ret
+gl1:	push	di
+	mov	di,offset symbs
+	call	sl
+	pop	di
+	ret

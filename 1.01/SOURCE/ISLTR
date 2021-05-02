@@ -1,0 +1,16 @@
+isltr:	cmp	al,2Eh
+	jz	isltr1
+	cmp	al,40h
+	jc	isltr0
+	cmp	al,5Ah
+	jna	isltr1
+	cmp	al,5Fh
+	jz	isltr1
+	cmp	al,61h
+	jc	isltr0
+	cmp	al,7Ah
+	jna	isltr1
+isltr0:	stc
+	ret
+isltr1:	clc
+	ret

@@ -1,0 +1,18 @@
+wfn:	cld
+	mov	di,si
+	mov	cx,0Ch
+	xor	al,al
+	repnz	scasb
+	neg	cx
+	add	cx,0Ch
+	mov	di,offset asmm2
+	rep	movsb
+	mov	al,24h
+	stosb
+	mov	ah,9
+	mov	dx,offset asmm2
+	int	21h
+	mov	ah,9
+	mov	dx,offset done+4
+	int	21h
+	ret

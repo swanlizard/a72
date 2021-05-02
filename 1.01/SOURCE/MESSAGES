@@ -1,0 +1,26 @@
+amsg	db	"A72  8086 assembler  Version 1.01",20h,20h
+	db	"Copyright (c) 2002, 2006 PC-72"
+	db	0Dh,0Ah,0Dh,0Ah,24h
+usage	db	"Syntax:  A72 infile[.ASM] [outfile[.COM]]",0Dh,0Ah,24h
+asmm1	db	"Reading: $"
+asmm2	db	0Dh dup(20h)
+asmm3	db	"Writing: $"
+asmm4	db	"Including: $"
+inco	db	"Over",0Dh,0Ah,24h
+done	db	"Done",0Dh,0Ah,24h
+errf	db	"Errors: $"
+errn	db	6 dup(20h),0Dh,0Ah,24h
+em0	db	"Wrong operand$"
+em1	db	"Syntax error$"
+em2	db	"Malformed displacement$"
+em3	db	"Unrecognised instruction$"
+em4	db	"Undefined symbol$"
+em5	db	"Jump out of range$"
+em6	db	"Operand size mismatch$"
+em7	db	"Constant too large$"
+em8	db	"Missing operand$"
+em9	db	"Characters past end$"
+emA	db	"Duplicate symbol$"
+emB	db	"File error$"
+emC	db	"Reserved word misuse$"
+onlm	db	" on line $"

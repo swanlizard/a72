@@ -1,0 +1,15 @@
+rmid:	mov	al,9
+	stosb
+	lodsb
+	call	wptr
+	call	wdisp
+	mov	al,2Ch
+	stosb
+	or	word ptr [wadj],0
+	jz	rmidb
+	lodsw
+	call	whax
+	jmp	endl
+rmidb:	lodsb
+	call	whal
+	jmp	endl

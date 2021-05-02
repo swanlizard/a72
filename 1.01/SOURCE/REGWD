@@ -1,0 +1,11 @@
+regwd:	mov	al,9
+	stosb
+	mov	al,[opcode]
+	and	ax,7
+	shl	ax,1
+	add	ax,offset regs+10h
+	push	si
+	mov	si,ax
+	movsw
+	pop	si
+	jmp	endl

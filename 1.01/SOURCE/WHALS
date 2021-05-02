@@ -1,0 +1,20 @@
+whals:	or	al,al
+	jns	whal
+	neg	al
+	mov	byte ptr [di],2Dh
+	inc	di
+whal:	cld
+	cmp	al,9
+	ja	whalg
+	add	al,30h
+	stosb
+	ret
+whalg:	call	halx
+	cmp	al,39h
+	jna	whald
+	mov	byte ptr [di],30h
+	inc	di
+whald:	stosw
+	mov	al,68h
+	stosb
+	ret

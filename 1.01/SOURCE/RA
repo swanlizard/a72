@@ -1,0 +1,184 @@
+ra8f:	mov	al,8
+	jmp	fail
+ra:	call	gn
+	jc	ra8f
+	xor	dx,dx
+	mov	byte ptr [wadj],0
+	mov	byte ptr [op],0
+	cmp	byte ptr [si],2
+	jnz	rarg
+	mov	ax,[si+1]
+	mov	cx,14h
+	mov	di,offset regs+26h
+	std
+	repnz	scasw
+	jz	rregs
+rarg:	mov	ax,[si]
+	cmp	ax,5B01h
+	jz	rdisp
+	call	borw
+	jnc	rbwps
+	call	rq
+	jnc	rquos
+	call	re
+	jmp	riax
+rregs:	jmp	rreg
+rbwps:	jmp	rbwp
+rquos:	jmp	rquo
+rdminu:	call	gn
+	mov	al,[si+1]
+	call	isnum
+	jc	raf
+	call	val
+	neg	ax
+	jmp	short rdtpm
+rdps:	and	byte ptr [op],0FDh
+	not	ah
+	and	ah,2
+	or	[op],ah
+rdisp:	call	gn
+	mov	ax,[si+1]
+	cmp	byte ptr [si],2
+	jnz	rdelse
+	mov	dl,1
+	cmp	ax,6973h
+	jz	sid
+	cmp	ax,6964h
+	jz	did
+	cmp	ax,7062h
+	jz	bpd
+	cmp	ax,7862h
+	jz	bxd
+rdelse:	cmp	word ptr [si],2D01h
+	jz	rdminu
+	call	isnum
+	jnc	rdimmd
+	call	isltr
+	jnc	lbd
+raf:	mov	al,1
+	jmp	fail
+sid:	shl	dl,1
+did:	shl	dl,1
+bpd:	shl	dl,1
+bxd:	test	dh,dl
+	jnz	rdfail
+	or	dh,dl
+	test	byte ptr [op],2
+	jz	rdpm
+rdimmd:	call	val
+rdtpm:	or	byte ptr [flags],8
+	test	byte ptr [op],2
+	jz	dispdp
+	neg	ax
+dispdp:	add	[disp],ax
+rdpm:	call	gn
+	mov	ax,[si]
+	cmp	ax,2D01h
+	jz	rdps
+	cmp	ax,2B01h
+	jz	rdps
+	cmp	ax,5D01h
+	jnz	rdfail
+	mov	al,dh
+	mov	bx,offset rm
+	xlatb
+	test	al,0F0h
+	jnz	rdfail
+	mov	dh,al
+	mov	dl,2	
+	jmp	warg
+lbd:	call	gl
+	jc	lbdf
+	or	byte ptr [flags],4
+	jmp	short rdtpm
+lbdf:	mov	al,4
+	jmp	fail
+rdfail:	mov	al,2
+	jmp	fail
+rbwp:	mov	ax,[si]
+	cmp	al,2
+	jz	rregp
+	cmp	ax,5B01h
+	jnz	srf
+	jmp	rdisp
+rregp:	mov	ax,[si+1]
+	mov	cx,4
+	mov	di,offset regs+26h
+	std
+	repnz	scasw
+	jnz	srf
+	mov	dh,cl
+	call	tgn
+	cmp	word ptr [si],3A01h
+	jz	rsp
+srf:	mov	al,2
+	jmp	fail
+rreg:	xor	dl,dl
+	mov	dh,cl
+	and	dh,7
+	or	byte ptr [wadj],1
+	cmp	cl,8
+	jc	rgpr
+	shl	byte ptr [wadj],1
+	cmp	cl,10h
+	jc	rgpr
+	call	tgn
+	cmp	word ptr [si],3A01h
+	jnz	rsr
+rsp:	mov	cl,3
+	shl	dh,cl
+	add	dh,26h
+	mov	[segpref],dh
+	or	byte ptr [flags],40h
+	call	gn
+	call	gn
+	cmp	word ptr [si],5B01h
+	jnz	srf
+	xor	dx,dx
+	mov	byte ptr [wadj],0
+	jmp	rdisp
+rsr:	or	dl,2
+rgpr:	or	dl,1
+	jmp	warg
+ripsf:	mov	al,8
+	jmp	fail
+rips:	and	byte ptr [op],0FEh
+	shr	ah,1
+	not	ah
+	and	ah,1
+	or	[op],ah
+	call	gn
+	call	gn
+	jc	ripsf
+	mov	ax,[si]
+	call	re
+riax:	or	dl,dl
+	jnz	riax1
+	mov	dx,bx
+riax1:	or	byte ptr [flags],2
+	test	byte ptr [op],1
+	jz	rimp
+	neg	ax
+rimp:	add	[imm],ax
+	call	tgn
+	mov	ax,[si]
+	cmp	ax,2D01h
+	jz	rips
+	cmp	ax,2B01h
+	jz	rips
+	jmp	warg
+rquo:	lodsb
+	cmp	al,2
+	ja	rquo7
+	mov	dx,404h
+	or	byte ptr [flags],3
+	mov	di,offset imm
+	movsw
+	cmp	al,1
+	jna	rquob
+	jmp	warg
+rquob:	and	byte ptr [flags],0FEh
+	mov	byte ptr [imm+1],0
+	jmp	warg
+rquo7:	mov	al,7
+	jmp	fail

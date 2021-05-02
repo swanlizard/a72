@@ -1,0 +1,10 @@
+init:	mov	byte ptr [func],0
+	mov	word ptr [symbs],0
+	mov	si,80h
+	cld
+	lodsb
+	xor	ah,ah
+	add	si,ax
+	mov	[si],ah
+	mov	si,81h
+	ret

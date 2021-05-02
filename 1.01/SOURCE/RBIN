@@ -1,0 +1,15 @@
+rbin:	mov	ax,4200h
+	xor	cx,cx
+	mov	dx,[pc]
+	mov	bx,[infile]
+	int	21h
+	jc	rbin0
+	mov	ah,3Fh
+	mov	cx,20h
+	mov	dx,offset input+1
+	mov	bx,[infile]
+	int	21h
+	jc	rbin0
+	mov	[input],al
+	clc
+rbin0:	ret

@@ -1,0 +1,31 @@
+rl:	mov	ax,4200h
+	mov	cx,word ptr [count+2]
+	mov	dx,word ptr [count]
+	mov	bx,[infile]
+	int	21h
+	jc	rl0
+	mov	ah,3Fh
+	mov	cx,80h
+	mov	dx,offset input
+	mov	bx,[infile]
+	int	21h
+	jc	rl0
+	or	ax,ax
+	jz	rl0
+	mov	cx,ax
+	mov	di,offset input
+	mov	al,0Dh
+	cld
+	repnz	scasb
+	lea	ax,[di-input]
+	cmp	ax,80h
+	jnc	rle
+	inc	word ptr [ln]
+	cmp	byte ptr [di],0Ah
+	jnz	rle
+	inc	ax
+rle:	add	word ptr [count],ax
+	adc	word ptr [count+2],0
+	ret
+rl0:	xor	ax,ax
+	ret

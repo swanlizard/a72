@@ -1,0 +1,11 @@
+wreg:	cld
+	push	si
+	mov	si,ax
+	and	si,38h
+	shr	si,1
+	shr	si,1
+	add	si,offset regs
+	add	si,word ptr [wadj]
+	movsw
+	pop	si
+	ret

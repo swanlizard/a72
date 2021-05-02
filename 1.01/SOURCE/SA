@@ -1,0 +1,26 @@
+sa:	push	ax
+	push	di
+	call	sl
+	pop	di
+	pop	ax
+	jc	sa1
+	stc
+	ret
+sa1:	push	bx
+	xor	bh,bh
+	mov	cx,[di]
+	inc	word ptr [di]
+	add	di,2
+	jcxz	sa0
+sa2:	mov	bl,[di]
+	lea	di,[bx+di+3]
+	loop	sa2
+sa0:	mov	cl,[si]
+	xor	ch,ch
+	inc	cx
+	cld
+	rep	movsb
+	stosw
+	pop	bx
+	clc
+	ret

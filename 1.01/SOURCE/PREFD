@@ -1,0 +1,2 @@
+prefd:	mov	sp,[stk]
+	jmp	dsas

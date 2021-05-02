@@ -1,0 +1,7 @@
+grp:	mov	al,byte ptr [si]
+	shr	al,1
+	shr	al,1
+	and	al,0Eh
+	xor	ah,ah
+	mov	si,ax
+	ret

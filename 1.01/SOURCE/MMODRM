@@ -1,0 +1,69 @@
+mmodrm:	or	byte ptr [flags],10h
+	mov	ax,word ptr [args]
+	mov	cl,4
+	cmp	al,11h
+	jz	mwrs
+	cmp	al,12h
+	jz	mwmr
+	cmp	al,13h
+	jz	mwrs
+	cmp	al,21h
+	jz	mwrm
+	cmp	al,23h
+	jz	mwrm
+	cmp	al,31h
+	jz	mwsr
+	cmp	al,32h
+	jz	mwmr
+	and	ax,0F0Fh
+	cmp	al,1
+	jz	mwr
+	cmp	al,2
+	jz	mwm
+	mov	ax,word ptr [args]
+	ror	ax,cl
+	and	ax,0F0Fh
+	cmp	al,1
+	jz	mwr
+	cmp	al,2
+	jz	mwm
+	ret
+mwrs:	or	byte ptr [modrm],0C0h
+mwrm:	rol	ah,cl
+	jmp	short mwmr
+mwsr:	or	byte ptr [modrm],0C0h
+mwmr:	mov	al,ah
+	push	ax
+	and	ax,7007h
+	shr	ah,1
+	or	al,ah
+	or	[modrm],al
+	pop	ax
+	cmp	byte ptr [modrm],0C0h
+	jc	mwdisp
+	ret
+mwr:	or	byte ptr [modrm],0C0h
+mwm:	mov	al,ah
+	and	al,7
+	or	[modrm],al
+	cmp	byte ptr [modrm],0C0h
+	jc	mwdisp
+	ret
+mwdisp:	test	byte ptr [flags],8
+	jz	mwd0
+	test	ah,8
+	jz	mwd16
+	or	byte ptr [flags],4
+	ret
+mwd16:	test	byte ptr [flags],4
+	jz	mwd8
+	or	byte ptr [modrm],80h
+	ret
+mwd8:	or	byte ptr [modrm],40h
+	or	byte ptr [flags],8
+	ret
+mwd0:	mov	al,[modrm]
+	and	al,0C7h
+	cmp	al,6
+	jz	mwd8
+	ret

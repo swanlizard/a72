@@ -1,0 +1,9 @@
+relwd:	mov	ax,2409h
+	stosw
+	lodsw
+	or	ax,ax
+	js	relwdw
+	mov	byte ptr [di],2Bh
+	inc	di
+relwdw:	call	whaxs
+	jmp	endl

@@ -1,0 +1,8 @@
+isnum:	cmp	al,30h
+	jc	isnum0
+	cmp	al,39h
+	ja	isnum0
+	clc
+	ret
+isnum0:	stc
+	ret

@@ -1,0 +1,22 @@
+whaxs:	or	ax,ax
+	jns	whax
+	neg	ax
+	mov	byte ptr [di],2Dh
+	inc	di
+whax:	cld
+	or	ah,ah
+	jz	whal
+	push	ax
+	mov	al,ah
+	call	halx
+	cmp	al,39h
+	jna	whaxl
+	mov	byte ptr [di],30h
+	inc	di
+whaxl:	stosw
+	pop	ax
+	call	halx
+	stosw
+	mov	al,68h
+	stosb
+	ret

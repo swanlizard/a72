@@ -1,0 +1,20 @@
+rimmd:	mov	al,9
+	stosb
+	mov	al,[opcode]
+	and	ax,0Fh
+	shl	ax,1
+	add	ax,offset regs
+	push	si
+	mov	si,ax
+	movsw
+	pop	si
+	mov	al,2Ch
+	stosb
+	test	byte ptr [opcode],8
+	jz	rimmdb
+	lodsw
+	call	whax
+	jmp	endl
+rimmdb:	lodsb
+	call	whal
+	jmp	endl

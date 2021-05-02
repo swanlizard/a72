@@ -1,0 +1,10 @@
+gn:	mov	si,[next]
+	push	di
+	mov	di,offset element
+	call	cc
+	pop	di
+	pushf
+	mov	[next],si
+	mov	si,offset element
+	popf
+	ret

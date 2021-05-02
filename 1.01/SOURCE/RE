@@ -1,0 +1,60 @@
+re:	xor	bx,bx
+	cmp	ax,2401h
+	jz	recu
+	cmp	ax,2D01h
+	jz	remi
+	cmp	ax,6F06h
+	jz	reof
+	cmp	ax,7203h
+	jz	rere
+	xchg	al,ah
+	call	isnum
+	jnc	reim
+	call	isltr
+	jnc	relb
+re0:	xor	al,al
+	jmp	fail
+re4:	mov	al,4
+	jmp	fail
+re8:	mov	al,8
+	jmp	fail
+recu:	mov	ax,[pc]
+	add	ax,[vorg]
+	mov	bx,304h
+	ret
+remi:	call	gn
+	jc	re8
+	mov	al,[si+1]
+	call	isnum
+	jc	re0
+	call	val
+	neg	ax
+	mov	bx,4
+	ret
+reof:	cmp	word ptr [si+2],6666h
+	jnz	relb
+	cmp	word ptr [si+4],6573h
+	jnz	relb
+	cmp	byte ptr [si+6],74h
+	jnz	relb
+	call	gn
+	jc	re8
+	cmp	word ptr [si],2401h
+	jz	recu
+relb:	call	gl
+	jc	re4
+	mov	bx,104h
+	ret
+reim:	call	val
+	mov	bx,4
+	ret
+rere:	cmp	word ptr [si+2],6C65h
+	jnz	relb
+	call	gn
+	jc	re8
+	call	gl
+	jc	re4
+	sub	ax,[pc]
+	sub	ax,[vorg]
+	mov	bx,204h
+	ret
