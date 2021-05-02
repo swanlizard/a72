@@ -1,0 +1,30 @@
+g0Bh:	call	gn
+	jnc	g0Bh1
+	ret
+g0Bh1:	mov	al,[si+1]
+	call	isnum
+	jc	g0Bh2
+g0Bhv:	call	val
+	mov	[imm],ax
+	or	byte ptr [flags],3
+	dec	byte ptr [opcode]
+	ret
+g0Bh2:	call	norf
+	cmp	al,3
+	jz	g0Bhf
+	cmp	al,4
+	jz	g0Bhn
+	xor	al,al
+	jmp	fail
+g0Bhf:	mov	byte ptr [opcode],0CBh
+	call	gn
+	jnc	g0Bhg
+	ret
+g0Bhn:	call	gn
+	jnc	g0Bhg
+	ret
+g0Bhg:	mov	al,[si+1]
+	call	isnum
+	jnc	g0Bhv
+	xor	al,al
+	jmp	fail

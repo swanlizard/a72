@@ -1,0 +1,28 @@
+g11h:	call	ra
+	call	comma
+	call	ra
+	mov	ax,word ptr [args]
+	cmp	al,11h
+	jz	g11hr
+	cmp	al,41h
+	jz	g11hi
+g11hf:	mov	al,0
+	jmp	fail
+g11hr:	cmp	ah,20h
+	jnz	g11hf
+	test	byte ptr [args+2],20h
+	jz	g11hf
+	mov	byte ptr [opcode],0ECh
+	test	byte ptr [args+2],2
+	jz	g11h0
+	inc	byte ptr [opcode]
+g11h0:	ret
+g11hi:	mov	ax,[imm]
+	or	ah,ah
+	jnz	g11hf
+	and	byte ptr [flags],0FEh
+	mov	byte ptr [opcode],0E4h
+	test	byte ptr [args+2],2
+	jz	g11h0
+	inc	byte ptr [opcode]
+	ret

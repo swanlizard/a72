@@ -1,0 +1,17 @@
+g7:	call	gn
+	jnc	g7a
+	mov	ax,0Ah
+	jmp	short g7c
+g7a:	mov	al,[si+1]
+	call	isnum
+	jnc	g7b
+	mov	al,0
+	jmp	fail
+g7b:	call	val
+	or	ah,ah
+	jz	g7c
+	mov	al,7
+	jmp	fail
+g7c:	mov	[imm],ax
+	or	byte ptr [flags],2
+	ret

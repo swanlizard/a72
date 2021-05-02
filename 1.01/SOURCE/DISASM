@@ -1,0 +1,84 @@
+disasm:	cld
+	mov	[stk],sp
+	mov	bp,offset output
+	mov	bx,offset input
+	mov	di,bp
+	mov	si,bx
+	inc	di
+	inc	si
+	mov	byte ptr [bp],0
+	mov	byte ptr [segpref],0
+dsas:	mov	al,9
+	stosb
+	lodsb
+	mov	[opcode],al
+	mov	word ptr [wadj],0
+	test	al,1
+	jz	dsab
+	mov	word ptr [wadj],10h
+dsab:	xor	ah,ah
+	shl	ax,1
+	shl	ax,1
+	push	si
+	mov	si,offset bin86
+	add	si,ax
+	lodsw
+	push	si
+	mov	si,ax
+	xor	ch,ch
+	mov	cl,[si]
+	jcxz	dsa0
+	inc	si
+	rep	movsb
+dsa0:	pop	si
+	lodsw
+	pop	si
+	call	ax
+dsax:	mov	dl,[segpref]
+	or	dl,dl
+	jz	dsnsp
+	push	si
+	push	di
+	dec	di
+	mov	cx,di
+	sub	cx,bp
+	mov	si,di
+	add	di,0Fh
+	std
+	rep	movsb
+	mov	di,bp
+	inc	di
+	mov	al,9
+	cld
+	stosb
+	call	wspr
+	mov	ax,3B09h
+	stosw
+	mov	ax,[pc]
+	dec	ax
+	push	ax
+	mov	al,ah
+	call	halx
+	stosw
+	pop	ax
+	call	halx
+	stosw
+	mov	al,20h
+	stosb
+	mov	al,dl
+	call	halx
+	stosw
+	mov	ax,0A0Dh
+	stosw
+	pop	di
+	pop	si
+	add	di,0Fh
+dsnsp:	mov	ax,si
+	sub	ax,bx
+	dec	ax
+	add	[pc],ax
+	mov	ax,di
+	sub	ax,bp
+	dec	ax
+	add	[bp],al
+	ret

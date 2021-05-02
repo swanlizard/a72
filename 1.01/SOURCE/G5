@@ -1,0 +1,35 @@
+g5:	call	ra
+	and	byte ptr [flags],0E2h
+	mov	ax,word ptr [args]
+	cmp	al,4
+	jnz	g5f0
+	mov	dx,[imm]
+	or	ah,ah
+	jz	g5i0
+	cmp	ah,1
+	jz	g5i1
+	cmp	ah,2
+	jz	g5i2
+	cmp	ah,3
+	jnz	g5f0
+	add	dx,2
+g5i1:	sub	dx,[pc]
+	sub	dx,[vorg]
+g5i2:	sub	dx,2
+	mov	[imm],dx
+g5i0:	mov	ax,dx
+	or	ah,ah
+	jnz	g5inz
+	cbw
+g5inz:	or	ax,ax
+	jns	g5ins
+	cmp	ax,0FF80h
+	jc	g5f5
+	ret
+g5ins:	cmp	ax,80h
+	jnc	g5f5
+	ret
+g5f0:	mov	al,0
+	jmp	fail
+g5f5:	mov	al,5
+	jmp	fail

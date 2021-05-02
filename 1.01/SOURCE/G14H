@@ -1,0 +1,122 @@
+g14h:	mov	byte ptr [flags],0
+	mov	bp,offset output
+	mov	di,offset output+4
+	mov	word ptr [bp],0
+	mov	word ptr [bp+2],0
+	mov	word ptr [index],0
+g14hg:	cld
+	call	gn
+	jc	g14hf8
+	mov	ax,[si]
+	call	rq
+	jnc	g14hs
+	cmp	ax,3F01h
+	jz	g14hu
+	call	re
+	jmp	short g14hd
+g14hs:	mov	al,0C0h
+	mov	cx,1
+	call	ubp
+	lodsb
+	add	[bp+3],al
+	xor	ah,ah
+	mov	cx,ax
+	rep	movsb
+	jmp	short g14hc
+g14hu:	mov	al,[opcode]
+	or	al,80h
+	mov	cx,1
+	xor	dx,dx
+	jmp	short g14hv
+g14hd:	mov	cx,1
+	mov	dx,ax
+	push	di
+	call	tgn
+	pop	di
+	mov	ax,[si]
+	cmp	ax,6403h
+	jz	g14hdu
+	cmp	ax,2801h
+	jz	g14hp
+	mov	al,[opcode]
+	or	al,0C0h
+g14hv:	call	ubp
+	call	udi
+g14hc:	call	gn
+	jc	g14he
+	cmp	word ptr [si],2C01h
+	jnz	g14hf0
+	jmp	g14hg
+g14he:	ret
+g14hf0:	xor	al,al
+	jmp	fail
+g14hf1:	mov	al,1
+	jmp	fail
+g14hf8:	mov	al,8
+	jmp	fail
+g14hdu:	cmp	word ptr [si+2],7075h
+	jnz	g14hf1
+	call	gn
+g14hp:	call	gn
+	cmp	word ptr [si],2801h
+	jnz	g14hf1
+	call	gn
+	jc	g14hf8
+	cmp	bx,4
+	jnz	g14hf1
+	mov	ax,[si]
+	mov	bl,[opcode]
+	or	bl,80h
+	mov	cx,dx
+	xor	dx,dx
+	cmp	ax,3F01h
+	jz	g14hdd
+	xchg	ah,al
+	call	isnum
+	jc	g14hf0
+	or	bl,40h
+	call	val
+	mov	dx,ax
+g14hdd:	mov	al,bl
+	call	ubp2
+	call	udi
+	call	gn
+	jc	g14hf1
+	mov	bp,di
+	add	di,4
+	mov	byte ptr [bp],0
+	cmp	word ptr [si],2901h
+	jnz	g14hf1
+	jmp	g14hc
+ubp:	cmp	al,[bp]
+	jz	ubp0
+ubp2:	or	byte ptr [bp],0
+	jz	ubp1
+	mov	bp,di
+	add	di,4
+ubp1:	mov	[bp],al
+	mov	[bp+1],cx
+	mov	byte ptr [bp+3],0
+	inc	word ptr [index]
+	mov	bx,word ptr [index]
+	shl	bx,1
+	mov	word ptr [bx+index],bp
+ubp0:	ret
+udi:	inc	byte ptr [bp+3]
+	mov	cl,[opcode]
+	mov	ax,1
+	shl	ax,cl
+	mov	[di],dx
+	cmp	ax,2
+	ja	udi1
+	add	di,ax
+	ret
+udi1:	sub	ax,2
+	inc	di
+	inc	di
+	mov	cx,ax
+	mov	ax,dx
+	rcl	ax,1
+	salc
+	rep	stosb
+	ret

@@ -1,0 +1,23 @@
+bss:	cld
+	push	ax
+bssls:	lodsb
+	cmp	al,20h
+	jz	bssls
+	cmp	al,9
+	jz	bssls
+	dec	si
+	push	di
+	inc	di
+bssl:	mov	al,[si]
+	cmp	al,21h
+	jc	bsse
+	movsb
+	jmp	short bssl
+bsse:	mov	ax,di
+	pop	di
+	sub	ax,di
+	dec	ax
+	mov	[di],al
+	cmp	al,1
+	pop	ax
+	ret

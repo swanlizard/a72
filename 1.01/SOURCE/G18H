@@ -1,0 +1,23 @@
+g18h:	call	ra
+	call	comma
+	call	ra
+	mov	ax,word ptr [args]
+	cmp	al,14h
+	jz	g18hrm
+	cmp	al,24h
+	jz	g18hrm
+g18hf:	xor	al,al
+	jmp	g18hf
+g18hrm:	mov	ax,[imm]
+	cmp	ax,3Fh
+	jna	g18hg
+	mov	al,7
+	jmp	fail
+g18hg:	mov	cl,3
+	mov	ah,al
+	ror	al,cl
+	and	ax,707h
+	rol	ah,cl
+	or	word ptr [opcode],ax
+	and	byte ptr [flags],0FCh
+	jmp	mmodrm

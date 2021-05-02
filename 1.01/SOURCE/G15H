@@ -1,0 +1,16 @@
+g15h:	mov	byte ptr [flags],0
+	call	ra
+	cmp	byte ptr [args],4
+	jz	g15h1
+g15hf:	mov	al,1
+	jmp	fail
+g15h1:	cmp	byte ptr [func],2
+	jnz	g15h0
+	or	byte ptr [temp],0
+	jz	g15hf
+	mov	si,offset temp
+	mov	di,offset symbs
+	call	sl
+	mov	ax,[imm]
+	stosw
+g15h0:	ret

@@ -1,0 +1,7 @@
+aamd:	mov	al,9
+	stosb
+	lodsb
+	cmp	al,0Ah
+	jz	aamd0
+	call	whal
+aamd0:	jmp	endl

@@ -1,0 +1,26 @@
+g2:	call	ra
+	call	comma
+	jc	g2n
+	call	gn
+	jc	g2mp
+	mov	al,[opcode]
+	mov	[modrm],al
+	mov	al,[args+2]
+	shr	al,1
+	and	al,1
+	add	al,0D0h
+	mov	[opcode],al
+	lodsw
+	cmp	ax,3101h
+	jz	g2n
+	cmp	ax,6302h
+	jnz	g2f
+	lodsb
+	cmp	al,6Ch
+	jnz	g2f
+	add	byte ptr [opcode],2
+g2n:	jmp	mmodrm
+g2f:	mov	al,0
+	jmp	fail
+g2mp:	mov	al,8
+	jmp	fail

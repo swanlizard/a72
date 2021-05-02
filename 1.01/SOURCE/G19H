@@ -1,0 +1,2 @@
+g19h:	mov	al,0Ch
+	jmp	fail

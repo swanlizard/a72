@@ -1,0 +1,62 @@
+cmdlin:	mov	di,offset element
+	call	bss
+	mov	bx,si
+	mov	si,offset element
+	mov	dx,offset usage+14h
+	call	fspec
+	jc	cmdl0
+	mov	byte ptr [func],19h
+	stc
+	call	case
+	mov	di,offset infn
+	xor	ah,ah
+	lodsb
+	mov	cx,ax
+	rep	movsb
+	mov	[di],ah
+	mov	di,offset infn
+	mov	al,2Eh
+	mov	cx,9
+	repnz	scasb
+	dec	di
+	mov	ax,8
+	sub	ax,cx
+	mov	cx,4
+	mov	si,offset usage+23h
+	rep	cmpsb
+	jnz	aflag
+	and	byte ptr [func],0E3h
+aflag:	mov	si,bx
+	mov	di,offset element
+	call	bss
+	mov	bx,si
+	mov	si,offset element
+	mov	dx,offset usage+23h
+	call	fspec
+	jc	cmdl1
+	stc
+	call	case
+	mov	di,offset outfn
+	xor	ah,ah
+	lodsb
+	mov	cx,ax
+	rep	movsb
+	mov	[di],ah
+	clc
+	ret
+cmdl1:	cld
+	mov	cx,ax
+	mov	si,offset infn
+	mov	di,offset outfn
+	rep	movsb
+	mov	si,offset usage+14h
+	test	byte ptr [func],10h
+	jz	cmdl2
+	add	si,0Fh
+cmdl2:	movsw
+	movsw
+	mov	byte ptr [di],0
+	clc
+	ret
+cmdl0:	stc
+	ret

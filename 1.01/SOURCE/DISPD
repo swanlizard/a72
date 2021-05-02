@@ -1,0 +1,5 @@
+dispd:	mov	al,9
+	stosb
+	lodsb
+	call	wdisp
+	jmp	endl

@@ -1,0 +1,25 @@
+g0Dh:	call	ra
+	mov	ax,word ptr [args]
+	test	byte ptr [args+2],2
+	jz	g0Dhf
+	cmp	al,1
+	jz	g0Dhr
+	cmp	al,2
+	jz	g0Dhm
+	cmp	al,3
+	jz	g0Dhs
+g0Dhf:	mov	al,0
+	jmp	fail
+g0Dhr:	and	ah,7
+	add	ah,50h
+	mov	[opcode],ah
+	ret
+g0Dhm:	or	byte ptr [modrm],30h
+	mov	byte ptr [opcode],0FFh
+	jmp	mmodrm
+g0Dhs:	mov	cl,3
+	and	ah,cl
+	shl	ah,cl
+	add	ah,6
+	mov	[opcode],ah
+	ret

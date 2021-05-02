@@ -1,0 +1,21 @@
+g0Ch:	call	gn
+	jnc	g0Ch1
+	mov	al,8
+	jmp	fail
+g0Ch1:	mov	al,[si+1]
+	call	isnum
+	jnc	g0Ch2
+	mov	al,0
+	jmp	fail
+g0Ch2:	call	val
+	cmp	ax,3
+	jz	g0Ch3
+	or	ah,ah
+	jz	g0Ch4
+	mov	al,7
+	jmp	fail
+g0Ch3:	dec	byte ptr [opcode]
+	ret
+g0Ch4:	mov	[imm],ax
+	or	byte ptr [flags],2
+	ret

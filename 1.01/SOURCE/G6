@@ -1,0 +1,88 @@
+g6:	call	tgn
+	jc	g6f8
+	call	norf
+	cmp	al,3
+	jz	g6f
+	cmp	al,4
+	jz	g6n
+	cmp	al,5
+	jz	g6s
+g6l:	call	ra
+	mov	ax,word ptr [args]
+	cmp	al,4
+	jz	g6i
+	cmp	al,1
+	jz	g6rm
+	cmp	al,2
+	jnz	g6f0
+g6rm:	mov	al,[args+2]
+	or	al,al
+	jz	g6rn
+	cmp	al,2
+	jz	g6rn
+	cmp	al,3
+	jz	g6rf
+	mov	al,6
+	jmp	fail
+g6s:	call	gn
+	call	igptr
+	cmp	byte ptr [opcode],20h
+	jnz	g6f0
+	mov	byte ptr [opcode],0EBh
+	jmp	g5
+g6f:	or	byte ptr [opcode],8
+g6n:	call	gn
+	call	igptr
+	jmp	short g6l
+g6rf:	or	byte ptr [opcode],8
+g6rn:	mov	al,[opcode]
+	or	[modrm],al
+	mov	byte ptr [opcode],0FFh
+	jmp	mmodrm
+g6f8:	mov	al,8
+	jmp	fail
+g6f0:	xor	al,al
+	jmp	fail
+g6i:	call	tgn
+	cmp	word ptr [si],3A01h
+	jz	g6if
+	mov	al,[opcode]
+	test	al,8
+	jnz	g6f8
+	mov	cl,3
+	rol	al,cl
+	and	al,1
+	add	al,0E8h
+	mov	[opcode],al
+	mov	dx,[imm]
+	or	ah,ah
+	jz	g6i0
+	cmp	ah,1
+	jz	g6i1
+	cmp	ah,2
+	jz	g6i2
+	cmp	ah,3
+	jnz	g6f0
+	add	dx,3
+g6i1:	sub	dx,[pc]
+	sub	dx,[vorg]
+g6i2:	sub	dx,3
+	mov	[imm],dx
+g6i0:	or	byte ptr [flags],3
+	ret
+g6if:	call	gn
+	call	gn
+	jc	g6f0
+	mov	al,[si+1]
+	call	isnum
+	jc	g6f0
+	call	val
+	mov	[disp],ax
+	or	byte ptr [flags],0Fh
+	xor	al,al
+	xchg	al,byte ptr [opcode]
+	cmp	al,20h
+	jc	g6iop
+	add	byte ptr [opcode],50h
+g6iop:	add	byte ptr [opcode],9Ah
+	ret

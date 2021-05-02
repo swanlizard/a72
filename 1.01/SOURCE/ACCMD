@@ -1,0 +1,16 @@
+accmd:	mov	al,9
+	stosb
+	mov	ax,word ptr [wadj]
+	add	ax,offset regs
+	push	si
+	mov	si,ax
+	movsw
+	pop	si
+	call	wspr
+	mov	ax,5B2Ch
+	stosw
+	lodsw
+	call	whax
+	mov	al,5Dh
+	stosb
+	jmp	endl

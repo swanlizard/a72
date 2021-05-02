@@ -1,0 +1,35 @@
+g1:	call	ra
+	call	comma
+	call	ra
+	call	wa
+	mov	ax,word ptr [args]
+	cmp	al,11h
+	jz	g1rm
+	cmp	al,12h
+	jz	g1mr
+	cmp	al,21h
+	jz	g1rm
+	cmp	al,41h
+	jz	g1ri
+	cmp	al,42h
+	jz	g1mi
+	xor	al,al
+	jmp	fail
+g1ri:	and	ah,7
+	jz	g1ai
+g1mi:	mov	al,[opcode]
+	or	[modrm],al
+	mov	al,[wadj]
+	or	[flags],al
+	or	al,80h
+	mov	[opcode],al
+	jmp	mmodrm
+g1rm:	add	byte ptr [opcode],2
+g1mr:	mov	al,[wadj]
+	add	[opcode],al
+	jmp	mmodrm
+g1ai:	or	byte ptr [opcode],4
+	mov	al,[wadj]
+	or	[flags],al
+	or	[opcode],al
+	ret

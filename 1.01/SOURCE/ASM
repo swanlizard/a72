@@ -1,0 +1,115 @@
+asm:	mov	word ptr [index],0
+	mov	word ptr [output],0
+	mov	word ptr [rsize],1
+	mov	word ptr [next],offset input
+	mov	[stk],sp
+	xor	ax,ax
+	mov	di,offset flags
+	mov	cx,15
+	cld
+	rep	stosb
+asml:	call	gn
+	jnc	asm1
+	ret
+asm1:	mov	di,offset i8086
+	call	sl
+	jnc	isgood
+	mov	ah,17h
+isgood:	mov	[opcode],al
+	or	byte ptr [flags],20h
+	mov	bl,ah
+	xor	bh,bh
+	shl	bx,1
+	lea	bx,[bx+ihdl]
+	call	[bx]
+	call	gn
+	jnc	asmx
+	or	byte ptr [flags],0
+	jnz	write
+	or	word ptr [index],0
+	jnz	dar
+	ret
+asmx:	mov	al,9
+	jmp	fail
+write:	mov	di,offset output
+	mov	word ptr [index],1
+	mov	word ptr [index+2],di
+	mov	al,0C0h
+	stosb
+	mov	ax,[rsize]
+	stosw
+	inc	di
+	mov	si,offset prefix
+	lodsb
+	test	byte ptr [flags],80h
+	jz	wnpref
+	stosb
+wnpref:	lodsb
+	test	byte ptr [flags],40h
+	jz	wnsprf
+	stosb
+wnsprf:	lodsb
+	test	byte ptr [flags],20h
+	jz	wnopc
+	stosb
+wnopc:	lodsb
+	test	byte ptr [flags],10h
+	jz	wnmrm
+	stosb
+wnmrm:	lodsw
+	test	byte ptr [flags],8
+	jz	wndisp
+	test	byte ptr [flags],4
+	jz	wdisp8
+	stosb
+	mov	al,ah
+wdisp8:	stosb
+wndisp:	lodsw
+	test	byte ptr [flags],2
+	jz	wnimm
+	test	byte ptr [flags],1
+	jz	wimm8
+	stosb
+	mov	al,ah
+wimm8:	stosb
+wnimm:	mov	ax,di
+	sub	ax,offset output+4
+	mov	[output+3],al
+	jmp	short wrd
+dar:	mov	cx,word ptr [index]
+	mov	si,cx
+	shl	si,1
+	add	si,offset index
+darl:	std
+	lodsw
+	mov	bx,ax
+	test	byte ptr [bx],40h
+	jz	dard
+	dec	cx
+	jnz	darl
+	jmp	short wrd
+dard:	mov	si,offset index+2
+ddl:	cld
+	lodsw
+	mov	bx,ax
+	and	byte ptr [bx],0BFh
+	loop	ddl
+wrd:	mov	si,offset output
+	mov	bx,word ptr [index]
+wrdat:	cld
+	lodsb
+	test	al,80h
+	jz	wrde
+	mov	cl,al
+	and	cl,0Fh
+	lodsw
+	shl	ax,cl
+	mov	cx,ax
+	lodsb
+	xor	ah,ah
+	add	si,ax
+	mul	cx
+	add	[pc],ax
+	dec	bx
+	jnz	wrdat
+wrde:	ret

@@ -1,0 +1,14 @@
+accrd:	mov	ax,6109h
+	stosw
+	mov	ax,2C78h
+	stosw
+	mov	al,[opcode]
+	and	al,7
+	shl	al,1
+	xor	ah,ah
+	add	ax,offset regs+10h
+	push	si
+	mov	si,ax
+	movsw
+	pop	si
+	jmp	endl

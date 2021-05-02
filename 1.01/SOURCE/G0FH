@@ -1,0 +1,33 @@
+g0Fh:	call	ra
+	call	comma
+	call	ra
+	call	wa
+	mov	ax,word ptr [args]
+	cmp	al,11h
+	jz	g0Fhr
+	cmp	al,12h
+	jz	g0Fhr
+	cmp	al,21h
+	jz	g0Fhr
+	cmp	al,41h
+	jz	g0Fhri
+	cmp	al,42h
+	jz	g0Fhmi
+	mov	al,0
+	jmp	fail
+g0Fhr:	mov	al,84h
+	add	al,[wadj]
+	mov	[opcode],al
+	jmp	mmodrm
+g0Fhri:	or	ah,ah
+	jz	g0Fha
+g0Fhmi:	mov	al,[wadj]
+	or	[flags],al
+	or	al,0F6h
+	mov	[opcode],al
+	jmp	mmodrm
+g0Fha:	mov	al,[wadj]
+	or	[flags],al
+	or	al,0A8h
+	mov	[opcode],al
+	ret

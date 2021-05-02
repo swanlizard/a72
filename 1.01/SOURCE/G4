@@ -1,0 +1,20 @@
+g4:	call	ra
+	call	wa
+	mov	ax,word ptr [args]
+	cmp	al,1
+	jz	g4r
+	cmp	al,2
+	jz	g4m
+	mov	al,0
+	jmp	fail
+g4r:	test	byte ptr [args+2],2
+	jz	g4m
+	and	ah,7
+	add	ah,40h
+	add	[opcode],ah
+	ret
+g4m:	mov	al,0FEh
+	add	al,[wadj]
+	xchg	al,[opcode]
+	or	[modrm],al
+	jmp	mmodrm

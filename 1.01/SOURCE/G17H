@@ -1,0 +1,55 @@
+g17h:	mov	byte ptr [flags],0
+	mov	al,[si+1]
+	call	isnum
+	jc	g17h0
+	call	val
+	mov	[rsize],ax
+	mov	sp,[stk]
+	jmp	asml
+g17h0:	cmp	byte ptr [si],2
+	jnz	g17h1
+	mov	ax,[si+1]
+	mov	di,offset regs+26h
+	mov	cl,14h
+	std
+	repnz	scasw
+	jnz	g17h1
+	cmp	cl,10h
+	jc	g17hfw
+	call	gn
+	cmp	word ptr [si],3A01h
+	jnz	g17hfw
+	mov	ch,3
+	xchg	cl,ch
+	shl	ch,cl
+	add	ch,26h
+	mov	[opcode],ch
+	or	byte ptr [flags],20h
+	ret
+g17h1:	mov	cl,[si]
+	xor	ch,ch
+	inc	cx
+	mov	di,offset temp
+	cld
+	rep	movsb
+	call	tgn
+	jc	g17hf
+	cmp	word ptr [si],3A01h
+	jnz	g17h3
+	call	gn
+g17h3:	test	byte ptr [func],8
+	jz	g17h2
+	mov	ax,[pc]
+	add	ax,[vorg]
+	mov	si,offset temp
+	mov	di,offset symbs
+	call	sa
+	jnc	g17h2
+	mov	al,0Ah
+	jmp	fail
+g17h2:	mov	sp,[stk]
+	jmp	asml
+g17hf:	mov	al,3
+	jmp	fail
+g17hfw:	mov	al,0Ch
+	jmp	fail

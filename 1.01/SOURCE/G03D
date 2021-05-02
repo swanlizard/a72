@@ -1,0 +1,26 @@
+g03d:	push	si
+	call	grp
+	mov	si,word ptr [si+_g03d]
+	mov	cl,[si]
+	xor	ch,ch
+	inc	si
+	rep	movsb
+	pop	si
+	mov	al,9
+	stosb
+	lodsb
+	call	wptr
+	call	wdisp
+	test	al,30h
+	jz	g03dt
+	jmp	endl
+g03dt:	mov	al,2Ch
+	stosb
+	test	byte ptr [opcode],1
+	jz	g03dtb
+	lodsw
+	call	whax
+	jmp	endl
+g03dtb:	lodsb
+	call	whal
+	jmp	endl

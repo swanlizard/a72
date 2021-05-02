@@ -1,0 +1,8 @@
+g8:	call	ra
+	call	comma
+	call	ra
+	cmp	byte ptr [args],21h
+	jnz	g8f
+	jmp	mmodrm
+g8f:	mov	al,0
+	jmp	fail

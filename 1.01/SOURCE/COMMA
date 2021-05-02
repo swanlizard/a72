@@ -1,0 +1,7 @@
+comma:	call	gn
+	jc	comma0
+	cmp	word ptr [si],2C01h
+	jnz	comma0
+	ret
+comma0:	mov	al,8
+	jmp	fail

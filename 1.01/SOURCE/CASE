@@ -1,0 +1,20 @@
+case:	push	ax
+	push	bx
+	salc
+	and	al,20h
+	mov	ah,al
+	mov	bl,[si]
+	xor	bh,bh
+casel:	mov	al,[bx+si]
+	or	al,20h
+	cmp	al,61h
+	jc	casenl
+	cmp	al,7Ah
+	ja	casenl
+	xor	al,ah
+	mov	[bx+si],al
+casenl:	dec	bx
+	jnz	casel
+	pop	bx
+	pop	ax
+	ret

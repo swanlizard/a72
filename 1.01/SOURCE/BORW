@@ -1,0 +1,34 @@
+borw:	cmp	ax,6204h
+	jz	borw1
+	cmp	ax,7704h
+	jz	borw2
+	cmp	ax,6405h
+	jz	borw3
+borw0:	stc
+	ret
+borw1:	mov	di,offset _byte
+	jmp	short borws
+borw2:	mov	di,offset _word
+	jmp	short borws
+borw3:	mov	di,offset _dword
+borws:	mov	cl,[di]
+	xor	ch,ch
+	inc	cl
+	push	si
+	rep	cmpsb
+	pop	si
+	jnz	borw0
+	mov	cl,[di]
+	mov	[wadj],cl
+	call	gn
+	jc	borwf
+igptr:	cmp	word ptr [si],7003h
+	jnz	borwe
+	cmp	word ptr [si+2],7274h
+	jnz	borwe
+	call	gn
+	jc	borwf
+borwe:	clc
+	ret
+borwf:	mov	al,8
+	jmp	fail

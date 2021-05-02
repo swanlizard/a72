@@ -1,0 +1,10 @@
+disf:	mov	word ptr [pc],0
+disfl:	mov	byte ptr [input],0
+	call	rbin
+	jc	disf0
+	or	byte ptr [input],0
+	jz	disf0
+	call	disasm
+	call	wrasm
+	jnc	disfl
+disf0:	ret

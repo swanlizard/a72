@@ -1,0 +1,23 @@
+g02d:	push	si
+	call	grp
+	mov	si,word ptr [si+_g02d]
+	mov	cl,[si]
+	xor	ch,ch
+	inc	si
+	rep	movsb
+	pop	si
+	mov	al,9
+	stosb
+	lodsb
+	call	wptr
+	call	wdisp
+	mov	al,2Ch
+	stosb
+	test	byte ptr [opcode],2
+	jz	g02d1
+	mov	ax,6C63h
+	stosw
+	jmp	endl
+g02d1:	mov	al,31h
+	stosb
+	jmp	endl

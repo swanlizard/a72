@@ -1,0 +1,29 @@
+g10h:	call	ra
+	call	comma
+	call	ra
+	call	wa
+	mov	ax,word ptr [args]
+	cmp	al,11h
+	jz	g10hr
+	cmp	al,12h
+	jz	g10hm
+	cmp	al,21h
+	jz	g10hm
+	mov	al,0
+	jmp	fail
+g10hr:	or	byte ptr [wadj],0
+	jz	g10hm
+	test	ah,0Fh
+	jz	g10har
+	test	ah,0F0h
+	jz	g10hra
+g10hm:	mov	al,86h
+	or	al,[wadj]
+	mov	[opcode],al
+	jmp	mmodrm
+g10har:	mov	cl,4
+	shr	ah,cl
+g10hra:	and	ah,7
+	add	ah,90h
+	mov	[opcode],ah
+	ret

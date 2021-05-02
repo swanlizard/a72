@@ -1,0 +1,13 @@
+g13h:	mov	byte ptr [flags],0
+	call	gn
+	jnc	g13h1
+	mov	al,8
+	jmp	fail
+g13h1:	mov	al,[si+1]
+	call	isnum
+	jnc	g13h2
+	mov	al,0
+	jmp	fail
+g13h2:	call	val
+	mov	[vorg],ax
+	ret

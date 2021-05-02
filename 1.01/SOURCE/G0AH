@@ -1,0 +1,5 @@
+g0Ah:	mov	sp,[stk]
+	mov	al,[opcode]
+	mov	[prefix],al
+	or	byte ptr [flags],80h
+	jmp	asml

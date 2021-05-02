@@ -1,0 +1,61 @@
+g9:	call	ra
+	call	comma
+	call	ra
+	call	wa
+	mov	ax,word ptr [args]
+	cmp	al,11h
+	jz	g9rm
+	cmp	al,12h
+	jz	g9mr
+	cmp	al,13h
+	jz	g9sr
+	cmp	al,21h
+	jz	g9rm
+	cmp	al,23h
+	jz	g9sr
+	cmp	al,31h
+	jz	g9rs
+	cmp	al,32h
+	jz	g9rs
+	cmp	al,41h
+	jz	g9ri
+	cmp	al,42h
+	jz	g9mi
+	mov	al,0
+	jmp	fail
+g9ri:	mov	al,[wadj]
+	or	[flags],al
+	mov	cl,3
+	shl	al,cl
+	and	ah,7
+	or	al,ah
+	or	al,0B0h
+	mov	[opcode],al
+	ret
+g9mi:	mov	al,[wadj]
+	or	[flags],al
+	add	al,0C6h
+	mov	[opcode],al
+	jmp	mmodrm
+g9rm:	mov	byte ptr [opcode],2
+	cmp	ah,0E0h
+	jz	g9a
+	jmp	short g9na
+g9mr:	cmp	ah,0Eh
+	jz	g9a
+g9na:	mov	al,88h
+	add	al,[wadj]
+	add	[opcode],al
+	jmp	mmodrm
+g9sr:	mov	byte ptr [opcode],2
+g9rs:	add	byte ptr [opcode],8Ch
+	jmp	mmodrm
+g9a:	xor	byte ptr [opcode],2
+	mov	al,0A0h
+	add	al,[wadj]
+	add	[opcode],al
+	mov	ax,[disp]
+	mov	[imm],ax
+	and	byte ptr [flags],0E3h
+	or	byte ptr [flags],3
+	ret

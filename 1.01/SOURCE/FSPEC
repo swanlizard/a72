@@ -1,0 +1,54 @@
+fspec:	push	si
+	mov	cl,[si]
+	xor	ch,ch
+	jcxz	fsp0
+	inc	si
+	mov	di,si
+	mov	al,2Eh
+	cld
+	repnz	scasb
+	jnz	fspun
+	inc	cx
+	cmp	cx,4
+	jna	fsp3
+	mov	cx,4
+fsp3:	dec	di
+	mov	ax,di
+	sub	ax,si
+	cmp	ax,8
+	jna	fsp8
+	push	si
+	mov	si,di
+	sub	ax,8
+	sub	di,ax
+	rep	movsb
+	pop	si
+fsp8:	add	di,cx
+	mov	byte ptr [di],0
+	mov	ax,di
+	sub	ax,si
+	mov	[si-1],al
+	pop	si
+	clc
+	ret
+fspun:	mov	ax,di
+	sub	ax,si
+	cmp	ax,8
+	jna	fspun8
+	sub	ax,8
+	sub	di,ax
+fspun8:	push	si
+	mov	si,dx
+	movsw
+	movsw
+	pop	si
+	mov	byte ptr [di],0
+	mov	ax,di
+	sub	ax,si
+	mov	[si-1],al
+	pop	si
+	clc
+	ret
+fsp0:	pop	si
+	stc
+	ret

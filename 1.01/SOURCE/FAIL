@@ -1,0 +1,32 @@
+fail:	cld
+	inc	word ptr [errs]
+	mov	word ptr [index],0
+	mov	byte ptr [output],0
+	mov	sp,[stk]
+	xor	ah,ah
+	shl	ax,1
+	add	ax,offset errm
+	mov	di,ax
+	mov	ah,9
+	mov	dx,[di]
+	int	21h
+	test	byte ptr [func],1
+	jz	fail0
+	mov	ah,9
+	mov	dx,offset onlm
+	int	21h
+	mov	di,offset element
+	mov	ax,[ln]
+	call	decim
+	mov	ax,0A0Dh
+	stosw
+	mov	al,24h
+	stosb
+	mov	ah,9
+	mov	dx,offset element
+	int	21h
+	ret
+fail0:	mov	ah,9
+	mov	dx,offset done+4
+	int	21h
+	ret

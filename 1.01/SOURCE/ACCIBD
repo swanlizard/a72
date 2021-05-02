@@ -1,0 +1,7 @@
+accibd:	mov	ax,6109h
+	stosw
+	mov	ax,2C6Ch
+	stosw
+	lodsb
+	call	whal
+	jmp	endl

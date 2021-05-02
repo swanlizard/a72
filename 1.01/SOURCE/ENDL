@@ -1,0 +1,28 @@
+endl:	mov	ax,3B09h
+	stosw
+	mov	ax,[pc]
+	add	ax,[vorg]
+	push	ax
+	mov	al,ah
+	call	halx
+	stosw
+	pop	ax
+	call	halx
+	stosw
+	push	si
+	mov	cx,si
+	sub	cx,bx
+	mov	si,bx
+	dec	cx
+	inc	si
+dops:	mov	al,20h
+	stosb
+	lodsb
+	call	halx
+	stosw
+	loop	dops
+	pop	si
+	mov	ax,0A0Dh
+	stosw
+	mov	byte ptr [di],24h
+	ret

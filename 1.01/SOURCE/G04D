@@ -1,0 +1,60 @@
+g04d:	push	bx
+	xor	ah,ah
+	mov	al,byte ptr [si]
+	shr	al,1
+	shr	al,1
+	and	al,0Eh
+	mov	bx,ax
+	mov	bx,word ptr [bx+_g04d]
+	or	byte ptr [bx],0
+	jnz	g04d1
+	pop	bx
+	jmp	invd
+g04d1:	push	si
+	push	ax
+	mov	si,bx
+	mov	cl,[si]
+	inc	si
+	xor	ch,ch
+	rep	movsb
+	mov	al,9
+	stosb
+	pop	ax
+	pop	si
+	pop	bx
+	shr	al,1
+	cmp	al,5
+	jz	g04df
+	cmp	al,4
+	jz	g04dd
+	cmp	al,3
+	jz	g04df
+	cmp	al,2
+	jz	g04dd
+	lodsb
+	call	wptr
+	call	wdisp
+	jmp	endl
+g04df:	mov	al,[si]
+	cmp	al,0C0h
+	jc	g04dm
+	mov	ax,6166h
+	stosw
+	mov	ax,2072h
+	stosw
+	lodsb
+	call	wdisp
+	jmp	endl
+g04dm:	mov	ax,7764h
+	stosw
+	mov	ax,726Fh
+	stosw
+	mov	ax,2064h
+	stosw
+	mov	ax,7470h
+	stosw
+	mov	ax,2072h
+	stosw
+g04dd:	lodsb
+	call	wdisp
+	jmp	endl

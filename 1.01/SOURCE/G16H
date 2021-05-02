@@ -1,0 +1,39 @@
+g16h:	mov	byte ptr [flags],0
+	mov	si,[next]
+	mov	di,offset element
+	call	bss
+	mov	[next],si
+	mov	si,di
+	mov	dx,offset _grp
+	call	fspec
+	jc	g16h0
+	mov	ah,9
+	mov	dx,offset asmm4
+	int	21h
+	mov	si,offset element
+	stc
+	call	case
+	inc	si
+	call	wfn
+	mov	ax,3D00h
+	mov	dx,offset element+1
+	int	21h
+	jc	g16h0
+	inc	word ptr [inclev]
+	mov	di,word ptr [inclev]
+	mov	cx,3
+	shl	di,cl
+	add	di,offset inclev
+	xchg	ax,[infile]
+	stosw
+	push	si
+	mov	si,offset ln
+	rep	movsw
+	pop	si
+	mov	cx,3
+	xor	ax,ax
+	mov	di,offset ln
+	rep	stosw
+	ret
+g16h0:	mov	al,0Bh
+	jmp	fail

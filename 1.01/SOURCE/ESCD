@@ -1,0 +1,15 @@
+escd:	mov	al,9
+	stosb
+	mov	al,[opcode]
+	mov	ah,[si]
+	mov	cl,3
+	ror	ah,cl
+	and	ax,707h
+	rol	al,cl
+	or	al,ah
+	call	whal
+	mov	al,2Ch
+	stosb
+	lodsb
+	call	wdisp
+	jmp	endl

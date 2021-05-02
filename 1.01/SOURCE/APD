@@ -1,0 +1,48 @@
+alibpd:	mov	ax,6C61h
+	jmp	short aibpd
+axibpd:	mov	ax,7861h
+aibpd:	mov	byte ptr [di],9
+	inc	di
+	stosw
+	mov	al,2Ch
+	stosb
+	lodsb
+	call	whal
+	jmp	endl
+ibalpd:	mov	ax,6C61h
+	jmp	short ibapd
+ibaxpd:	mov	ax,7861h
+ibapd:	push	ax
+	mov	al,9
+	stosb
+	lodsb
+	call	whal
+	mov	al,2Ch
+	stosb
+	pop	ax
+	stosw
+	jmp	endl
+aldxpd:	mov	ax,6C61h
+	jmp	short adxpd
+axdxpd:	mov	ax,7861h
+adxpd:	mov	byte ptr [di],9
+	inc	di
+	stosw
+	mov	al,2Ch
+	stosb
+	mov	ax,7864h
+	stosw
+	jmp	endl
+dxalpd:	mov	ax,6C61h
+	jmp	short dxapd
+dxaxpd:	mov	ax,7861h
+dxapd:	push	ax
+	mov	al,9
+	stosb
+	mov	ax,5844h
+	stosw
+	mov	al,2Ch
+	stosb
+	pop	ax
+	stosw
+	jmp	endl

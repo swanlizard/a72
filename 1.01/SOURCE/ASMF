@@ -1,0 +1,31 @@
+asmf:	mov	di,offset pc
+	xor	ax,ax
+	mov	cx,6
+	rep	stosw
+	mov	word ptr [inclev],0
+asmfl:	call	rl
+	or	ax,ax
+	jz	asmf0
+	call	asm
+	call	wr
+	jmp	short asmfl
+asmf0:	or	word ptr [inclev],0
+	jnz	asmf1
+	ret
+asmf1:	mov	ah,3Eh
+	mov	bx,[infile]
+	int	21h
+	mov	cx,3
+	mov	si,word ptr [inclev]
+	shl	si,cl
+	add	si,offset inclev
+	lodsw
+	mov	[infile],ax
+	mov	di,offset ln
+	rep	movsw
+	dec	word ptr [inclev]
+	mov	ah,9
+	mov	dx,offset inco
+	int	21h
+	jmp	short asmfl
+	ret

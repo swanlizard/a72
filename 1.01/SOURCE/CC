@@ -1,0 +1,80 @@
+cc:	cld
+	push	ax
+	push	dx
+	push	di
+	inc	di
+	mov	dx,di
+ccl:	mov	al,[si]
+	mov	ah,al
+	cmp	al,22h
+	jz	cquo
+	cmp	al,27h
+	jz	cquo
+	cmp	al,2Eh
+	jz	cltr
+	cmp	al,3Bh
+	jz	cc0
+	cmp	al,40h
+	jz	cltr
+	cmp	al,5Fh
+	jz	cltr
+	cmp	al,21h
+	jc	cskip
+	cmp	al,2Fh
+	jna	csym
+	cmp	al,30h
+	jc	cskip
+	cmp	al,39h
+	jna	cltr
+	cmp	al,3Ah
+	jc	cskip
+	cmp	al,3Fh
+	jna	csym
+	cmp	al,41h
+	jc	cskip
+	cmp	al,5Ah
+	jna	cltru
+	cmp	al,5Bh
+	jc	cskip
+	cmp	al,60h
+	jna	csym
+	cmp	al,61h
+	jc	cskip
+	cmp	al,7Ah
+	jna	cltr
+	cmp	al,7Bh
+	jc	cskip
+	cmp	al,7Fh
+	jna	csym
+cskip:	or	al,al
+	jz	cc0
+	cmp	al,0Dh
+	jz	cc0
+	cmp	di,dx
+	jnz	cc0
+	inc	si
+	jmp	short ccl
+cltru:	or	al,20h
+cltr:	stosb
+	inc	si
+	jmp	short ccl
+cquo:	movsb
+	mov	al,[si]
+	or	al,al
+	jz	cc0
+	cmp	al,0Dh
+	jz	cc0
+	cmp	al,ah
+	jz	cc1
+	jmp	short cquo
+csym:	cmp	di,dx
+	jnz	cc0
+cc1:	movsb
+cc0:	mov	ax,di
+	pop	di
+	sub	ax,dx
+	pop	dx
+	mov	[di],al
+	cmp	al,1
+	pop	ax
+	ret
