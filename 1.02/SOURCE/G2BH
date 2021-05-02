@@ -1,0 +1,3 @@
+G2BH:		MOV AL, 0FH
+		MOV [FPREF], AL
+		RET
