@@ -1,0 +1,29 @@
+DOTASM		DB 3, "ASM"
+DOTCOM		DB 3, "COM"
+PROCM		DB 4, "In: "
+OUTM		DB 5, "Out: "
+EM0		DB 13, "Wrong operand"
+EM1		DB 12, "Syntax error"
+EM2		DB 16, "Bad displacement"
+EM3		DB 24, "Unrecognised instruction"
+EM4		DB 16, "Undefined symbol"
+EM5		DB 21, "Jump out of range by "
+EM6		DB 21, "Operand size mismatch"
+EM7		DB 18, "Constant too large"
+EM8		DB 15, "Missing operand"
+EM9		DB 19, "Characters past end"
+EMA		DB 16, "Duplicate symbol"
+EMB		DB 15, "Could not open "
+EMC		DB 20, "Reserved word misuse"
+EMD		DB 17, "Invalid operation"
+EME		DB 13, "Line too long"
+EMF		DB 24, "Malformed stack register"
+ONLM		DB 7, ", line "
+BYTEM		DB 6, " bytes"
+ERRF		DB "Errors: "
+ERRN		DB 32, 32, 32, 32, 32, 13, 10, 36
+AMSG		DB "PC-72 8088 assembler  Version 1.03", 13, 10, 36
+USAGE		DB 13, 10
+		DB "A72 [/A] <in>[.ASM] [<out>[.COM]]", 13, 10
+		DB "A72 /D <in>[.COM] [<out>[.ASM]]", 13, 10, 36
+DOSERR		DB "MS-DOS 2 or later required", 13, 10, 36

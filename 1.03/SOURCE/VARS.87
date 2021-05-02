@@ -1,0 +1,21 @@
+PC		DW ?
+USIZE		DW ?
+UD		DW ?
+ERRS		DW ?
+INFILE		DW ?
+OUTFILE		DW ?
+FUNC		DB ?
+VORG		DW ?
+STK		DW ?
+EOL		DW ?
+EOB		DW ?
+FLAGS		DB ?
+WADJ		DB ?, ?
+ARGS		DB ?, ?, ?
+FPREF		DB ?
+PREFIX		DB ?
+SEGPREF		DB ?
+OPCODE		DB ?
+MODRM		DB ?
+DISP		DW ?
+IMM		DW ?
