@@ -6,8 +6,10 @@ CHANGES FROM 1.02 RELEASE
 - Completely rewrote RA and RE and split them up some more for a less confusing control flow and more reuse of modular code.  As a side effect it ended up being more compact.
 - Added some more error messages so the errors would be a little bit less obtuse.
 - Rewrote VAL to use one unified decoder rather than three different ones.  It uses a MUL but the cycle penalty is much less serious than the old RD was.
-- Proper EVEN directive.
+- Rewrote WDA to use one unified encoder.  Like above, except with DIV.
+- Added EVEN, EQU, and END directives.
 - Support for single elements of uninitialised data (stuff like DB ?, DW ?, etc).
 - Generally tightened up the code a tad more.
-- Added another example program, a textmode tetris clone.
+- Added two more example programs: a textmode tetris clone and a Base64 transcoder.
 - Fixed bugs in BMSD, BBBW, BBBR.  Now we have proper CGA bitmap graphics.
+- No longer freaks out when unable to include a file.
