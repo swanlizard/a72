@@ -1,4 +1,4 @@
-I8086		DW 84H
+I8086		DW 134
 _AAA		DB 3, "aaa",	37H, 0
 _AAD		DB 3, "aad",	0D5H, 7
 _AAM		DB 3, "aam",	0D4H, 7
@@ -23,9 +23,11 @@ _DB		DB 2, "db",	1, 14H
 		DB 2, "dd",	3, 14H
 _DEC		DB 3, "dec",	8, 4
 _DIV		DB 3, "div",	30H, 3
-		DB 2, "ds",	0, 18H
+		DB 2, "ds",	0, 16H
 		DB 2, "dw",	2, 14H
 _DWORD		DB 5, "dword",	3, 15H
+		DB 3, "end",	0, 1AH
+		DB 3, "equ",	0, 19H
 		DB 4, "even",	90H, 17H
 _ESC		DB 3, "esc",	0D8H, 0EH
 _FAR		DB 3, "far",	3, 15H
@@ -34,7 +36,7 @@ _IDIV		DB 4, "idiv",	38H, 3
 _IMUL		DB 4, "imul",	28H, 3
 _IN		DB 2, "in",	0E4H, 11H
 _INC		DB 3, "inc",	0, 4
-		DB 7, "include",	0, 16H
+		DB 7, "include",0, 18H
 _INT		DB 3, "int",	0CDH, 0CH
 _INTO		DB 4, "into",	0CEH, 0
 _IRET		DB 4, "iret",	0CFH, 0

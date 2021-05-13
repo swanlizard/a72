@@ -1,3 +1,2 @@
 PREFD:		DEC DI
-		MOV SP, [STK]
 		JMP DSAS

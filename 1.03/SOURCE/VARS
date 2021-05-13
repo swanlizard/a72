@@ -6,7 +6,7 @@ INFILE		DW ?
 OUTFILE		DW ?
 FUNC		DB ?
 VORG		DW ?
-STK		DW ?
+STK		DW ?, ?
 EOL		DW ?
 EOB		DW ?
 FLAGS		DB ?

@@ -21,8 +21,6 @@ ONLM		DB 7, ", line "
 BYTEM		DB 6, " bytes"
 ERRF		DB "Errors: "
 ERRN		DB 32, 32, 32, 32, 32, 13, 10, 36
-AMSG		DB "PC-72 8088 assembler  Version 1.03", 13, 10, 36
-USAGE		DB 13, 10
-		DB "8088 [/A] <in>[.ASM] [<out>[.COM]]", 13, 10
-		DB "8088 /D <in>[.COM] [<out>[.ASM]]", 13, 10, 36
+AMSG		DB "PC-72 assembler v1.03", 13, 10, 36
+USAGE		DB "A72 {[/A] | /D} <in> [<out>]", 13, 10, 36
 DOSERR		DB "MS-DOS 2 or later required", 13, 10, 36
