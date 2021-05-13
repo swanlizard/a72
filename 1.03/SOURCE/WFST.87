@@ -8,7 +8,7 @@ WFST:		PUSH AX
 		STOSW
 		POP AX
 		STOSW
-		MOV AL, 29H
+		INC AX
 		STOSB
 		POP AX
 		RET

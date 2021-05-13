@@ -46,7 +46,7 @@ IHDL		DW G0, G1, G2, G3
 		DW G18H, G19H, G1AH, G1BH
 		DW G1CH, G1DH, G1EH, G1FH
 		DW G20H, G21H, G22H, G23H
-		DW G24H, G25H
+		DW G24H, G25H, G26H, G27H
 REGS		DB "alcldlblahchdhbh"
 		DB "axcxdxbxspbpsidi"
 		DB "escsssds"
