@@ -1,9 +1,13 @@
 ISTT:		PUSH AX
+		PUSH DX
+		MOV DX, 16
 		XOR CX, CX
-		CMP AX, 1
-		JZ $+7
+ISTT1:		CMP AX, 1
+		JZ ISTT2
 		INC CX
 		ROR AX, 1
-		JNZ $-8
+		DEC DX
+		JNZ ISTT1
+ISTT2:		POP DX
 		POP AX
 		RET
