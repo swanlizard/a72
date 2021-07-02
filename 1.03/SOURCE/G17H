@@ -1,5 +1,0 @@
-G17H:		MOV AX, [PC]
-		AND AL, 1
-		JNZ G17H0
-		MOV [FLAGS], AL
-G17H0:		RET

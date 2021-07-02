@@ -1,5 +1,0 @@
-WAITD:		DEC DI
-		MOV AL, [OPCODE]
-		MOV [FPREF], AL
-		MOV SP, [STK]
-		JMP DSAS
