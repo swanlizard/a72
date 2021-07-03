@@ -9,7 +9,7 @@ CHANGES FROM 1.02 RELEASE
 - Added EVEN, EQU, and END directives.
 - Support for single elements of uninitialised data (stuff like DB ?, DW ?, etc).
 - Generally tightened up the code a tad more.
-- Added two more example programs: a textmode tetris clone and a Base64 transcoder.
+- Added a few more example programs.
 - Fixed bugs in BMSD, BBBW, BBBR.  Now we have proper CGA bitmap graphics.
 - No longer freaks out when unable to include a file.
 - Now requires commas as part of standard syntax
