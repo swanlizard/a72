@@ -791,7 +791,7 @@ MFKEYS		DB 80
 		DB " 6Paste  7HFlip  8Clear  9VFlip 10Quit  "
 AMSG		DB "VGA ROM BIOS font editor by PC-72"
 		DB 13, 10, 36
-USAGE		DB "Syntax:  VGAFONT <filename>", 13, 10, 36
+USAGE		DB "VGAFONT <filename>", 13, 10, 36
 NOVGAM		DB "Error: VGA not detected.", 13, 10, 36
 FNAME		DS 16
 BUFFER		DS 16

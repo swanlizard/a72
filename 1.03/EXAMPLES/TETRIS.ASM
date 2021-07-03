@@ -1,4 +1,3 @@
-; Programmed by PC-72
 ; Thank you Alexey Pajitnov for inventing this digital drug
 		CALL INIT
 		CALL NUMBER
