@@ -28,3 +28,9 @@ A minimal symbolic assembler for MS-DOS 2.0 compatible systems.
 - On a similar note, no floating point numeric constant handling/display.  This is for the simple reason that I have absolutely 0 concept of how that would even work.  I'm bad at math.  I bring you instruction encodings, not Einsteinian theorems.  There's probably someone out there more savvy than I who could implement it without breaking a sweat.  I would not just be breaking a sweat; I'd be breaking every single braincell in the process.
 
 > \* Segment prefixes may be put either inside or outside the brackets&mdash;or even on separate lines.
+
+### Disclaimer
+
+- You use this program and its accompanying examples and utilities entirely at your own risk.  I may not be held responsible for damage caused to your system through improper use of this program.
+- This program is provided as is, with no warranties express or implied, and no development schedule.  It is updated at my leisure and at my whim.
+- I am not responsible for physical accidents, deaths, and other disasters caused by improper use of the program.
