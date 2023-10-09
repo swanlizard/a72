@@ -6,6 +6,7 @@
 - Symbol tables, alphabetically sorted, are appended to listings.
 - Rewrote numeric constant handler.
 - Condensed bits of program in a couple places.
+- The Q sigil is now an alias of O, like, y'know, you would actually expect.
 
 ---
 
