@@ -9,7 +9,7 @@ A minimal symbolic assembler for MS-DOS 2.0 compatible systems.
 - Covers every possible 8086 ~~and 8087~~[^3] instruction encoding, including undocumented instructions.
 - Doesn't give a hoot about code formatting/spacing.
 - Supports undefined data and the basic directives *EVEN*, *EQU[^2], *END*, and *ORG*.
-- Accepts binary, quaternary, octal, hexadecimal, and decimal numeric constants.  Quaternary is in there[^4] because it was a debug thing that got left in.  It takes up all of 2 lines (4 bytes) of extra code, oh no.
+- Accepts binary, quaternary, octal, hexadecimal, and decimal numeric constants.  ~~Quaternary is in there[^4] because it was a debug thing that got left in.  It takes up all of 2 lines (4 bytes) of extra code, oh no.~~ not anymore it isn't
 - Built-in VERY basic disassembler.
 - Basic listing functionality.
 
