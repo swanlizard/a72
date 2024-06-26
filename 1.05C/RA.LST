@@ -50,9 +50,9 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  0100              46    ; DISPLAY PROGRAM MESSAGE AND
  0100              47    ; CHECK DOS VERSION
  0100 B409         48    START:  MOV     AH,9
- 0102 BA3421       49            MOV     DX,AMSG
+ 0102 BA2C21       49            MOV     DX,AMSG
  0105 CD21         50            INT     21H
-R-ASSEMBLER VERSION 1.05C    RA.ASM                       2
+R-ASSEMBLER VERSION 1.05C    RA.ASM                      2
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
@@ -64,7 +64,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  010F              56    ; 2.0 OR HIGHER REQUIRED FOR
  010F              57    ; FILE HANDLES
  010F B409         58            MOV     AH,9
- 0111 BA5021       59            MOV     DX,DOSERR
+ 0111 BA4821       59            MOV     DX,DOSERR
  0114 CD21         60            INT     21H
  0116 CD20         61            INT     20H
  0118              62    
@@ -79,21 +79,21 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  0121              71    ; BLANK ALL TEMPORARY VARIABLES
  0121              72    ; AND STORAGE BUFFERS
  0121 31C0         73    MAIN:   XOR     AX,AX
- 0123 BF7822       74            MOV     DI,TXTBUF
+ 0123 BF7022       74            MOV     DI,TXTBUF
  0126 B90309       75            MOV     CX,SYMBS-TXTBUF+3
  0129 FC           76            CLD
  012A F3AA         77            REP STOSB
  012C              78    
  012C              79    ; START LISTING ON PAGE ONE
  012C 40           80            INC     AX
- 012D A3A628       81            MOV     [PAGNUM],AX
- 0130 A3782B       82            MOV     [SYMBS],AX
+ 012D A39E28       81            MOV     [PAGNUM],AX
+ 0130 A3702B       82            MOV     [SYMBS],AX
  0133              83    
  0133              84    ; FIRST SYMBOL RESERVED FOR
  0133              85    ; LOAD ADDRESS
  0133 B80001       86            MOV     AX,DEFORG
- 0136 A37B2B       87            MOV     [SYMBS+3],AX
- 0139 A38028       88            MOV     [VORG],AX
+ 0136 A3732B       87            MOV     [SYMBS+3],AX
+ 0139 A37828       88            MOV     [VORG],AX
  013C              89    
  013C              90    ; START READING COMMAND LINE
  013C BE8200       91            MOV     SI,82H
@@ -101,19 +101,19 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  0142 72D4         93            JC      ERROR
  0144 E87205       94            CALL    OPEN
  0147 7245         95            JC      BAH
- 0149 FF367828     96            PUSH    WORD [FUNC]
+ 0149 FF367028     96            PUSH    WORD [FUNC]
  014D              97    
  014D              98    ; SIMPLE TWO-PASS STRUCTURE
- 014D BF7825       99    RUN:    MOV     DI,TEMP
- 0150 BEFB20       100           MOV     SI,PASSM
-R-ASSEMBLER VERSION 1.05C    RA.ASM                       3
+ 014D BF7025       99    RUN:    MOV     DI,TEMP
+ 0150 BEF320       100           MOV     SI,PASSM
+R-ASSEMBLER VERSION 1.05C    RA.ASM                      3
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
  0153 E82B0D       101           CALL    WRM
- 0156 A1A028       102           MOV     AX,[PASS]
+ 0156 A19828       102           MOV     AX,[PASS]
  0159 40           103           INC     AX
- 015A A3A028       104           MOV     [PASS],AX
+ 015A A39828       104           MOV     [PASS],AX
  015D B90A00       105           MOV     CX,10
  0160 E8C40A       106           CALL    WN
  0163 E85508       107           CALL    PRUNT
@@ -123,7 +123,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  016B              111   ; IF ERRORS WERE ENCOUNTERED,
  016B              112   ; ABORT FURTHER ASSEMBLY UNTIL
  016B              113   ; CORRECTED
- 016B A1A428       114           MOV     AX,[ERRORS]
+ 016B A19C28       114           MOV     AX,[ERRORS]
  016E 85C0         115           TEST    AX,AX
  0170 7520         116           JNZ     HUMBUG
  0172              117   
@@ -134,13 +134,13 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  0172              122   ; FOR A MULTI-PASS STRUCTURE
  0172              123   ; COULD BE DONE WITH A DEDICATED
  0172              124   ; FUNC BUFFER
- 0172 A17828       125           MOV     AX,[FUNC]
+ 0172 A17028       125           MOV     AX,[FUNC]
  0175 30C0         126           XOR     AL,AL
  0177 86E0         127           XCHG    AL,AH
- 0179 A37828       128           MOV     [FUNC],AX
+ 0179 A37028       128           MOV     [FUNC],AX
  017C 84C0         129           TEST    AL,AL
  017E 75CD         130           JNZ     RUN
- 0180 8F067828     131           POP     WORD [FUNC]
+ 0180 8F067028     131           POP     WORD [FUNC]
  0184 E85A07       132           CALL    UDDUMP
  0187 E8CE05       133           CALL    SYMDMP
  018A 30C0         134           XOR     AL,AL
@@ -160,7 +160,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  0194              148   ; ANNOUNCE WHICH ONES WERE
  0194              149   ; PRODUCED
  0194 B44C         150   CLOSE:  MOV     AH,4CH
-R-ASSEMBLER VERSION 1.05C    RA.ASM                       4
+R-ASSEMBLER VERSION 1.05C    RA.ASM                      4
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
@@ -169,32 +169,32 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  019A B43E         153           MOV     AH,3EH
  019C 8B1C         154           MOV     BX,[SI]
  019E CD21         155           INT     21H
- 01A0 BF7825       156           MOV     DI,TEMP
- 01A3 BE0621       157           MOV     SI,OUTM
+ 01A0 BF7025       156           MOV     DI,TEMP
+ 01A3 BEFE20       157           MOV     SI,OUTM
  01A6 E8D80C       158           CALL    WRM
  01A9              159   
  01A9              160   ; FLAG BY FLAG
  01A9 B91010       161           MOV     CX,1010H
- 01AC BED828       162           MOV     SI,OUTFN
- 01AF 8B1E9828     163           MOV     BX,[OUTHDL]
+ 01AC BED028       162           MOV     SI,OUTFN
+ 01AF 8B1E9028     163           MOV     BX,[OUTHDL]
  01B3 E82700       164           CALL    CLOSF
  01B6 B92020       165           MOV     CX,2020H
- 01B9 BEF828       166           MOV     SI,LSTFN
- 01BC 8B1E9A28     167           MOV     BX,[LSTHDL]
+ 01B9 BEF028       166           MOV     SI,LSTFN
+ 01BC 8B1E9228     167           MOV     BX,[LSTHDL]
  01C0 E81A00       168           CALL    CLOSF
  01C3 B94040       169           MOV     CX,4040H
- 01C6 BE1829       170           MOV     SI,SYMFN
- 01C9 8B1E9C28     171           MOV     BX,[SYMHDL]
+ 01C6 BE1029       170           MOV     SI,SYMFN
+ 01C9 8B1E9428     171           MOV     BX,[SYMHDL]
  01CD E80D00       172           CALL    CLOSF
  01D0              173   
  01D0              174   ; DO NOT ANNOUNCE OUTPUT FILES
  01D0              175   ; IF THERE ARE NONE
- 01D0 830EA42800   176           OR      WORD [ERRORS],0
+ 01D0 830E9C2800   176           OR      WORD [ERRORS],0
  01D5 7503         177           JNZ     CLOSE1
  01D7 E8E107       178           CALL    PRUNT
  01DA 58           179   CLOSE1: POP     AX
  01DB CD21         180           INT     21H
- 01DD 850E7828     181   CLOSF:  TEST    [FUNC],CX
+ 01DD 850E7028     181   CLOSF:  TEST    [FUNC],CX
  01E1 740A         182           JZ      CLOSF1
  01E3 E89B0C       183           CALL    WRM
  01E6 B020         184           MOV     AL,20H
@@ -214,7 +214,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  01F7 5F           198           POP     DI
  01F8 726B         199           JC      PARANO
  01FA 8915         200           MOV     [DI],DX
-R-ASSEMBLER VERSION 1.05C    RA.ASM                       5
+R-ASSEMBLER VERSION 1.05C    RA.ASM                      5
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
@@ -231,14 +231,14 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  0209              211   
  0209              212   ; ALSO SAVE THE FIRST DETECTED
  0209              213   ; FILESPEC AS DEFAULT FILE NAME
- 0209 A03829       214           MOV     AL,[DEFFN]
+ 0209 A03029       214           MOV     AL,[DEFFN]
  020C 84C0         215           TEST    AL,AL
  020E 7511         216           JNZ     PARAM
  0210 56           217           PUSH    SI
  0211 89D6         218           MOV     SI,DX
- 0213 BF3829       219           MOV     DI,DEFFN
+ 0213 BF3029       219           MOV     DI,DEFFN
  0216 E85201       220           CALL    WFN
- 0219 BE3829       221           MOV     SI,DEFFN
+ 0219 BE3029       221           MOV     SI,DEFFN
  021C              222   
  021C              223   ; WITHOUT AN EXTENSION
  021C F9           224           STC
@@ -248,12 +248,12 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  0221              228   ; --------------------------------
  0221              229   ; PROCESS COMMAND LINE AND SET
  0221              230   ; FUNCTION AND FILE FLAGS
- 0221 BFB828       231   PARAM:  MOV     DI,INFN
+ 0221 BFB028       231   PARAM:  MOV     DI,INFN
  0224 EB48         232           JMP     SHORT PARAG
- 0226 BF8028       233   PARASC: MOV     DI,VORG
+ 0226 BF7828       233   PARASC: MOV     DI,VORG
  0229 3C4F         234           CMP     AL,"O"
  022B 74C1         235           JE      PARAO
- 022D BFAA28       236           MOV     DI,LSTWID
+ 022D BFA228       236           MOV     DI,LSTWID
  0230 3C57         237           CMP     AL,"W"
  0232 74BA         238           JE      PARAO
  0234              239   
@@ -261,40 +261,40 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  0234              241   ; AND FILE NAME BUFFER FOR GIVEN
  0234              242   ; SWITCH AND BRANCH TO CONFIRM
  0234 BA0112       243           MOV     DX,1201H
- 0237 BFD828       244           MOV     DI,OUTFN
+ 0237 BFD028       244           MOV     DI,OUTFN
  023A 3C41         245           CMP     AL,"A"
  023C 742C         246           JE      PARAFN
  023E BA9000       247           MOV     DX,90H
  0241 3C44         248           CMP     AL,"D"
  0243 7425         249           JE      PARAFN
  0245 BA0122       250           MOV     DX,2201H
-R-ASSEMBLER VERSION 1.05C    RA.ASM                       6
+R-ASSEMBLER VERSION 1.05C    RA.ASM                      6
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
- 0248 BFF828       251           MOV     DI,LSTFN
+ 0248 BFF028       251           MOV     DI,LSTFN
  024B 3C4C         252           CMP     AL,"L"
  024D 741B         253           JE      PARAFN
  024F BAA000       254           MOV     DX,0A0H
  0252 3C55         255           CMP     AL,"U"
  0254 7414         256           JE      PARAFN
  0256 BA0040       257           MOV     DX,4000H
- 0259 BF1829       258           MOV     DI,SYMFN
+ 0259 BF1029       258           MOV     DI,SYMFN
  025C 3C53         259           CMP     AL,"S"
  025E 740A         260           JE      PARAFN
- 0260 BA7621       261   PARARG: MOV     DX,USAGE
+ 0260 BA6E21       261   PARARG: MOV     DX,USAGE
  0263 F9           262           STC
  0264 C3           263           RET
- 0265 BA6221       264   PARANO: MOV     DX,NOPAR
+ 0265 BA5A21       264   PARANO: MOV     DX,NOPAR
  0268 F9           265           STC
  0269 C3           266           RET
- 026A 09167828     267   PARAFN: OR      [FUNC],DX
+ 026A 09167028     267   PARAFN: OR      [FUNC],DX
  026E E81001       268   PARAG:  CALL    RFN
  0271 72B3         269           JC      PARASC
  0273 7589         270           JNZ     PARAWF
  0275              271   
  0275              272   ; DONE READING THROUGH PARAMETERS
- 0275 800E382900   273   PARAEN: OR      BYTE [DEFFN],0
+ 0275 800E302900   273   PARAEN: OR      BYTE [DEFFN],0
  027A 74E9         274           JZ      PARANO
  027C              275   
  027C              276   ; NOW ASSIGN DEFAULT FILE
@@ -302,8 +302,8 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  027C              278   ; SPECIFIED EXTENSIONS
  027C BDE720       279           MOV     BP,DOTCOM
  027F BAE320       280           MOV     DX,DOTASM
- 0282 BFB828       281           MOV     DI,INFN
- 0285 A17828       282           MOV     AX,[FUNC]
+ 0282 BFB028       281           MOV     DI,INFN
+ 0285 A17028       282           MOV     AX,[FUNC]
  0288 A98030       283           TEST    AX,3080H
  028B 7505         284           JNZ     PARAST
  028D              285   
@@ -322,7 +322,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  0296              298   
  0296              299   ; DEFAULT INPUT EXTENSION IS ASM
  0296              300   ; AND OUTPUT IS COM, BUT IF
-R-ASSEMBLER VERSION 1.05C    RA.ASM                       7
+R-ASSEMBLER VERSION 1.05C    RA.ASM                      7
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
@@ -338,18 +338,18 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  029B 7405         310           JZ      PARANS
  029D 25FFBF       311           AND     AX,0BFFFH
  02A0 0C06         312           OR      AL,6
- 02A2 A37828       313   PARANS: MOV     [FUNC],AX
- 02A5 BE3829       314           MOV     SI,DEFFN
+ 02A2 A37028       313   PARANS: MOV     [FUNC],AX
+ 02A5 BE3029       314           MOV     SI,DEFFN
  02A8 E8E900       315           CALL    RFN1
  02AB E81700       316           CALL    PARAWN
  02AE 89EA         317           MOV     DX,BP
- 02B0 BFD828       318           MOV     DI,OUTFN
+ 02B0 BFD028       318           MOV     DI,OUTFN
  02B3 E80F00       319           CALL    PARAWN
  02B6 BAEF20       320           MOV     DX,DOTSYM
- 02B9 BF1829       321           MOV     DI,SYMFN
+ 02B9 BF1029       321           MOV     DI,SYMFN
  02BC E80600       322           CALL    PARAWN
  02BF BAEB20       323           MOV     DX,DOTLST
- 02C2 BFF828       324           MOV     DI,LSTFN
+ 02C2 BFF028       324           MOV     DI,LSTFN
  02C5              325   
  02C5              326   ; GENERATE NAMES AND EXTENSIONS
  02C5              327   ; THAT WERE NOT SPECIFIED
@@ -372,30 +372,30 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  02DD              344   ; --------------------------------
  02DD              345   ; ASSEMBLE OR DISASSEMBLE AN
  02DD              346   ; ENTIRE FILE
- 02DD A18028       347   PROCF:  MOV     AX,[VORG]
- 02E0 A37E28       348           MOV     [PC],AX
+ 02DD A17828       347   PROCF:  MOV     AX,[VORG]
+ 02E0 A37628       348           MOV     [PC],AX
  02E3              349   
  02E3              350   ; RESET ALL PERTINENT COUNTERS
-R-ASSEMBLER VERSION 1.05C    RA.ASM                       8
+R-ASSEMBLER VERSION 1.05C    RA.ASM                      8
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
  02E3 31C0         351           XOR     AX,AX
- 02E5 A38228       352           MOV     [USIZE],AX
- 02E8 A3A828       353           MOV     [LSTLIN],AX
+ 02E5 A37A28       352           MOV     [USIZE],AX
+ 02E8 A3A028       353           MOV     [LSTLIN],AX
  02EB              354   
  02EB              355   ; ENSURE LISTING WIDTH IS WITHIN
  02EB              356   ; ACCEPTABLE BOUNDS
  02EB B80300       357           MOV     AX,3
- 02EE 3906AA28     358           CMP     [LSTWID],AX
+ 02EE 3906A228     358           CMP     [LSTWID],AX
  02F2 720C         359           JB      PROCF0
  02F4 B80800       360           MOV     AX,8
- 02F7 3B06AA28     361           CMP     AX,[LSTWID]
+ 02F7 3B06A228     361           CMP     AX,[LSTWID]
  02FB 7203         362           JB      PROCF0
- 02FD A1AA28       363           MOV     AX,[LSTWID]
+ 02FD A1A228       363           MOV     AX,[LSTWID]
  0300              364   
  0300              365   ; DUMP EQUATES
- 0300 A3AA28       366   PROCF0: MOV     [LSTWID],AX
+ 0300 A3A228       366   PROCF0: MOV     [LSTWID],AX
  0303 E87205       367           CALL    EQDUMP
  0306              368   
  0306              369   ; GET INPUT FILE PARAMETERS
@@ -419,8 +419,8 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  031B 741B         387           JZ      PROCF3
  031D              388   
  031D              389   ; SAVE PROGRAM COUNTER FOR LISTING
- 031D A17E28       390           MOV     AX,[PC]
- 0320 A3A228       391           MOV     [OLDPC],AX
+ 031D A17628       390           MOV     AX,[PC]
+ 0320 A39A28       391           MOV     [OLDPC],AX
  0323 E81907       392           CALL    ASM
  0326 7217         393           JC      PROCF4
  0328 E80801       394           CALL    WLST
@@ -430,7 +430,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  0332              398   
  0332              399   ; ON ANY FILE ERRORS, CLOSE ALL
  0332              400   ; OPEN INPUT FILES AND ABORT WITH
-R-ASSEMBLER VERSION 1.05C    RA.ASM                       9
+R-ASSEMBLER VERSION 1.05C    RA.ASM                      9
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
@@ -477,14 +477,14 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  0357              441   ; WRITE ERROR MESSAGE TO CONSOLE
  0357              442   ; AND LISTING
  0357 E80B06       443   PROCF5: CALL    SCREAM
- 035A F606782820   444           TEST    BYTE [FUNC],20H
+ 035A F606702820   444           TEST    BYTE [FUNC],20H
  035F 74B5         445           JZ      PROCF1
  0361 B440         446           MOV     AH,40H
- 0363 8B1E9A28     447           MOV     BX,[LSTHDL]
+ 0363 8B1E9228     447           MOV     BX,[LSTHDL]
  0367 CD21         448           INT     21H
  0369 EBAB         449           JMP     SHORT PROCF1
  036B              450   
-R-ASSEMBLER VERSION 1.05C    RA.ASM                       10
+R-ASSEMBLER VERSION 1.05C    RA.ASM                      10
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
@@ -538,7 +538,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  03AA              498   
  03AA              499   ; --------------------------------
  03AA              500   ; ADD OR REMOVE EXTENSION FROM
-R-ASSEMBLER VERSION 1.05C    RA.ASM                       11
+R-ASSEMBLER VERSION 1.05C    RA.ASM                      11
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
@@ -591,8 +591,8 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  03D6              547   ; --------------------------------
  03D6              548   ; RETRIEVE CURRENT INPUT FILE
  03D6              549   ; PARAMETERS
- 03D6 A19E28       550   CALF:   MOV     AX,[INCLEV]
-R-ASSEMBLER VERSION 1.05C    RA.ASM                       12
+ 03D6 A19628       550   CALF:   MOV     AX,[INCLEV]
+R-ASSEMBLER VERSION 1.05C    RA.ASM                      12
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
@@ -607,7 +607,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  03E0 86E0         559           XCHG    AL,AH
  03E2 D1E8         560           SHR     AX,1
  03E4 D1E8         561           SHR     AX,1
- 03E6 BE7829       562           MOV     SI,INCBUF
+ 03E6 BE7029       562           MOV     SI,INCBUF
  03E9 01C6         563           ADD     SI,AX
  03EB              564   
  03EB              565   ; RETRIEVE ZERO FLAG AND CLEAR
@@ -618,7 +618,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  03EE              570   
  03EE              571   ; --------------------------------
  03EE              572   ; OPEN NEW INPUT FILE
- 03EE FF069E28     573   INCF:   INC     WORD [INCLEV]
+ 03EE FF069628     573   INCF:   INC     WORD [INCLEV]
  03F2 89F7         574           MOV     DI,SI
  03F4 E8DFFF       575           CALL    CALF
  03F7 721D         576           JC      INCF0
@@ -646,15 +646,15 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  040E AB           598           STOSW
  040F              599   
  040F              600   ; SIGNAL END OF PAGE TO START
-R-ASSEMBLER VERSION 1.05C    RA.ASM                       13
+R-ASSEMBLER VERSION 1.05C    RA.ASM                      13
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
  040F              601   ; ON A NEW PAGE
  040F A1AA1F       602           MOV     AX,[PAGLEN]
- 0412 A3A828       603           MOV     [LSTLIN],AX
+ 0412 A3A028       603           MOV     [LSTLIN],AX
  0415 C3           604           RET
- 0416 FF0E9E28     605   INCF0:  DEC     WORD [INCLEV]
+ 0416 FF0E9628     605   INCF0:  DEC     WORD [INCLEV]
  041A F9           606   CALF0:  STC
  041B C3           607           RET
  041C              608   
@@ -665,11 +665,11 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  0421 B43E         613           MOV     AH,3EH
  0423 8B1C         614           MOV     BX,[SI]
  0425 CD21         615           INT     21H
- 0427 FF0E9E28     616           DEC     WORD [INCLEV]
+ 0427 FF0E9628     616           DEC     WORD [INCLEV]
  042B              617   
  042B              618   ; END OF PAGE, TURN A NEW LEAF
  042B A1AA1F       619           MOV     AX,[PAGLEN]
- 042E A3A828       620           MOV     [LSTLIN],AX
+ 042E A3A028       620           MOV     [LSTLIN],AX
  0431 F8           621           CLC
  0432 C3           622           RET
  0433              623   
@@ -682,12 +682,12 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  0437 57           630           PUSH    DI
  0438              631   
  0438              632   ; ONLY WRITE LISTING IF REQUESTED
- 0438 F606782820   633           TEST    BYTE [FUNC],20H
+ 0438 F606702820   633           TEST    BYTE [FUNC],20H
  043D 746B         634           JZ      WLSTE
- 043F BE7823       635           MOV     SI,BINBUF
- 0442 BF7824       636           MOV     DI,LSTBUF
- 0445 8B1E7C28     637           MOV     BX,[BINLEN]
- 0449 8B16A228     638           MOV     DX,[OLDPC]
+ 043F BE7023       635           MOV     SI,BINBUF
+ 0442 BF7024       636           MOV     DI,LSTBUF
+ 0445 8B1E7428     637           MOV     BX,[BINLEN]
+ 0449 8B169A28     638           MOV     DX,[OLDPC]
  044D 89FD         639           MOV     BP,DI
  044F              640   
  044F              641   ; PRINT ADDRESS AND FIRST COUPLE
@@ -700,7 +700,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  0455              648   ; SAVE POSITION FOR TAB TO SPACE
  0455              649   ; CONVERSION
  0455 89FD         650           MOV     BP,DI
-R-ASSEMBLER VERSION 1.05C    RA.ASM                       14
+R-ASSEMBLER VERSION 1.05C    RA.ASM                      14
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
@@ -708,8 +708,8 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  0458 56           652           PUSH    SI
  0459              653   
  0459              654   ; WRITE INPUT LINE TO LISTING
- 0459 BE7822       655           MOV     SI,TXTBUF
- 045C 8B1E7A28     656           MOV     BX,[TXTLEN]
+ 0459 BE7022       655           MOV     SI,TXTBUF
+ 045C 8B1E7228     656           MOV     BX,[TXTLEN]
  0460 85DB         657           TEST    BX,BX
  0462 7424         658           JZ      WLSTM
  0464 AC           659   WLSTL:  LODSB
@@ -754,17 +754,17 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  0491 5F           698           POP     DI
  0492 B80D0A       699           MOV     AX,0A0DH
  0495 AB           700           STOSW
-R-ASSEMBLER VERSION 1.05C    RA.ASM                       15
+R-ASSEMBLER VERSION 1.05C    RA.ASM                      15
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
- 0496 BA7824       701           MOV     DX,LSTBUF
+ 0496 BA7024       701           MOV     DX,LSTBUF
  0499 E8B604       702           CALL    WROTE
  049C 5E           703           POP     SI
  049D 5B           704           POP     BX
  049E 5A           705           POP     DX
  049F 7209         706           JC      WLSTE
- 04A1 BF7824       707           MOV     DI,LSTBUF
+ 04A1 BF7024       707           MOV     DI,LSTBUF
  04A4              708   
  04A4              709   ; KEEP WRITING LEFTOVER DATA
  04A4              710   ; TO LISTING TO STAY WITHIN THE
@@ -795,9 +795,9 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  04BF              735   ; SET WIDTH, AND OUTPUT EXCEEDING
  04BF              736   ; THE WIDTH HAS TO BE WRITTEN ON
  04BF              737   ; SEPARATE LINES
- 04BF 3B0EAA28     738           CMP     CX,[LSTWID]
+ 04BF 3B0EA228     738           CMP     CX,[LSTWID]
  04C3 7604         739           JBE     WLSTG
- 04C5 8B0EAA28     740           MOV     CX,[LSTWID]
+ 04C5 8B0EA228     740           MOV     CX,[LSTWID]
  04C9 29CB         741   WLSTG:  SUB     BX,CX
  04CB 01CA         742           ADD     DX,CX
  04CD B020         743           MOV     AL,20H
@@ -808,7 +808,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  04D6 84C0         748           TEST    AL,AL
  04D8 C3           749   WLSTX:  RET
  04D9              750   
-R-ASSEMBLER VERSION 1.05C    RA.ASM                       16
+R-ASSEMBLER VERSION 1.05C    RA.ASM                      16
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
@@ -817,9 +817,9 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  04D9 52           753   WLSTI:  PUSH    DX
  04DA 53           754           PUSH    BX
  04DB 56           755           PUSH    SI
- 04DC 8B0EAA28     756           MOV     CX,[LSTWID]
+ 04DC 8B0EA228     756           MOV     CX,[LSTWID]
  04E0 D1E1         757           SHL     CX,1
- 04E2 81C17F24     758           ADD     CX,LSTBUF+7
+ 04E2 81C17724     758           ADD     CX,LSTBUF+7
  04E6 29F9         759           SUB     CX,DI
  04E8 B020         760           MOV     AL,20H
  04EA F3AA         761           REP STOSB
@@ -848,10 +848,10 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  050B              784   ; WRITE PAGE TITLE AND/OR
  050B              785   ; INCREMENT LINE NUMBER
  050B FC           786   WTITLE: CLD
- 050C BF7826       787           MOV     DI,TEMP2
- 050F BE3421       788           MOV     SI,AMSG
+ 050C BF7026       787           MOV     DI,TEMP2
+ 050F BE2C21       788           MOV     SI,AMSG
  0512 8D4D3A       789           LEA     CX,[DI+3AH]
- 0515 A1A828       790           MOV     AX,[LSTLIN]
+ 0515 A1A028       790           MOV     AX,[LSTLIN]
  0518              791   
  0518              792   ; START OF LISTING?  WRITE PAGE
  0518              793   ; HEADER.  LSTLIN CAN ONLY BE
@@ -862,15 +862,15 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  051C              798   
  051C              799   ; END OF PAGE?  WRITE PAGE FEED
  051C              800   ; CHARACTER AND THEN PROCEED TO
-R-ASSEMBLER VERSION 1.05C    RA.ASM                       17
+R-ASSEMBLER VERSION 1.05C    RA.ASM                      17
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
  051C              801   ; WRITE PAGE HEADER
  051C 3B06AA1F     802           CMP     AX,[PAGLEN]
  0520 727D         803           JC      WTITL5
- 0522 FF06A628     804           INC     WORD [PAGNUM]
- 0526 C706A8280000 805           MOV     WORD [LSTLIN],0
+ 0522 FF069E28     804           INC     WORD [PAGNUM]
+ 0526 C706A0280000 805           MOV     WORD [LSTLIN],0
  052C B00C         806           MOV     AL,0CH
  052E AA           807           STOSB
  052F              808   
@@ -889,14 +889,14 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  0542 29F9         821   WTITL2: SUB     CX,DI
  0544 B020         822           MOV     AL,20H
  0546 F3AA         823           REP STOSB
- 0548 A1A628       824           MOV     AX,[PAGNUM]
+ 0548 A19E28       824           MOV     AX,[PAGNUM]
  054B B10A         825           MOV     CL,10
  054D E8D706       826           CALL    WN
  0550 B80D0A       827           MOV     AX,0A0DH
  0553 AB           828           STOSW
  0554              829   
  0554              830   ; WRITE USER DEFINED PAGE TITLE
- 0554 BE7827       831           MOV     SI,TTLBUF
+ 0554 BE7027       831           MOV     SI,TTLBUF
  0557 800C00       832           OR      BYTE [SI],0
  055A 7407         833           JZ      WTITL3
  055C E82209       834           CALL    WRM
@@ -905,23 +905,23 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  0563 AB           837   WTITL3: STOSW
  0564              838   
  0564              839   ; WRITE APPROPRIATE LISTING HEADER
- 0564 BE2621       840           MOV     SI,SYMLIN
- 0567 830EA02800   841           OR      WORD [PASS],0
+ 0564 BE1E21       840           MOV     SI,SYMLIN
+ 0567 830E982800   841           OR      WORD [PASS],0
  056C 741A         842           JZ      WTITL4
- 056E 8B0EAA28     843           MOV     CX,[LSTWID]
+ 056E 8B0EA228     843           MOV     CX,[LSTWID]
  0572 D1E1         844           SHL     CX,1
  0574 83C107       845           ADD     CX,7
  0577 01F9         846           ADD     CX,DI
- 0579 BE0C21       847           MOV     SI,BINLIN
+ 0579 BE0421       847           MOV     SI,BINLIN
  057C E80209       848           CALL    WRM
  057F 29F9         849           SUB     CX,DI
  0581 B020         850           MOV     AL,20H
-R-ASSEMBLER VERSION 1.05C    RA.ASM                       18
+R-ASSEMBLER VERSION 1.05C    RA.ASM                      18
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
  0583 F3AA         851           REP STOSB
- 0585 BE1921       852           MOV     SI,SRCLIN
+ 0585 BE1121       852           MOV     SI,SRCLIN
  0588 E8F608       853   WTITL4: CALL    WRM
  058B B80D0A       854           MOV     AX,0A0DH
  058E AB           855           STOSW
@@ -932,9 +932,9 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  0593 F3AA         860           REP STOSB
  0595 B80D0A       861           MOV     AX,0A0DH
  0598 AB           862           STOSW
- 0599 BA7826       863           MOV     DX,TEMP2
+ 0599 BA7026       863           MOV     DX,TEMP2
  059C E8B303       864           CALL    WROTE
- 059F FF06A828     865   WTITL5: INC     WORD [LSTLIN]
+ 059F FF06A028     865   WTITL5: INC     WORD [LSTLIN]
  05A3 F8           866           CLC
  05A4 C3           867           RET
  05A5              868   
@@ -946,7 +946,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  05AA              874   ; INCREMENT INPUT LINE NUMBER
  05AA FF4402       875           INC     WORD [SI+2]
  05AD 8B1C         876           MOV     BX,[SI]
- 05AF F606782880   877           TEST    BYTE [FUNC],80H
+ 05AF F606702880   877           TEST    BYTE [FUNC],80H
  05B4 7423         878           JZ      READ2
  05B6              879   
  05B6              880   ; IF DISASSEMBLING, FIRST SEEK
@@ -954,8 +954,8 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  05B6              882   ; TAKE CARE TO SKIP LOAD ADDRESS
  05B6 B80042       883           MOV     AX,4200H
  05B9 31C9         884           XOR     CX,CX
- 05BB 8B167E28     885           MOV     DX,[PC]
- 05BF 2B168028     886           SUB     DX,[VORG]
+ 05BB 8B167628     885           MOV     DX,[PC]
+ 05BF 2B167828     886           SUB     DX,[VORG]
  05C3 CD21         887           INT     21H
  05C5 7271         888           JC      READ8
  05C7              889   
@@ -963,14 +963,14 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  05C7              891   ; IS 8 BYTES
  05C7 B43F         892           MOV     AH,3FH
  05C9 B90800       893           MOV     CX,8
- 05CC BA7823       894           MOV     DX,BINBUF
+ 05CC BA7023       894           MOV     DX,BINBUF
  05CF CD21         895           INT     21H
  05D1 7265         896           JC      READ8
  05D3 85C0         897           TEST    AX,AX
  05D5 C3           898           RET
  05D6              899   
  05D6              900   ; SET ZERO FLAG
-R-ASSEMBLER VERSION 1.05C    RA.ASM                       19
+R-ASSEMBLER VERSION 1.05C    RA.ASM                      19
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
@@ -981,7 +981,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  05D9              905   ; OF TEXT
  05D9 B43F         906   READ2:  MOV     AH,3FH
  05DB B90001       907           MOV     CX,100H
- 05DE BA7822       908           MOV     DX,TXTBUF
+ 05DE BA7022       908           MOV     DX,TXTBUF
  05E1 CD21         909           INT     21H
  05E3 7253         910           JC      READ8
  05E5 85C0         911           TEST    AX,AX
@@ -991,7 +991,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  05ED 31DB         915           XOR     BX,BX
  05EF              916   
  05EF              917   ; FIND FIRST LINE BREAK
- 05EF BF7822       918           MOV     DI,TXTBUF
+ 05EF BF7022       918           MOV     DI,TXTBUF
  05F2 8A01         919   READ3:  MOV     AL,[BX+DI]
  05F4 43           920           INC     BX
  05F5 B40A         921           MOV     AH,0AH
@@ -1010,7 +1010,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  0607 730B         934           JNC     READ5
  0609 8821         935           MOV     [BX+DI],AH
  060B 43           936           INC     BX
- 060C 891E7A28     937   READ4:  MOV     [TXTLEN],BX
+ 060C 891E7228     937   READ4:  MOV     [TXTLEN],BX
  0610 85DB         938           TEST    BX,BX
  0612 F8           939           CLC
  0613 C3           940           RET
@@ -1024,7 +1024,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  0619 E305         948   READ6:  JCXZ    READ7
  061B 3821         949           CMP     [BX+DI],AH
  061D 7501         950           JNZ     READ7
-R-ASSEMBLER VERSION 1.05C    RA.ASM                       20
+R-ASSEMBLER VERSION 1.05C    RA.ASM                      20
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
@@ -1062,12 +1062,12 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  0642              982   
  0642              983   ; --------------------------------
  0642              984   ; WRITE TO BINARY OUTPUT
- 0642 F606782810   985   WRITE:  TEST    BYTE [FUNC],10H
+ 0642 F606702810   985   WRITE:  TEST    BYTE [FUNC],10H
  0647 7450         986           JZ      WRITE4
- 0649 F606782880   987           TEST    BYTE [FUNC],80H
+ 0649 F606702880   987           TEST    BYTE [FUNC],80H
  064E 7550         988           JNZ     WRITE6
- 0650 A17C28       989           MOV     AX,[BINLEN]
- 0653 8B168228     990           MOV     DX,[USIZE]
+ 0650 A17428       989           MOV     AX,[BINLEN]
+ 0653 8B167A28     990           MOV     DX,[USIZE]
  0657              991   
  0657              992   ; IF THERE IS NO BINARY BUFFER
  0657              993   ; TO WRITE, ABORT
@@ -1078,11 +1078,11 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  065F              998   
  065F              999   ; IF THERE IS UNDEFINED DATA
  065F              1000  ; PRESENT, WRITE IT OUT AS ZEROES
-R-ASSEMBLER VERSION 1.05C    RA.ASM                       21
+R-ASSEMBLER VERSION 1.05C    RA.ASM                      21
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
- 065F BF7825       1001          MOV     DI,TEMP
+ 065F BF7025       1001          MOV     DI,TEMP
  0662 B90001       1002          MOV     CX,100H
  0665 30C0         1003          XOR     AL,AL
  0667 FC           1004          CLD
@@ -1094,8 +1094,8 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  0672 89D1         1010          MOV     CX,DX
  0674 51           1011  WRITE2: PUSH    CX
  0675 B440         1012          MOV     AH,40H
- 0677 BA7825       1013          MOV     DX,TEMP
- 067A 8B1E9828     1014          MOV     BX,[OUTHDL]
+ 0677 BA7025       1013          MOV     DX,TEMP
+ 067A 8B1E9028     1014          MOV     BX,[OUTHDL]
  067E CD21         1015          INT     21H
  0680 722F         1016          JC      WRITE7
  0682 59           1017          POP     CX
@@ -1105,15 +1105,15 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  0688              1021  
  0688              1022  ; WRITE BINARY BUFFER TO OUTPUT
  0688 B440         1023  WRITE3: MOV     AH,40H
- 068A 8B0E7C28     1024          MOV     CX,[BINLEN]
- 068E BA7823       1025          MOV     DX,BINBUF
- 0691 8B1E9828     1026          MOV     BX,[OUTHDL]
+ 068A 8B0E7428     1024          MOV     CX,[BINLEN]
+ 068E BA7023       1025          MOV     DX,BINBUF
+ 0691 8B1E9028     1026          MOV     BX,[OUTHDL]
  0695 CD21         1027          INT     21H
  0697 7218         1028          JC      WRITE7
  0699              1029  
  0699              1030  ; RESET UNDEFINED DATA COUNTER
  0699 31C0         1031  WRITE4: XOR     AX,AX
- 069B A38228       1032          MOV     [USIZE],AX
+ 069B A37A28       1032          MOV     [USIZE],AX
  069E F8           1033  WRITE5: CLC
  069F C3           1034          RET
  06A0              1035  
@@ -1121,29 +1121,29 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  06A0              1037  ; WRITE GENERATED TEXT BUFFER
  06A0              1038  ; INSTEAD
  06A0 B440         1039  WRITE6: MOV     AH,40H
- 06A2 8B0E7A28     1040          MOV     CX,[TXTLEN]
- 06A6 BA7822       1041          MOV     DX,TXTBUF
- 06A9 8B1E9828     1042          MOV     BX,[OUTHDL]
+ 06A2 8B0E7228     1040          MOV     CX,[TXTLEN]
+ 06A6 BA7022       1041          MOV     DX,TXTBUF
+ 06A9 8B1E9028     1042          MOV     BX,[OUTHDL]
  06AD CD21         1043          INT     21H
  06AF 73E8         1044          JNC     WRITE4
- 06B1 BAD828       1045  WRITE7: MOV     DX,OUTFN
+ 06B1 BAD028       1045  WRITE7: MOV     DX,OUTFN
  06B4 B00F         1046          MOV     AL,0FH
  06B6 E9AC02       1047          JMP     SCREAM
  06B9              1048  
  06B9              1049  ; --------------------------------
  06B9              1050  ; OPEN ALL REQUISITE FILES
-R-ASSEMBLER VERSION 1.05C    RA.ASM                       22
+R-ASSEMBLER VERSION 1.05C    RA.ASM                      22
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
- 06B9 BEB828       1051  OPEN:   MOV     SI,INFN
+ 06B9 BEB028       1051  OPEN:   MOV     SI,INFN
  06BC E8D5FC       1052          CALL    RFN1
  06BF E82CFD       1053          CALL    INCF
  06C2 7242         1054          JC      OPEN1
- 06C4 BF7825       1055          MOV     DI,TEMP
- 06C7 BE0121       1056          MOV     SI,INM
+ 06C4 BF7025       1055          MOV     DI,TEMP
+ 06C7 BEF920       1056          MOV     SI,INM
  06CA E8B407       1057          CALL    WRM
- 06CD BEB828       1058          MOV     SI,INFN
+ 06CD BEB028       1058          MOV     SI,INFN
  06D0 E8AE07       1059          CALL    WRM
  06D3 57           1060          PUSH    DI
  06D4              1061  
@@ -1155,20 +1155,20 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  06D4              1067  ; PROCESSING AND TO KEEP TALLY
  06D4              1068  ; OF WHAT'S OPEN
  06D4 B91010       1069          MOV     CX,1010H
- 06D7 BAD828       1070          MOV     DX,OUTFN
- 06DA BF9828       1071          MOV     DI,OUTHDL
+ 06D7 BAD028       1070          MOV     DX,OUTFN
+ 06DA BF9028       1071          MOV     DI,OUTHDL
  06DD E85D00       1072          CALL    OPENF
  06E0 7224         1073          JC      OPEN1
  06E2 B92020       1074          MOV     CX,2020H
- 06E5 BAF828       1075          MOV     DX,LSTFN
- 06E8 BF9A28       1076          MOV     DI,LSTHDL
+ 06E5 BAF028       1075          MOV     DX,LSTFN
+ 06E8 BF9228       1076          MOV     DI,LSTHDL
  06EB E84F00       1077          CALL    OPENF
  06EE 7216         1078          JC      OPEN1
- 06F0 F70678280404 1079          TEST    WORD [FUNC],404H
+ 06F0 F70670280404 1079          TEST    WORD [FUNC],404H
  06F6 7513         1080          JNZ     OPEN2
  06F8 B94040       1081          MOV     CX,4040H
- 06FB BA1829       1082          MOV     DX,SYMFN
- 06FE BF9C28       1083          MOV     DI,SYMHDL
+ 06FB BA1029       1082          MOV     DX,SYMFN
+ 06FE BF9428       1083          MOV     DI,SYMHDL
  0701 E83900       1084          CALL    OPENF
  0704 7331         1085          JNC     OPEN3
  0706 B00B         1086  OPEN1:  MOV     AL,0BH
@@ -1184,15 +1184,15 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  070C              1096  ; FILE
  070C B020         1097          MOV     AL,20H  
  070E AA           1098          STOSB
- 070F BE1829       1099          MOV     SI,SYMFN
+ 070F BE1029       1099          MOV     SI,SYMFN
  0712 E86C07       1100          CALL    WRM
-R-ASSEMBLER VERSION 1.05C    RA.ASM                       23
+R-ASSEMBLER VERSION 1.05C    RA.ASM                      23
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
  0715 57           1101          PUSH    DI
  0716 B8003D       1102          MOV     AX,3D00H
- 0719 BA1829       1103          MOV     DX,SYMFN
+ 0719 BA1029       1103          MOV     DX,SYMFN
  071C CD21         1104          INT     21H
  071E 72E6         1105          JC      OPEN1
  0720 89C3         1106          MOV     BX,AX
@@ -1201,13 +1201,13 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  0724              1109  ; READ EVERYTHING THE SEGMENT
  0724              1110  ; CAN HOLD
  0724 89E1         1111          MOV     CX,SP
- 0726 BA782A       1112          MOV     DX,MAPBUF
+ 0726 BA702A       1112          MOV     DX,MAPBUF
  0729 29D1         1113          SUB     CX,DX
  072B CD21         1114          INT     21H
  072D B43E         1115          MOV     AH,3EH
  072F CD21         1116          INT     21H
- 0731 A17B2B       1117          MOV     AX,[SYMBS+3]
- 0734 A38028       1118          MOV     [VORG],AX
+ 0731 A1732B       1117          MOV     AX,[SYMBS+3]
+ 0734 A37828       1118          MOV     [VORG],AX
  0737 5F           1119  OPEN3:  POP     DI
  0738 E88002       1120          CALL    PRUNT
  073B              1121  
@@ -1220,7 +1220,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  073D              1128  ; REPETITIVE PROCESS OF TESTING,
  073D              1129  ; OPENING FILES, AND
  073D              1130  ; SETTING/RESETTING FLAGS
- 073D 850E7828     1131  OPENF:  TEST    [FUNC],CX
+ 073D 850E7028     1131  OPENF:  TEST    [FUNC],CX
  0741 740B         1132          JZ      OPENF1
  0743 51           1133          PUSH    CX
  0744 B43C         1134          MOV     AH,3CH
@@ -1235,27 +1235,27 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  0750              1143  ; TURN OFF REQUEST FLAG SINCE
  0750              1144  ; THE FILE WAS NOT OPENED
  0750 F7D1         1145  OPENF2: NOT     CX
- 0752 210E7828     1146          AND     [FUNC],CX
+ 0752 210E7028     1146          AND     [FUNC],CX
  0756 F9           1147          STC
  0757 C3           1148          RET
  0758              1149  
  0758              1150  ; --------------------------------
-R-ASSEMBLER VERSION 1.05C    RA.ASM                       24
+R-ASSEMBLER VERSION 1.05C    RA.ASM                      24
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
  0758              1151  ; WRITE SYMBOL DUMP AT THE END
  0758              1152  ; OF LISTING
  0758 FC           1153  SYMDMP: CLD
- 0759 BE782B       1154          MOV     SI,SYMBS
+ 0759 BE702B       1154          MOV     SI,SYMBS
  075C AD           1155          LODSW
  075D 85C0         1156          TEST    AX,AX
  075F 7501         1157          JNZ     SYMDM1
  0761 C3           1158  SYMDM0: RET
  0762 89C1         1159  SYMDM1: MOV     CX,AX
  0764 31C0         1160          XOR     AX,AX
- 0766 A3A028       1161          MOV     [PASS],AX
- 0769 A17828       1162          MOV     AX,[FUNC]
+ 0766 A39828       1161          MOV     [PASS],AX
+ 0769 A17028       1162          MOV     AX,[FUNC]
  076C              1163  
  076C              1164  ; IF NEITHER SYMBOL FILE NOR
  076C              1165  ; LISTING IS REQUESTED, ABORT
@@ -1274,8 +1274,8 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  077B 51           1178          PUSH    CX
  077C B440         1179          MOV     AH,40H
  077E B90001       1180          MOV     CX,100H
- 0781 BA782A       1181          MOV     DX,MAPBUF
- 0784 8B1E9C28     1182          MOV     BX,[SYMHDL]
+ 0781 BA702A       1181          MOV     DX,MAPBUF
+ 0784 8B1E9428     1182          MOV     BX,[SYMHDL]
  0788 CD21         1183          INT     21H
  078A 59           1184          POP     CX
  078B 51           1185          PUSH    CX
@@ -1289,12 +1289,12 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  0794              1193  
  0794              1194  ; WRITE TABLE WHOLESALE
  0794 B440         1195          MOV     AH,40H
- 0796 BA782B       1196          MOV     DX,SYMBS
+ 0796 BA702B       1196          MOV     DX,SYMBS
  0799 89F1         1197          MOV     CX,SI
  079B 29D1         1198          SUB     CX,DX
- 079D 8B1E9C28     1199          MOV     BX,[SYMHDL]
+ 079D 8B1E9428     1199          MOV     BX,[SYMHDL]
  07A1 CD21         1200          INT     21H
-R-ASSEMBLER VERSION 1.05C    RA.ASM                       25
+R-ASSEMBLER VERSION 1.05C    RA.ASM                      25
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
@@ -1348,7 +1348,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  07D1 89E9         1248          MOV     CX,BP
  07D3              1249  
  07D3              1250  ; BRUTE ASCII COMPARE
-R-ASSEMBLER VERSION 1.05C    RA.ASM                       26
+R-ASSEMBLER VERSION 1.05C    RA.ASM                      26
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
@@ -1362,7 +1362,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  07DB              1258  ; SAVE LEFT SYMBOL TO TEMP BUFFER
  07DB 56           1259          PUSH    SI
  07DC 57           1260          PUSH    DI
- 07DD BF7825       1261          MOV     DI,TEMP
+ 07DD BF7025       1261          MOV     DI,TEMP
  07E0 89D9         1262          MOV     CX,BX
  07E2 F3A4         1263          REP MOVSB
  07E4 5F           1264          POP     DI
@@ -1376,7 +1376,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  07ED              1272  
  07ED              1273  ; MOVE BUFFERED SYMBOL
  07ED              1274  ; TO THE RIGHT
- 07ED BE7825       1275          MOV     SI,TEMP
+ 07ED BE7025       1275          MOV     SI,TEMP
  07F0 89D9         1276          MOV     CX,BX
  07F2 F3A4         1277          REP MOVSB
  07F4 5E           1278          POP     SI
@@ -1402,13 +1402,13 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  0808              1298  ; WRITE SYMBOL TABLE TO LISTING
  0808 31D2         1299  SYMLST: XOR     DX,DX
  080A              1300  
-R-ASSEMBLER VERSION 1.05C    RA.ASM                       27
+R-ASSEMBLER VERSION 1.05C    RA.ASM                      27
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
  080A              1301  ; FORCE A NEW PAGE
  080A A1AA1F       1302          MOV     AX,[PAGLEN]
- 080D A3A828       1303          MOV     [LSTLIN],AX
+ 080D A3A028       1303          MOV     [LSTLIN],AX
  0810 51           1304          PUSH    CX
  0811 56           1305          PUSH    SI
  0812              1306  
@@ -1427,7 +1427,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  0824 59           1319          POP     CX
  0825              1320  
  0825              1321  ; PREPARE A LINE OF SYMBOLS
- 0825 BF7824       1322          MOV     DI,LSTBUF
+ 0825 BF7024       1322          MOV     DI,LSTBUF
  0828 51           1323  SYMLS4: PUSH    CX
  0829 89F9         1324          MOV     CX,DI
  082B FC           1325          CLD
@@ -1451,12 +1451,12 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  083F B82020       1343          MOV     AX,2020H
  0842 AB           1344          STOSW
  0843 89F9         1345          MOV     CX,DI
- 0845 81E97824     1346          SUB     CX,LSTBUF
+ 0845 81E97024     1346          SUB     CX,LSTBUF
  0849 01D1         1347          ADD     CX,DX
  084B              1348  
  084B              1349  ; MAKE SURE LINE DOES NOT EXCEED
  084B              1350  ; MAXIMUM LENGTH
-R-ASSEMBLER VERSION 1.05C    RA.ASM                       28
+R-ASSEMBLER VERSION 1.05C    RA.ASM                      28
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
@@ -1464,12 +1464,12 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  084E 59           1352          POP     CX
  084F 7206         1353          JB      SYMLS6
  0851 E80600       1354          CALL    SYMLS7
- 0854 BF7824       1355          MOV     DI,LSTBUF
+ 0854 BF7024       1355          MOV     DI,LSTBUF
  0857 49           1356  SYMLS6: DEC     CX
  0858 75CE         1357          JNZ     SYMLS4
  085A              1358  
  085A              1359  ; WRITE LINE TO LISTING
- 085A 81FF7824     1360  SYMLS7: CMP     DI,LSTBUF
+ 085A 81FF7024     1360  SYMLS7: CMP     DI,LSTBUF
  085E 7617         1361          JBE     SYMLS8
  0860 4F           1362          DEC     DI
  0861 4F           1363          DEC     DI
@@ -1483,7 +1483,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  0869 57           1371          PUSH    DI
  086A E89EFC       1372          CALL    WTITLE
  086D 5F           1373          POP     DI
- 086E BA7824       1374          MOV     DX,LSTBUF
+ 086E BA7024       1374          MOV     DX,LSTBUF
  0871 E8DE00       1375          CALL    WROTE
  0874 5E           1376          POP     SI
  0875 5A           1377          POP     DX
@@ -1493,7 +1493,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  0878              1381  ; --------------------------------
  0878              1382  ; DUMP ALL EQUATES FROM SYMBOL
  0878              1383  ; TABLE ONE BY ONE
- 0878 A07828       1384  EQDUMP: MOV     AL,[FUNC]
+ 0878 A07028       1384  EQDUMP: MOV     AL,[FUNC]
  087B 84C0         1385          TEST    AL,AL
  087D 79F8         1386          JNS     SYMLS8
  087F              1387  
@@ -1502,7 +1502,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  087F A802         1390          TEST    AL,2
  0881 74F4         1391          JZ      SYMLS8
  0883 FC           1392          CLD
- 0884 BE782B       1393          MOV     SI,SYMBS
+ 0884 BE702B       1393          MOV     SI,SYMBS
  0887 AD           1394          LODSW
  0888 89C1         1395          MOV     CX,AX
  088A E32F         1396          JCXZ    EQDUM3
@@ -1510,7 +1510,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  088D 19DB         1398          SBB     BX,BX
  088F 43           1399  EQDUM1: INC     BX
  0890 8A00         1400          MOV     AL,[BX+SI]
-R-ASSEMBLER VERSION 1.05C    RA.ASM                       29
+R-ASSEMBLER VERSION 1.05C    RA.ASM                      29
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
@@ -1520,7 +1520,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  0896              1404  ; CHECK FOR EQUATE
  0896 A802         1405          TEST    AL,2
  0898 741A         1406          JZ      EQDUM2
- 089A BF7822       1407          MOV     DI,TXTBUF
+ 089A BF7022       1407          MOV     DI,TXTBUF
  089D 51           1408          PUSH    CX
  089E 89D9         1409          MOV     CX,BX
  08A0 FC           1410          CLD
@@ -1542,12 +1542,12 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  08B9 E2D1         1426          LOOP    EQDUM0
  08BB              1427  
  08BB              1428  ; WRITE ORG DIRECTIVE
- 08BB BF7822       1429  EQDUM3: MOV     DI,TXTBUF
+ 08BB BF7022       1429  EQDUM3: MOV     DI,TXTBUF
  08BE B009         1430          MOV     AL,9
  08C0 AA           1431          STOSB
  08C1 B8243D       1432          MOV     AX,3D00H+PCCHAR
  08C4 AB           1433          STOSW
- 08C5 A18028       1434          MOV     AX,[VORG]
+ 08C5 A17828       1434          MOV     AX,[VORG]
  08C8 E87D00       1435          CALL    WHEX
  08CB              1436  
  08CB              1437  ; REUSABLE LISTING FUNCTION
@@ -1555,8 +1555,8 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  08CE FC           1439          CLD
  08CF AB           1440          STOSW
  08D0 89F8         1441          MOV     AX,DI
- 08D2 2D7822       1442          SUB     AX,TXTBUF
- 08D5 A37A28       1443          MOV     [TXTLEN],AX
+ 08D2 2D7022       1442          SUB     AX,TXTBUF
+ 08D5 A37228       1443          MOV     [TXTLEN],AX
  08D8 56           1444          PUSH    SI
  08D9 E857FB       1445          CALL    WLST
  08DC E863FD       1446          CALL    WRITE
@@ -1564,13 +1564,13 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  08E0 C3           1448          RET
  08E1              1449  
  08E1              1450  ; --------------------------------
-R-ASSEMBLER VERSION 1.05C    RA.ASM                       30
+R-ASSEMBLER VERSION 1.05C    RA.ASM                      30
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
  08E1              1451  ; WRITE ALL TRAILING UNDEFINED
  08E1              1452  ; NAMED DATA AREAS TO LISTING
- 08E1 A07828       1453  UDDUMP: MOV     AL,[FUNC]
+ 08E1 A07028       1453  UDDUMP: MOV     AL,[FUNC]
  08E4 84C0         1454          TEST    AL,AL
  08E6 795F         1455          JNS     UDDUM3
  08E8              1456  
@@ -1579,12 +1579,12 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  08E8 A802         1459          TEST    AL,2
  08EA 745B         1460          JZ      UDDUM3
  08EC FC           1461          CLD
- 08ED BE7D2B       1462          MOV     SI,SYMBS+5
- 08F0 8B0E782B     1463          MOV     CX,[SYMBS]
+ 08ED BE752B       1462          MOV     SI,SYMBS+5
+ 08F0 8B0E702B     1463          MOV     CX,[SYMBS]
  08F4 83F902       1464          CMP     CX,2
  08F7 724E         1465          JB      UDDUM3
  08F9 49           1466          DEC     CX
- 08FA C7067C280000 1467          MOV     WORD [BINLEN],0
+ 08FA C70674280000 1467          MOV     WORD [BINLEN],0
  0900 F9           1468  UDDUM0: STC
  0901 19DB         1469          SBB     BX,BX
  0903 43           1470  UDDUM1: INC     BX
@@ -1598,10 +1598,10 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  090E              1478  
  090E              1479  ; CHECK IF PAST FINAL PC
  090E 8B4001       1480          MOV     AX,[BX+SI+1]
- 0911 3B067E28     1481          CMP     AX,[PC]
+ 0911 3B067628     1481          CMP     AX,[PC]
  0915 7229         1482          JB      UDDUM2
  0917 51           1483          PUSH    CX
- 0918 BF7822       1484          MOV     DI,TXTBUF
+ 0918 BF7022       1484          MOV     DI,TXTBUF
  091B 89D9         1485          MOV     CX,BX
  091D FC           1486          CLD
  091E F3A4         1487          REP MOVSB
@@ -1613,12 +1613,12 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  092A AB           1493          STOSW
  092B 46           1494          INC     SI
  092C AD           1495          LODSW
- 092D 2B06A228     1496          SUB     AX,[OLDPC]
- 0931 0106A228     1497          ADD     [OLDPC],AX
+ 092D 2B069A28     1496          SUB     AX,[OLDPC]
+ 0931 01069A28     1497          ADD     [OLDPC],AX
  0935 E81000       1498          CALL    WHEX
  0938 E890FF       1499          CALL    LINEND
  093B 59           1500          POP     CX
-R-ASSEMBLER VERSION 1.05C    RA.ASM                       31
+R-ASSEMBLER VERSION 1.05C    RA.ASM                      31
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
@@ -1642,12 +1642,12 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  0952 89F9         1518  WROTE:  MOV     CX,DI
  0954 29D1         1519          SUB     CX,DX
  0956 B440         1520          MOV     AH,40H
- 0958 8B1E9A28     1521          MOV     BX,[LSTHDL]
+ 0958 8B1E9228     1521          MOV     BX,[LSTHDL]
  095C CD21         1522          INT     21H
  095E 73E7         1523          JNC     UDDUM3
  0960              1524  
  0960              1525  ; FROM HERE, A FALL-THROUGH
- 0960 BAF828       1526  WROTE1: MOV     DX,LSTFN
+ 0960 BAF028       1526  WROTE1: MOV     DX,LSTFN
  0963 B00F         1527          MOV     AL,0FH
  0965              1528  
  0965              1529  ; --------------------------------
@@ -1656,7 +1656,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  0965              1532  ; TERMINAL INTERFACE
  0965 FC           1533  SCREAM: CLD
  0966 98           1534          CBW
- 0967 BF7825       1535          MOV     DI,TEMP
+ 0967 BF7025       1535          MOV     DI,TEMP
  096A 89C1         1536          MOV     CX,AX
  096C              1537  
  096C              1538  ; ERROR CODE $0F IS A FILE ERROR
@@ -1672,7 +1672,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  0976 AD           1548          LODSW
  0977 50           1549          PUSH    AX
  0978              1550  
-R-ASSEMBLER VERSION 1.05C    RA.ASM                       32
+R-ASSEMBLER VERSION 1.05C    RA.ASM                      32
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
@@ -1724,16 +1724,16 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  09B4              1596  ; WRITE ERROR MESSAGE AND
  09B4              1597  ; FALL THROUGH TO PRUNT
  09B4 E8CA04       1598  SCRAM:  CALL    WRM
- 09B7 FF06A428     1599          INC     WORD [ERRORS]
+ 09B7 FF069C28     1599          INC     WORD [ERRORS]
  09BB              1600  
-R-ASSEMBLER VERSION 1.05C    RA.ASM                       33
+R-ASSEMBLER VERSION 1.05C    RA.ASM                      33
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
  09BB              1601  ; --------------------------------
  09BB              1602  ; ECHO LINE CURRENTLY BEING
  09BB              1603  ; WRITTEN TO TERMINAL
- 09BB BA7825       1604  PRUNT:  MOV     DX,TEMP
+ 09BB BA7025       1604  PRUNT:  MOV     DX,TEMP
  09BE B80D0A       1605          MOV     AX,0A0DH
  09C1 AB           1606          STOSW
  09C2 89F9         1607          MOV     CX,DI
@@ -1765,22 +1765,22 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  09E6 72F2         1633          JC      P2F
  09E8 89C3         1634          MOV     BX,AX
  09EA B43F         1635  P3L:    MOV     AH,3FH
- 09EC BA7825       1636          MOV     DX,TEMP
+ 09EC BA7025       1636          MOV     DX,TEMP
  09EF B90001       1637          MOV     CX,100H
  09F2 CD21         1638          INT     21H
  09F4 89F2         1639          MOV     DX,SI
  09F6 72E2         1640          JC      P2F
- 09F8 01067E28     1641          ADD     [PC],AX
+ 09F8 01067628     1641          ADD     [PC],AX
  09FC 89C1         1642          MOV     CX,AX
  09FE E31B         1643          JCXZ    P3E
- 0A00 F606782810   1644          TEST    BYTE [FUNC],10H
+ 0A00 F606702810   1644          TEST    BYTE [FUNC],10H
  0A05 7410         1645          JZ      P3S
  0A07 50           1646          PUSH    AX
  0A08 53           1647          PUSH    BX
  0A09 B440         1648          MOV     AH,40H
- 0A0B 8B167825     1649          MOV     DX,[TEMP]
- 0A0F 8B1E9828     1650          MOV     BX,[OUTHDL]
-R-ASSEMBLER VERSION 1.05C    RA.ASM                       34
+ 0A0B 8B167025     1649          MOV     DX,[TEMP]
+ 0A0F 8B1E9028     1650          MOV     BX,[OUTHDL]
+R-ASSEMBLER VERSION 1.05C    RA.ASM                      34
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
@@ -1796,7 +1796,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  0A20              1660  ; --------------------------------
  0A20              1661  ; TITLE DIRECTIVE REQUESTED
  0A20 FC           1662  P5:     CLD
- 0A21 BF7827       1663          MOV     DI,TTLBUF
+ 0A21 BF7027       1663          MOV     DI,TTLBUF
  0A24 89D9         1664          MOV     CX,BX
  0A26 F3A4         1665          REP MOVSB
  0A28 30C0         1666          XOR     AL,AL
@@ -1809,7 +1809,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  0A2D 85D2         1673  P4:     TEST    DX,DX
  0A2F 7508         1674          JNZ     P4S
  0A31 A1AA1F       1675          MOV     AX,[PAGLEN]
- 0A34 A3A828       1676          MOV     [LSTLIN],AX
+ 0A34 A3A028       1676          MOV     [LSTLIN],AX
  0A37 F8           1677          CLC
  0A38 C3           1678          RET
  0A39 8916AA1F     1679  P4S:    MOV     [PAGLEN],DX
@@ -1819,7 +1819,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  0A3F              1683  ; --------------------------------
  0A3F              1684  ; ACTUAL ASSEMBLER MODULES
  0A3F              1685          INCLUDE GENERIC.ASM
-R-ASSEMBLER VERSION 1.05C    GENERIC.ASM                  35
+R-ASSEMBLER VERSION 1.05C    GENERIC.ASM                 35
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
@@ -1830,21 +1830,21 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  0A41              5     ; SAVE STACK SO EVERY ERROR
  0A41              6     ; CAN RETURN HERE REGARDLESS OF
  0A41              7     ; STACK CONTENTS
- 0A41 89268428     8             MOV     [STK],SP
- 0A45 A37C28       9             MOV     [BINLEN],AX
- 0A48 BE7822       10            MOV     SI,TXTBUF
- 0A4B A07828       11            MOV     AL,[FUNC]
+ 0A41 89267C28     8             MOV     [STK],SP
+ 0A45 A37428       9             MOV     [BINLEN],AX
+ 0A48 BE7022       10            MOV     SI,TXTBUF
+ 0A4B A07028       11            MOV     AL,[FUNC]
  0A4E 84C0         12            TEST    AL,AL
  0A50 7946         13            JNS     ASMLIN
  0A52 FC           14            CLD
- 0A53 BF7822       15            MOV     DI,TXTBUF
+ 0A53 BF7022       15            MOV     DI,TXTBUF
  0A56              16    
  0A56              17    ; WRITE LABEL IF SYMBOLS ARE TO
  0A56              18    ; BE READ
  0A56 A802         19            TEST    AL,2
  0A58 7419         20            JZ      NOSYM
- 0A5A A17E28       21            MOV     AX,[PC]
- 0A5D BE782B       22            MOV     SI,SYMBS
+ 0A5A A17628       21            MOV     AX,[PC]
+ 0A5D BE702B       22            MOV     SI,SYMBS
  0A60 B10C         23            MOV     CL,0CH
  0A62 E82E01       24            CALL    SDEF
  0A65 750C         25            JNZ     NOSYM
@@ -1857,23 +1857,23 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  0A6D E81104       32            CALL    WRM
  0A70 B03A         33            MOV     AL,3AH
  0A72 AA           34            STOSB
- 0A73 BE7823       35    NOSYM:  MOV     SI,BINBUF
+ 0A73 BE7023       35    NOSYM:  MOV     SI,BINBUF
  0A76 AC           36            LODSB
- 0A77 A28C28       37            MOV     [OPCODE],AL
+ 0A77 A28428       37            MOV     [OPCODE],AL
  0A7A B009         38            MOV     AL,9
  0A7C AA           39            STOSB
  0A7D E8F50B       40            CALL    DISASM
  0A80 B80D0A       41            MOV     AX,0A0DH
  0A83 AB           42            STOSW
  0A84 89F8         43            MOV     AX,DI
- 0A86 2D7822       44            SUB     AX,TXTBUF
- 0A89 A37A28       45            MOV     [TXTLEN],AX
- 0A8C A17C28       46            MOV     AX,[BINLEN]
- 0A8F 01067E28     47            ADD     [PC],AX
+ 0A86 2D7022       44            SUB     AX,TXTBUF
+ 0A89 A37228       45            MOV     [TXTLEN],AX
+ 0A8C A17428       46            MOV     AX,[BINLEN]
+ 0A8F 01067628     47            ADD     [PC],AX
  0A93 F8           48            CLC
  0A94 C3           49            RET
  0A95 E8CC01       50    ASMLBL: CALL    LBL
-R-ASSEMBLER VERSION 1.05C    GENERIC.ASM                  36
+R-ASSEMBLER VERSION 1.05C    GENERIC.ASM                 36
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
@@ -1881,7 +1881,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  0A98              52    ; RESET STACK JUST IN CASE WE
  0A98              53    ; GOT BACK HERE FROM SOME OR
  0A98              54    ; OTHER ODD PLACE
- 0A98 8B268428     55    ASMLIN: MOV     SP,[STK]
+ 0A98 8B267C28     55    ASMLIN: MOV     SP,[STK]
  0A9C E85C00       56            CALL    CC
  0A9F 7429         57            JZ      SETEQ0
  0AA1              58    
@@ -1905,7 +1905,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  0AB9              76    
  0AB9              77    ; --------------------------------
  0AB9              78    ; EQU DIRECTIVE OR EQUAL SIGN
- 0AB9 A07828       79    SETEQU: MOV     AL,[FUNC]
+ 0AB9 A07028       79    SETEQU: MOV     AL,[FUNC]
  0ABC A803         80            TEST    AL,3
  0ABE 740A         81            JZ      SETEQ0
  0AC0              82    
@@ -1927,29 +1927,29 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  0AD7              98    
  0AD7              99    ; --------------------------------
  0AD7              100   ; ORG DIRECTIVE
-R-ASSEMBLER VERSION 1.05C    GENERIC.ASM                  37
+R-ASSEMBLER VERSION 1.05C    GENERIC.ASM                 37
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
  0AD7 E88A02       101   SETORG: CALL    RE
- 0ADA 8B167E28     102           MOV     DX,[PC]
- 0ADE A37E28       103           MOV     [PC],AX
+ 0ADA 8B167628     102           MOV     DX,[PC]
+ 0ADE A37628       103           MOV     [PC],AX
  0AE1              104   
  0AE1              105   ; CHECK FOR START OF PROGRAM
- 0AE1 3B168028     106           CMP     DX,[VORG]
+ 0AE1 3B167828     106           CMP     DX,[VORG]
  0AE5 740A         107           JE      SETOR2
  0AE7              108   
  0AE7              109   ; IF NEW ADDRESS IS AHEAD,
  0AE7              110   ; DEFINE AS EMPTY SPACE
  0AE7 29D0         111           SUB     AX,DX
  0AE9 7204         112           JB      SETOR1
- 0AEB 01068228     113           ADD     [USIZE],AX
+ 0AEB 01067A28     113           ADD     [USIZE],AX
  0AEF F8           114   SETOR1: CLC
  0AF0 C3           115           RET
  0AF1              116   
  0AF1              117   ; SET LOAD ADDRESS AT
  0AF1              118   ; PROGRAM START
- 0AF1 A37B2B       119   SETOR2: MOV     [SYMBS+3],AX
+ 0AF1 A3732B       119   SETOR2: MOV     [SYMBS+3],AX
  0AF4 F8           120           CLC
  0AF5 C3           121           RET
  0AF6              122   
@@ -1981,7 +1981,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  0B1B 3C3B         148           CMP     AL,3BH
  0B1D 7426         149           JE      CCT
  0B1F 3C41         150           CMP     AL,41H
-R-ASSEMBLER VERSION 1.05C    GENERIC.ASM                  38
+R-ASSEMBLER VERSION 1.05C    GENERIC.ASM                 38
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
@@ -2035,7 +2035,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  0B4C 75F7         198           JNZ     CCT
  0B4E 43           199   CCW:    INC     BX
  0B4F 3A00         200           CMP     AL,[BX+SI]
-R-ASSEMBLER VERSION 1.05C    GENERIC.ASM                  39
+R-ASSEMBLER VERSION 1.05C    GENERIC.ASM                 39
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
@@ -2089,7 +2089,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  0B73 72FB         248           JB      SL2
  0B75 39CB         249           CMP     BX,CX
  0B77 750B         250           JNE     SL4
-R-ASSEMBLER VERSION 1.05C    GENERIC.ASM                  40
+R-ASSEMBLER VERSION 1.05C    GENERIC.ASM                 40
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
@@ -2143,7 +2143,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  0BB6 3900         298           CMP     [BX+SI],AX
  0BB8 751D         299           JNE     SDEF6
  0BBA C3           300           RET
-R-ASSEMBLER VERSION 1.05C    GENERIC.ASM                  41
+R-ASSEMBLER VERSION 1.05C    GENERIC.ASM                 41
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
@@ -2197,7 +2197,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  0BF2 7202         348           JB      HALN
  0BF4 0407         349           ADD     AL,7
  0BF6              350   
-R-ASSEMBLER VERSION 1.05C    GENERIC.ASM                  42
+R-ASSEMBLER VERSION 1.05C    GENERIC.ASM                 42
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
@@ -2251,7 +2251,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  0C1B 2C07         398           SUB     AL,7
  0C1D 3C0F         399           CMP     AL,0FH
  0C1F 7705         400           JNBE    RN0
-R-ASSEMBLER VERSION 1.05C    GENERIC.ASM                  43
+R-ASSEMBLER VERSION 1.05C    GENERIC.ASM                 43
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
@@ -2305,7 +2305,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  0C47              448   ; BACKWARDS AT FIRST, AND THE
  0C47              449   ; FINAL ONE WRITTEN IS THE
  0C47              450   ; FIRST DIGIT--IF IT IS NOT A
-R-ASSEMBLER VERSION 1.05C    GENERIC.ASM                  44
+R-ASSEMBLER VERSION 1.05C    GENERIC.ASM                 44
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
@@ -2337,12 +2337,12 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  0C64              476   ; ADD SYMBOL TO SYMBOL TABLE
  0C64              477   ; OR REDEFINE EXISTING SYMBOL
  0C64 E894FE       478   LBL:    CALL    CC
- 0C67 A07828       479           MOV     AL,[FUNC]
+ 0C67 A07028       479           MOV     AL,[FUNC]
  0C6A 2403         480           AND     AL,3
  0C6C 7434         481           JZ      ERR3
  0C6E              482   
  0C6E              483   ; PROCESS DETECTED SYMBOL
- 0C6E BF782B       484           MOV     DI,SYMBS
+ 0C6E BF702B       484           MOV     DI,SYMBS
  0C71 E8ECFE       485           CALL    SL
  0C74 750F         486           JNZ     LBL1
  0C76              487   
@@ -2350,7 +2350,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  0C76              489   ; REDEFINED ON FUNCTION 2
  0C76 01DF         490           ADD     DI,BX
  0C78 47           491           INC     DI
- 0C79 A07828       492           MOV     AL,[FUNC]
+ 0C79 A07028       492           MOV     AL,[FUNC]
  0C7C 2402         493           AND     AL,2
  0C7E 7511         494           JNZ     LBL2
  0C80              495   
@@ -2359,7 +2359,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  0C82 E9C800       498           JMP     FAIL
  0C85              499   
  0C85              500   ; WRITE SYMBOL TO TABLE
-R-ASSEMBLER VERSION 1.05C    GENERIC.ASM                  45
+R-ASSEMBLER VERSION 1.05C    GENERIC.ASM                 45
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
@@ -2370,7 +2370,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  0C8C AA           505           STOSB
  0C8D              506   
  0C8D              507   ; INCREASE SYMBOL COUNT
- 0C8D FF06782B     508           INC     WORD [SYMBS]
+ 0C8D FF06702B     508           INC     WORD [SYMBS]
  0C91              509   
  0C91              510   ; SAVE POINTER TO ENTRY
  0C91 89FD         511   LBL2:   MOV     BP,DI
@@ -2378,7 +2378,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  0C93              513   ; GET CURRENT PROGRAM COUNTER
  0C93              514   ; AND STORE IN TABLE WITH THE
  0C93              515   ; NEW ENTRY
- 0C93 A17E28       516           MOV     AX,[PC]
+ 0C93 A17628       516           MOV     AX,[PC]
  0C96 AB           517           STOSW
  0C97              518   
  0C97              519   ; CHECK FOR COLON OR INSTRUCTION
@@ -2397,7 +2397,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  0CA7              532   
  0CA7              533   ; --------------------------------
  0CA7              534   ; PROCESS DFB/DFW DIRECTIVE
- 0CA7 BF7823       535   SETDFB: MOV     DI,BINBUF
+ 0CA7 BF7023       535   SETDFB: MOV     DI,BINBUF
  0CAA 31C9         536           XOR     CX,CX
  0CAC E84CFE       537   SETDMA: CALL    CC
  0CAF 746F         538           JZ      ERR8
@@ -2413,7 +2413,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  0CB6 31C0         548           XOR     AX,AX
  0CB8 F3AA         549           REP STOSB
  0CBA 58           550           POP     AX
-R-ASSEMBLER VERSION 1.05C    GENERIC.ASM                  46
+R-ASSEMBLER VERSION 1.05C    GENERIC.ASM                 46
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
@@ -2430,7 +2430,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  0CCB              561   
  0CCB              562   ; STORE ONLY THE NECESSARY
  0CCB              563   ; AMOUNT OF BYTES
- 0CCB 803E8C2802   564           CMP     BYTE [OPCODE],2
+ 0CCB 803E842802   564           CMP     BYTE [OPCODE],2
  0CD0 7431         565           JE      SETDCM
  0CD2 7303         566           JNB     SETDVW
  0CD4 4F           567           DEC     DI
@@ -2441,7 +2441,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  0CD7 D1E0         572   SETDVW: SHL     AX,1
  0CD9 18C0         573           SBB     AL,AL
  0CDB 51           574           PUSH    CX
- 0CDC 8A0E8C28     575           MOV     CL,[OPCODE]
+ 0CDC 8A0E8428     575           MOV     CL,[OPCODE]
  0CE0              576   
  0CE0              577   ; ALREADY HAVE TWO BYTES OF
  0CE0              578   ; VALUE STORED
@@ -2452,14 +2452,14 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  0CE8              583   
  0CE8              584   ; IF ANY UNDEFINED DATA IS
  0CE8              585   ; FOUND, ADD IT UP
- 0CE8 020E8C28     586   SETDUD: ADD     CL,[OPCODE]
+ 0CE8 020E8428     586   SETDUD: ADD     CL,[OPCODE]
  0CEC 46           587           INC     SI
  0CED EB14         588           JMP     SHORT SETDCM
  0CEF              589   
  0CEF              590   ; QUOTED STRINGS OF LESS THAN 3
  0CEF              591   ; BYTES ARE PROCESSED AS LITERAL
  0CEF              592   ; BINARY CONSTANTS
- 0CEF A08C28       593   SETDQU: MOV     AL,[OPCODE]
+ 0CEF A08428       593   SETDQU: MOV     AL,[OPCODE]
  0CF2 0403         594           ADD     AL,3
  0CF4 38C3         595           CMP     BL,AL
  0CF6 72CB         596           JB      SETDVA
@@ -2467,7 +2467,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  0CF9 89D9         598           MOV     CX,BX
  0CFB              599   
  0CFB              600   ; WRITE ONLY WHAT IS BETWEEN THE
-R-ASSEMBLER VERSION 1.05C    GENERIC.ASM                  47
+R-ASSEMBLER VERSION 1.05C    GENERIC.ASM                 47
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
@@ -2495,10 +2495,10 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  0D0F              622   ; BY THE LENGTH OF THE BINARY
  0D0F              623   ; OUTPUT PRODUCED, I.E. HOW FAR
  0D0F              624   ; THE BUFFER HAS BEEN SKIPPED
- 0D0F 010E8228     625   SETDEN: ADD     [USIZE],CX
+ 0D0F 010E7A28     625   SETDEN: ADD     [USIZE],CX
  0D13 89F8         626           MOV     AX,DI
- 0D15 2D7823       627           SUB     AX,BINBUF
- 0D18 A37C28       628           MOV     [BINLEN],AX
+ 0D15 2D7023       627           SUB     AX,BINBUF
+ 0D18 A37428       628           MOV     [BINLEN],AX
  0D1B 01C8         629           ADD     AX,CX
  0D1D E97101       630           JMP     STDAT
  0D20              631   
@@ -2521,7 +2521,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  0D33 7508         648           JNE     SETIN2
  0D35 46           649   SETIN1: INC     SI
  0D36              650   
-R-ASSEMBLER VERSION 1.05C    GENERIC.ASM                  48
+R-ASSEMBLER VERSION 1.05C    GENERIC.ASM                 48
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
@@ -2545,11 +2545,11 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  0D4A              668   
  0D4A              669   ; PROCEED DIRECTLY INTO THE
  0D4A              670   ; I/O HANDLER
- 0D4A A08C28       671   SETEND: MOV     AL,[OPCODE]
+ 0D4A A08428       671   SETEND: MOV     AL,[OPCODE]
  0D4D              672   
  0D4D              673   ; --------------------------------
  0D4D              674   ; ERROR AND I/O HANDLER
- 0D4D 8B268428     675   FAIL:   MOV     SP,[STK]
+ 0D4D 8B267C28     675   FAIL:   MOV     SP,[STK]
  0D51              676   
  0D51              677   ; FIRST RESET STACK TO TOP LEVEL
  0D51              678   ; CALLER, THE LINE ASSEMBLER
@@ -2559,7 +2559,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  0D55              682   ; ERROR CODE 5 IS RELATIVE JUMP
  0D55              683   ; OUT OF RANGE; CALCULATE THE
  0D55              684   ; ABSOLUTE AMOUNT OF BYTES
- 0D55 8B169028     685           MOV     DX,[IMM]
+ 0D55 8B168828     685           MOV     DX,[IMM]
  0D59 85D2         686           TEST    DX,DX
  0D5B 7902         687           JNS     FAIL1
  0D5D F7D2         688           NOT     DX
@@ -2571,11 +2571,11 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  0D64              694   ; PRIMITIVE EXPRESSION EVALUATOR
  0D64 30C9         695   RE:     XOR     CL,CL
  0D66 31C0         696           XOR     AX,AX
- 0D68 A39028       697           MOV     [IMM],AX
+ 0D68 A38828       697           MOV     [IMM],AX
  0D6B E88DFD       698   REA:    CALL    CC
  0D6E 741C         699           JZ      RED
  0D70              700   
-R-ASSEMBLER VERSION 1.05C    GENERIC.ASM                  49
+R-ASSEMBLER VERSION 1.05C    GENERIC.ASM                 49
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
@@ -2593,7 +2593,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  0D7D              712   
  0D7D              713   ; IF AN IDENTIFIER WAS FOUND,
  0D7D              714   ; GV HAS SET ITS FLAG INSTEAD
- 0D7D 01069028     715           ADD     [IMM],AX
+ 0D7D 01068828     715           ADD     [IMM],AX
  0D81 EBE8         716           JMP     SHORT REA
  0D83              717   
  0D83              718   ; USE OF AN OPERATOR WILL RESET
@@ -2608,7 +2608,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  0D8C              727   ; OPERATORS
  0D8C F6C140       728   RED:    TEST    CL,40H
  0D8F 748F         729           JZ      ERR8
- 0D91 A19028       730           MOV     AX,[IMM]
+ 0D91 A18828       730           MOV     AX,[IMM]
  0D94 C3           731           RET
  0D95              732   
  0D95              733   ; --------------------------------
@@ -2629,7 +2629,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  0DA6              748   ; CHECK SIZE OVERRIDES AND START
  0DA6              749   ; OVER IF THERE ARE ANY
  0DA6 E82002       750           CALL    RNM
-R-ASSEMBLER VERSION 1.05C    GENERIC.ASM                  50
+R-ASSEMBLER VERSION 1.05C    GENERIC.ASM                 50
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
@@ -2641,7 +2641,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  0DB0              756   ; END OF THE IDENTIFIER
  0DB0 3C40         757           CMP     AL,40H
  0DB2 7212         758           JB      GVA
- 0DB4 A07828       759           MOV     AL,[FUNC]
+ 0DB4 A07028       759           MOV     AL,[FUNC]
  0DB7 2403         760           AND     AL,3
  0DB9 752F         761           JNZ     GVL
  0DBB              762   
@@ -2650,7 +2650,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  0DBB              765   ; OTHERWISE JUST GET CURRENT PC
  0DBB 01DE         766   GVC:    ADD     SI,BX
  0DBD 80C901       767           OR      CL,1
- 0DC0 8B167E28     768           MOV     DX,[PC]
+ 0DC0 8B167628     768           MOV     DX,[PC]
  0DC4 EB52         769           JMP     SHORT GVV
  0DC6              770   
  0DC6              771   ; RETURN WITH CARRY MEANS
@@ -2683,7 +2683,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  0DDC              798   ; OF TEMP VALUE MUST BE BLANKED
  0DDC 30F6         799           XOR     DH,DH
  0DDE 7438         800           JZ      GVV
-R-ASSEMBLER VERSION 1.05C    GENERIC.ASM                  51
+R-ASSEMBLER VERSION 1.05C    GENERIC.ASM                 51
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
@@ -2698,7 +2698,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  0DEA              809   
  0DEA              810   ; PROCESS SYMBOL REFERENCE
  0DEA 51           811   GVL:    PUSH    CX
- 0DEB BF782B       812           MOV     DI,SYMBS
+ 0DEB BF702B       812           MOV     DI,SYMBS
  0DEE E86FFD       813           CALL    SL
  0DF1 5B           814           POP     BX
  0DF2              815   
@@ -2713,7 +2713,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  0DFA              824   ; IDENTIFIERS ON CODE 2 TO ALLOW
  0DFA              825   ; CODE 1 TO COLLECT THEM AT A
  0DFA              826   ; LEISURELY PACE
- 0DFA 84067828     827           TEST    AL,[FUNC]
+ 0DFA 84067028     827           TEST    AL,[FUNC]
  0DFE 74BB         828           JZ      GVC
  0E00              829   
  0E00              830   ; SYMBOL NOT FOUND ERROR
@@ -2733,11 +2733,11 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  0E05              844   ; SET DURING A CODE 2 SEQUENCE
  0E05 84F6         845   GVL1:   TEST    DH,DH
  0E07 750C         846           JNZ     GVL3
- 0E09 84067828     847           TEST    AL,[FUNC]
+ 0E09 84067028     847           TEST    AL,[FUNC]
  0E0D 7502         848           JNZ     GVL2
  0E0F 0821         849           OR      [BX+DI],AH
  0E11 8421         850   GVL2:   TEST    [BX+DI],AH
-R-ASSEMBLER VERSION 1.05C    GENERIC.ASM                  52
+R-ASSEMBLER VERSION 1.05C    GENERIC.ASM                 52
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
@@ -2775,30 +2775,30 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  0E45              882   ; --------------------------------
  0E45              883   ; CHECK VALUE FOR SYMBOL AND
  0E45              884   ; WRITE SYMBOL IF DETECTED
- 0E45 F606782803   885   WSYMA:  TEST    BYTE [FUNC],3
+ 0E45 F606702803   885   WSYMA:  TEST    BYTE [FUNC],3
  0E4A 7433         886           JZ      WSYMA4
  0E4C 56           887           PUSH    SI
  0E4D 30ED         888           XOR     CH,CH
- 0E4F BE782B       889           MOV     SI,SYMBS
+ 0E4F BE702B       889           MOV     SI,SYMBS
  0E52 E83EFD       890           CALL    SDEF
  0E55 7417         891           JZ      WSYMA1
  0E57              892   
  0E57              893   ; TRY SYMBOL-1
  0E57 40           894           INC     AX
  0E58 B52D         895           MOV     CH,2DH
- 0E5A BE782B       896           MOV     SI,SYMBS
+ 0E5A BE702B       896           MOV     SI,SYMBS
  0E5D E833FD       897           CALL    SDEF
  0E60 740C         898           JZ      WSYMA1
  0E62              899   
  0E62              900   ; TRY SYMBOL+1
-R-ASSEMBLER VERSION 1.05C    GENERIC.ASM                  53
+R-ASSEMBLER VERSION 1.05C    GENERIC.ASM                 53
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
  0E62 48           901           DEC     AX
  0E63 48           902           DEC     AX
  0E64 B52B         903           MOV     CH,2BH
- 0E66 BE782B       904           MOV     SI,SYMBS
+ 0E66 BE702B       904           MOV     SI,SYMBS
  0E69 E827FD       905           CALL    SDEF
  0E6C 750F         906           JNZ     WSYMA3
  0E6E E81000       907   WSYMA1: CALL    WRM
@@ -2833,19 +2833,19 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  0E8A              936   ; --------------------------------
  0E8A              937   ; DFS DIRECTIVE
  0E8A E8D7FE       938   SETDFS: CALL    RE
- 0E8D 01068228     939           ADD     [USIZE],AX
+ 0E8D 01067A28     939           ADD     [USIZE],AX
  0E91              940   
  0E91              941   ; --------------------------------
  0E91              942   ; STORE DATA AREA ADDRESS
  0E91 56           943   STDAT:  PUSH    SI
- 0E92 F606782802   944           TEST    BYTE [FUNC],2
+ 0E92 F606702802   944           TEST    BYTE [FUNC],2
  0E97 7436         945           JZ      STDAT4
- 0E99 BE7A2A       946           MOV     SI,MAPBUF+2
- 0E9C 8B0E782A     947           MOV     CX,[MAPBUF]
+ 0E99 BE722A       946           MOV     SI,MAPBUF+2
+ 0E9C 8B0E702A     947           MOV     CX,[MAPBUF]
  0EA0 E31E         948           JCXZ    STDAT3
- 0EA2 8B167E28     949   STDAT1: MOV     DX,[PC]
+ 0EA2 8B167628     949   STDAT1: MOV     DX,[PC]
  0EA6              950   
-R-ASSEMBLER VERSION 1.05C    GENERIC.ASM                  54
+R-ASSEMBLER VERSION 1.05C    GENERIC.ASM                 54
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
@@ -2870,36 +2870,36 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  0EBE E2E2         969           LOOP    STDAT1
  0EC0              970   
  0EC0              971   ; STORE NEW RECORD
- 0EC0 8B167E28     972   STDAT3: MOV     DX,[PC]
+ 0EC0 8B167628     972   STDAT3: MOV     DX,[PC]
  0EC4 8914         973           MOV     [SI],DX
  0EC6 01C2         974           ADD     DX,AX
  0EC8 895402       975           MOV     [SI+2],DX
- 0ECB FF06782A     976           INC     WORD [MAPBUF]
+ 0ECB FF06702A     976           INC     WORD [MAPBUF]
  0ECF 5E           977   STDAT4: POP     SI
  0ED0              978   
  0ED0              979   ; ADVANCE PC
- 0ED0 01067E28     980           ADD     [PC],AX
+ 0ED0 01067628     980           ADD     [PC],AX
  0ED4 F8           981           CLC
  0ED5 C3           982           RET
  0ED6              983   
  0ED6              984   ; --------------------------------
  0ED6              985   ; SCAN FOR DATA AREA ADDRESS
  0ED6 56           986   LDDAT:  PUSH    SI
- 0ED7 F606782802   987           TEST    BYTE [FUNC],2
+ 0ED7 F606702802   987           TEST    BYTE [FUNC],2
  0EDC 7420         988           JZ      LDDAT3
- 0EDE BE7A2A       989           MOV     SI,MAPBUF+2
- 0EE1 8B0E782A     990           MOV     CX,[MAPBUF]
+ 0EDE BE722A       989           MOV     SI,MAPBUF+2
+ 0EE1 8B0E702A     990           MOV     CX,[MAPBUF]
  0EE5 E317         991           JCXZ    LDDAT3
- 0EE7 A17E28       992   LDDAT1: MOV     AX,[PC]
+ 0EE7 A17628       992   LDDAT1: MOV     AX,[PC]
  0EEA              993   
  0EEA              994   ; CHECK IF PC WITHIN RECORD BOUNDS
  0EEA 3B04         995           CMP     AX,[SI]
  0EEC 720B         996           JB      LDDAT2
  0EEE 8B4402       997           MOV     AX,[SI+2]
- 0EF1 2B067E28     998           SUB     AX,[PC]
+ 0EF1 2B067628     998           SUB     AX,[PC]
  0EF5 7202         999           JC      LDDAT2
  0EF7 5E           1000          POP     SI
-R-ASSEMBLER VERSION 1.05C    GENERIC.ASM                  55
+R-ASSEMBLER VERSION 1.05C    GENERIC.ASM                 55
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
@@ -2911,39 +2911,39 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  0EFE 5E           1006  LDDAT3: POP     SI
  0EFF F9           1007          STC
  0F00 C3           1008          RET
-R-ASSEMBLER VERSION 1.05C    RA.ASM                       56
+R-ASSEMBLER VERSION 1.05C    RA.ASM                      56
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
  0F01              1686          INCLUDE 8086.ASM
-R-ASSEMBLER VERSION 1.05C    8086.ASM                     57
+R-ASSEMBLER VERSION 1.05C    8086.ASM                    57
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
  0F01              1     ; --------------------------------
  0F01              2     ; 8086-SPECIFIC LINE ASSEMBLER
  0F01 31C0         3     ASMCMD: XOR     AX,AX
- 0F03 BF8828       4             MOV     DI,WADJ
+ 0F03 BF8028       4             MOV     DI,WADJ
  0F06 B90800       5             MOV     CX,8
  0F09 FC           6             CLD
  0F0A F3AB         7             REP STOSW
  0F0C              8     
  0F0C              9     ; FIRST CHECK FOR MNEMONIC
  0F0C BF1C1C       10            MOV     DI,MNMTBL
- 0F0F 8036922820   11            XOR     BYTE [FLAGS],20H
+ 0F0F 80368A2820   11            XOR     BYTE [FLAGS],20H
  0F14 E849FC       12            CALL    SL
  0F17 BF4C19       13            MOV     DI,IHDL
  0F1A 7410         14            JZ      ASMCM1
  0F1C              15    
  0F1C              16    ; THEN CHECK FOR DIRECTIVE
  0F1C BF121F       17            MOV     DI,DIRTBL
- 0F1F 8036922820   18            XOR     BYTE [FLAGS],20H
+ 0F1F 80368A2820   18            XOR     BYTE [FLAGS],20H
  0F24 E839FC       19            CALL    SL
  0F27 BF6C19       20            MOV     DI,AHDL
  0F2A 7537         21            JNZ     ASMCM6
  0F2C              22    
  0F2C              23    ; CALL THE REQUISITE HANDLER
- 0F2C 86068C28     24    ASMCM1: XCHG    AL,[OPCODE]
+ 0F2C 86068428     24    ASMCM1: XCHG    AL,[OPCODE]
  0F30 86E0         25            XCHG    AL,AH
  0F32 D1E0         26            SHL     AX,1
  0F34 01C7         27            ADD     DI,AX
@@ -2952,12 +2952,12 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  0F38              30    ; WRITE OUTPUT ACCORDING TO
  0F38              31    ; COMPONENT FLAGS
  0F38 30D2         32    ASMCM2: XOR     DL,DL
- 0F3A 86169228     33            XCHG    DL,[FLAGS]
- 0F3E BF7823       34            MOV     DI,BINBUF
- 0F41 033E7C28     35            ADD     DI,[BINLEN]
+ 0F3A 86168A28     33            XCHG    DL,[FLAGS]
+ 0F3E BF7023       34            MOV     DI,BINBUF
+ 0F41 033E7428     35            ADD     DI,[BINLEN]
  0F45 56           36            PUSH    SI
  0F46 57           37            PUSH    DI
- 0F47 BE8A28       38            MOV     SI,PREFIX
+ 0F47 BE8228       38            MOV     SI,PREFIX
  0F4A FC           39            CLD
  0F4B              40    
  0F4B              41    ; SHIFT FLAG BITS ONE BY ONE
@@ -2970,13 +2970,13 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  0F53 59           48            POP     CX
  0F54 5E           49            POP     SI
  0F55 87F9         50            XCHG    CX,DI
-R-ASSEMBLER VERSION 1.05C    8086.ASM                     58
+R-ASSEMBLER VERSION 1.05C    8086.ASM                    58
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
  0F57 29F9         51            SUB     CX,DI
- 0F59 010E7C28     52            ADD     [BINLEN],CX
- 0F5D 010E7E28     53            ADD     [PC],CX
+ 0F59 010E7428     52            ADD     [BINLEN],CX
+ 0F5D 010E7628     53            ADD     [PC],CX
  0F61              54    
  0F61              55    ; SET ZERO FLAG TO SIGNAL
  0F61              56    ; SUCCESSFUL ASSEMBLY
@@ -3024,7 +3024,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  0F89              98    ; READ NUMERIC CONSTANT
  0F89 50           99    RNC:    PUSH    AX
  0F8A 51           100           PUSH    CX
-R-ASSEMBLER VERSION 1.05C    8086.ASM                     59
+R-ASSEMBLER VERSION 1.05C    8086.ASM                    59
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
@@ -3078,7 +3078,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  0FC2 5E           148           POP     SI
  0FC3              149   
  0FC3              150   ; SKIP PAST CONSTANT
-R-ASSEMBLER VERSION 1.05C    8086.ASM                     60
+R-ASSEMBLER VERSION 1.05C    8086.ASM                    60
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
@@ -3132,12 +3132,12 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  1000 3C10         198           CMP     AL,10H
  1002 7462         199           JE      RA1
  1004 7323         200           JNB     BORW2
-R-ASSEMBLER VERSION 1.05C    8086.ASM                     61
+R-ASSEMBLER VERSION 1.05C    8086.ASM                    61
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
  1006 01DE         201           ADD     SI,BX
- 1008 BF8828       202           MOV     DI,WADJ
+ 1008 BF8028       202           MOV     DI,WADJ
  100B              203   
  100B              204   ; SHIFT TO DISTANCE BYTE IF
  100B              205   ; DISTANCE OVERRIDE
@@ -3165,7 +3165,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  102C 31C9         227           XOR     CX,CX
  102E              228   
  102E              229   ; RESET SIZE
- 102E 89168828     230           MOV     [WADJ],DX
+ 102E 89168028     230           MOV     [WADJ],DX
  1032 E8C1FF       231   RAS:    CALL    BORW
  1035 742C         232           JZ      RAIX
  1037              233   
@@ -3186,7 +3186,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  104C 84E4         248           TEST    AH,AH
  104E 7405         249           JZ      RAIB
  1050              250   
-R-ASSEMBLER VERSION 1.05C    8086.ASM                     62
+R-ASSEMBLER VERSION 1.05C    8086.ASM                    62
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
@@ -3196,7 +3196,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  1050 E802FB       254           CALL    AA
  1053 7501         255           JNZ     RAIW
  1055 49           256   RAIB:   DEC     CX
- 1056 A08828       257   RAIW:   MOV     AL,[WADJ]
+ 1056 A08028       257   RAIW:   MOV     AL,[WADJ]
  1059 84C0         258           TEST    AL,AL
  105B 7406         259           JZ      RAIX
  105D B102         260           MOV     CL,2
@@ -3223,7 +3223,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  1075 3C08         281           CMP     AL,8
  1077 18C0         282           SBB     AL,AL
  1079 0402         283           ADD     AL,2
- 107B A28828       284           MOV     [WADJ],AL
+ 107B A28028       284           MOV     [WADJ],AL
  107E              285   
  107E              286   ; NOW ACT ON SEGMENT REGISTER
  107E 9E           287           SAHF
@@ -3240,7 +3240,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  108C              298   
  108C              299   ; CHECK FOR SIZE OVERRIDE AGAIN
  108C E867FF       300           CALL    BORW
-R-ASSEMBLER VERSION 1.05C    8086.ASM                     63
+R-ASSEMBLER VERSION 1.05C    8086.ASM                    63
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
@@ -3265,7 +3265,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  10AA E8E8FC       319           CALL    GV
  10AD 5A           320           POP     DX
  10AE 72B6         321           JC      RA1
- 10B0 01068E28     322           ADD     [DISP],AX
+ 10B0 01068628     322           ADD     [DISP],AX
  10B4 EBDD         323           JMP     SHORT RAD
  10B6              324   
  10B6              325   ; SET OPERATOR FLAG
@@ -3294,7 +3294,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  10C9 3C0E         348           CMP     AL,14
  10CB 7413         349           JZ      SID
  10CD 3C0F         350           CMP     AL,15
-R-ASSEMBLER VERSION 1.05C    8086.ASM                     64
+R-ASSEMBLER VERSION 1.05C    8086.ASM                    64
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
@@ -3348,7 +3348,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  110F              398   
  110F              399   ; NO REGISTERS USED?
  110F 3C0E         400           CMP     AL,0EH
-R-ASSEMBLER VERSION 1.05C    8086.ASM                     65
+R-ASSEMBLER VERSION 1.05C    8086.ASM                    65
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
@@ -3361,7 +3361,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  1117              407   
  1117              408   ; NUMERIC VALUE IS EVALUATED
  1117              409   ; FOR SIZE
- 1117 A18E28       410           MOV     AX,[DISP]
+ 1117 A18628       410           MOV     AX,[DISP]
  111A 85C0         411           TEST    AX,AX
  111C 7505         412           JNZ     RADB
  111E 80FE06       413           CMP     DH,6
@@ -3372,22 +3372,22 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  112A B10C         418   RADW:   MOV     CL,0CH
  112C              419   
  112C              420   ; SET ARGUMENT TYPE
- 112C 080E9228     421   WARG:   OR      [FLAGS],CL
- 1130 A18828       422           MOV     AX,[WADJ]
+ 112C 080E8A28     421   WARG:   OR      [FLAGS],CL
+ 1130 A18028       422           MOV     AX,[WADJ]
  1133 B104         423           MOV     CL,4
  1135              424   
  1135              425   ; IF ONE OPERAND PRESENT,
  1135              426   ; ROTATE IT INTO POSITION
- 1135 F60694280F   427           TEST    BYTE [ARGS],0FH
+ 1135 F6068C280F   427           TEST    BYTE [ARGS],0FH
  113A 7404         428           JZ      NARGS
  113C D3C0         429           ROL     AX,CL
  113E D3C2         430           ROL     DX,CL
- 1140 09069628     431   NARGS:  OR      [SIZES],AX
- 1144 09169428     432           OR      [ARGS],DX
+ 1140 09068E28     431   NARGS:  OR      [SIZES],AX
+ 1144 09168C28     432           OR      [ARGS],DX
  1148 E8B0F9       433           CALL    CC
  114B 7508         434           JNZ     COMMA
- 114D A19428       435           MOV     AX,[ARGS]
- 1150 8A2E9628     436           MOV     CH,[SIZES]
+ 114D A18C28       435           MOV     AX,[ARGS]
+ 1150 8A2E8E28     436           MOV     CH,[SIZES]
  1154 C3           437           RET
  1155              438   
  1155              439   ; CHECK FOR COMMA BETWEEN
@@ -3402,18 +3402,18 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  1163 E9C4FE       448           JMP     RA
  1166              449   
  1166              450   ; COLON AS OPERAND IS A SPECIAL
-R-ASSEMBLER VERSION 1.05C    8086.ASM                     66
+R-ASSEMBLER VERSION 1.05C    8086.ASM                    66
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
  1166              451   ; CASE TO DENOTE SEGMENT:OFFSET
  1166              452   ; ADDRESSING
- 1166 A09428       453   COL:    MOV     AL,[ARGS]
+ 1166 A08C28       453   COL:    MOV     AL,[ARGS]
  1169 3C04         454           CMP     AL,4
  116B 7518         455           JNZ     GSPR1
- 116D A19028       456           MOV     AX,[IMM]
- 1170 87068E28     457           XCHG    AX,[DISP]
- 1174 A39028       458           MOV     [IMM],AX
+ 116D A18828       456           MOV     AX,[IMM]
+ 1170 87068628     457           XCHG    AX,[DISP]
+ 1174 A38828       458           MOV     [IMM],AX
  1177 E8EAFB       459           CALL    RE
  117A BA0403       460           MOV     DX,304H
  117D 20CE         461           AND     DH,CL
@@ -3443,12 +3443,12 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  11A2 D0E0         485           SHL     AL,1
  11A4 0C26         486           OR      AL,26H
  11A6 46           487   GSPR2:  INC     SI
- 11A7 A28B28       488           MOV     [SEGPRE],AL
- 11AA A09228       489           MOV     AL,[FLAGS]
+ 11A7 A28328       488           MOV     [SEGPRE],AL
+ 11AA A08A28       489           MOV     AL,[FLAGS]
  11AD A840         490           TEST    AL,40H
  11AF 75D4         491           JNZ     GSPR1
  11B1 0C40         492           OR      AL,40H
- 11B3 A29228       493           MOV     [FLAGS],AL
+ 11B3 A28A28       493           MOV     [FLAGS],AL
  11B6 F8           494           CLC
  11B7 C3           495           RET
  11B8              496   
@@ -3456,7 +3456,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  11B8              498   ; SCAN REGISTER AND RETURN
  11B8              499   ; REGISTER INDEX
  11B8 51           500   SCREG:  PUSH    CX
-R-ASSEMBLER VERSION 1.05C    8086.ASM                     67
+R-ASSEMBLER VERSION 1.05C    8086.ASM                    67
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
@@ -3510,7 +3510,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  11FF              548   
  11FF              549   ; ONLY ONE OPERAND IS EXPLICIT
  11FF 88E0         550   WALZ:   MOV     AL,AH
-R-ASSEMBLER VERSION 1.05C    8086.ASM                     68
+R-ASSEMBLER VERSION 1.05C    8086.ASM                    68
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
@@ -3520,23 +3520,23 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  1206              554   
  1206              555   ; EQUAL OR NO EXPLICIT KNOWN
  1206              556   ; OPERAND SIZE
- 1206 A28828       557   WAZ:    MOV     [WADJ],AL
- 1209 F606922802   558           TEST    BYTE [FLAGS],2
+ 1206 A28028       557   WAZ:    MOV     [WADJ],AL
+ 1209 F6068A2802   558           TEST    BYTE [FLAGS],2
  120E 740E         559           JZ      WAE
  1210 84C0         560           TEST    AL,AL
  1212 740D         561           JZ      WAB
  1214 80FC01       562           CMP     AH,1
  1217 7408         563           JZ      WAB
- 1219 800E922801   564           OR      BYTE [FLAGS],1
+ 1219 800E8A2801   564           OR      BYTE [FLAGS],1
  121E 59           565   WAE:    POP     CX
  121F 58           566           POP     AX
  1220 C3           567           RET
  1221              568   
  1221              569   ; FITS IN A BYTE?
- 1221 80269228FE   570   WAB:    AND     BYTE [FLAGS],0FEH
- 1226 F606782801   571           TEST    BYTE [FUNC],1
+ 1221 80268A28FE   570   WAB:    AND     BYTE [FLAGS],0FEH
+ 1226 F606702801   571           TEST    BYTE [FUNC],1
  122B 75F1         572           JNZ     WAE
- 122D A19028       573           MOV     AX,[IMM]
+ 122D A18828       573           MOV     AX,[IMM]
  1230 84E4         574           TEST    AH,AH
  1232 74EA         575           JZ      WAE
  1234 E81EF9       576           CALL    AA
@@ -3549,8 +3549,8 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  123E              583   ; --------------------------------
  123E              584   ; GENERATE VALID MODIFIER BYTE
  123E              585   ; BASED ON ENCODED OPERANDS
- 123E 800E922810   586   MMODRM: OR      BYTE [FLAGS],10H
- 1243 A19428       587           MOV     AX,[ARGS]
+ 123E 800E8A2810   586   MMODRM: OR      BYTE [FLAGS],10H
+ 1243 A18C28       587           MOV     AX,[ARGS]
  1246 B104         588           MOV     CL,4
  1248 3C11         589           CMP     AL,11H
  124A 745C         590           JZ      MREGR
@@ -3564,7 +3564,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  125A 7426         598           JZ      MMEMR
  125C 3C31         599           CMP     AL,31H
  125E 7420         600           JZ      MMEML
-R-ASSEMBLER VERSION 1.05C    8086.ASM                     69
+R-ASSEMBLER VERSION 1.05C    8086.ASM                    69
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
@@ -3577,7 +3577,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  1269 743D         607           JZ      MREGR
  126B 3C03         608           CMP     AL,3
  126D 7413         609           JZ      MMEMR
- 126F A19428       610           MOV     AX,[ARGS]
+ 126F A18C28       610           MOV     AX,[ARGS]
  1272 D3C8         611           ROR     AX,CL
  1274 250F0F       612           AND     AX,0F0FH
  1277 3C01         613           CMP     AL,1
@@ -3594,14 +3594,14 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  1285 250770       624           AND     AX,7007H
  1288 D0CC         625           ROR     AH,1
  128A 08E0         626           OR      AL,AH
- 128C 08068D28     627           OR      [MODRM],AL
+ 128C 08068528     627           OR      [MODRM],AL
  1290 58           628           POP     AX
  1291 2408         629           AND     AL,8
  1293 7522         630           JNZ     MM0
  1295              631   
  1295              632   ; SET MODIFIER BITS ACCORDING
  1295              633   ; TO DISPLACEMENT
- 1295 A09228       634           MOV     AL,[FLAGS]
+ 1295 A08A28       634           MOV     AL,[FLAGS]
  1298 240C         635           AND     AL,0CH
  129A 741B         636           JZ      MM0
  129C B440         637           MOV     AH,40H
@@ -3618,13 +3618,13 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  12AC 250738       648           AND     AX,3807H
  12AF              649   
  12AF              650   ; SET REGISTER MODIFIER
-R-ASSEMBLER VERSION 1.05C    8086.ASM                     70
+R-ASSEMBLER VERSION 1.05C    8086.ASM                    70
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
  12AF 0CC0         651           OR      AL,0C0H
  12B1 08C4         652           OR      AH,AL
- 12B3 08268D28     653   MM8:    OR      [MODRM],AH
+ 12B3 08268528     653   MM8:    OR      [MODRM],AH
  12B7 C3           654   MM0:    RET
  12B8              655   
  12B8              656   ; --------------------------------
@@ -3637,12 +3637,12 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  12BC              663   ; NEGLECT THEM FOR PURPOSES OF
  12BC              664   ; GENERATING A MODIFIER
  12BC 250F0F       665           AND     AX,0F0FH
- 12BF A39428       666           MOV     [ARGS],AX
+ 12BF A38C28       666           MOV     [ARGS],AX
  12C2              667   
  12C2              668   ; MODIFIER EXTENSION IS IN TABLE
  12C2 B0D0         669           MOV     AL,0D0H
- 12C4 86068C28     670           XCHG    AL,[OPCODE]
- 12C8 A28D28       671           MOV     [MODRM],AL
+ 12C4 86068428     670           XCHG    AL,[OPCODE]
+ 12C8 A28528       671           MOV     [MODRM],AL
  12CB              672   
  12CB              673   ; GET OPERATION SIZE
  12CB 88E8         674           MOV     AL,CH
@@ -3650,7 +3650,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  12CF 7407         676           JZ      G2B
  12D1 48           677           DEC     AX
  12D2 7404         678           JZ      G2B
- 12D4 08068C28     679           OR      [OPCODE],AL
+ 12D4 08068428     679           OR      [OPCODE],AL
  12D8              680   
  12D8              681   ; HANDLE DETECTED OPERANDS
  12D8 58           682   G2B:    POP     AX
@@ -3666,19 +3666,19 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  12E1 7411         692           JZ      G2CL
  12E3 3C40         693           CMP     AL,40H
  12E5 7508         694           JNZ     G2F
- 12E7 A19028       695           MOV     AX,[IMM]
+ 12E7 A18828       695           MOV     AX,[IMM]
  12EA 3D0100       696           CMP     AX,1
  12ED 740A         697           JZ      G2N
  12EF              698   
  12EF              699   ; SYNTAX ERROR
  12EF B001         700   G2F:    MOV     AL,1
-R-ASSEMBLER VERSION 1.05C    8086.ASM                     71
+R-ASSEMBLER VERSION 1.05C    8086.ASM                    71
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
  12F1 E959FA       701           JMP     FAIL
- 12F4 800E8C2802   702   G2CL:   OR      BYTE [OPCODE],2
- 12F9 80269228FC   703   G2N:    AND     BYTE [FLAGS],0FCH
+ 12F4 800E842802   702   G2CL:   OR      BYTE [OPCODE],2
+ 12F9 80268A28FC   703   G2N:    AND     BYTE [FLAGS],0FCH
  12FE E93DFF       704           JMP     MMODRM
  1301              705   
  1301              706   ; --------------------------------
@@ -3702,31 +3702,31 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  1325              724   
  1325              725   ; 80-83 GROUP
  1325 B080         726   G1MI:   MOV     AL,80H
- 1327 86068C28     727           XCHG    AL,[OPCODE]
- 132B 08068D28     728           OR      [MODRM],AL
+ 1327 86068428     727           XCHG    AL,[OPCODE]
+ 132B 08068528     728           OR      [MODRM],AL
  132F              729   
  132F              730   ; IF IMMEDIATE FITS IN ONE BYTE
  132F              731   ; USE SPECIAL 82 OPCODES
- 132F A19028       732           MOV     AX,[IMM]
+ 132F A18828       732           MOV     AX,[IMM]
  1332 E820F8       733           CALL    AA
  1335 7518         734           JNZ     G1MR
- 1337 A09628       735           MOV     AL,[SIZES]
+ 1337 A08E28       735           MOV     AL,[SIZES]
  133A 3C22         736           CMP     AL,22H
  133C 7411         737           JZ      G1MR
- 133E 80269228FE   738           AND     BYTE [FLAGS],0FEH
- 1343 F6068828FF   739           TEST    BYTE [WADJ],0FFH
+ 133E 80268A28FE   738           AND     BYTE [FLAGS],0FEH
+ 1343 F6068028FF   739           TEST    BYTE [WADJ],0FFH
  1348 7405         740           JZ      G1MR
- 134A 800E8C2802   741   G1RM:   OR      BYTE [OPCODE],2
- 134F A08828       742   G1MR:   MOV     AL,[WADJ]
- 1352 08068C28     743           OR      [OPCODE],AL
+ 134A 800E842802   741   G1RM:   OR      BYTE [OPCODE],2
+ 134F A08028       742   G1MR:   MOV     AL,[WADJ]
+ 1352 08068428     743           OR      [OPCODE],AL
  1356 E9E5FE       744           JMP     MMODRM
- 1359 A08828       745   G1AI:   MOV     AL,[WADJ]
+ 1359 A08028       745   G1AI:   MOV     AL,[WADJ]
  135C 08E8         746           OR      AL,CH
- 135E 08068C28     747           OR      [OPCODE],AL
+ 135E 08068428     747           OR      [OPCODE],AL
  1362 C3           748           RET
  1363 B000         749   ERR0:   MOV     AL,0
  1365 E9E5F9       750           JMP     FAIL
-R-ASSEMBLER VERSION 1.05C    8086.ASM                     72
+R-ASSEMBLER VERSION 1.05C    8086.ASM                    72
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
@@ -3756,10 +3756,10 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  1392 7404         774           JZ      G3R
  1394 3C31         775           CMP     AL,31H
  1396 75CB         776           JNZ     ERR0
- 1398 A08828       777   G3R:    MOV     AL,[WADJ]
+ 1398 A08028       777   G3R:    MOV     AL,[WADJ]
  139B 08E8         778           OR      AL,CH
- 139D 86068C28     779           XCHG    AL,[OPCODE]
- 13A1 08068D28     780           OR      [MODRM],AL
+ 139D 86068428     779           XCHG    AL,[OPCODE]
+ 13A1 08068528     780           OR      [MODRM],AL
  13A5 E996FE       781           JMP     MMODRM
  13A8              782   
  13A8              783   ; --------------------------------
@@ -3775,12 +3775,12 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  13B8 75A9         793           JNZ     ERR0
  13BA 80FD02       794           CMP     CH,2
  13BD 720D         795           JC      G4M
- 13BF A08C28       796           MOV     AL,[OPCODE]
+ 13BF A08428       796           MOV     AL,[OPCODE]
  13C2 2418         797           AND     AL,18H
  13C4 0C40         798           OR      AL,40H
  13C6 08E0         799           OR      AL,AH
- 13C8 A28C28       800           MOV     [OPCODE],AL
-R-ASSEMBLER VERSION 1.05C    8086.ASM                     73
+ 13C8 A28428       800           MOV     [OPCODE],AL
+R-ASSEMBLER VERSION 1.05C    8086.ASM                    73
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
@@ -3789,26 +3789,26 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  13CC              803   ; R/M OPERANDS USE MULTI-BYTE
  13CC              804   ; EXTENSION OPCODES; POP IS A
  13CC              805   ; SPECIAL CASE SCENARIO
- 13CC A08C28       806   G4M:    MOV     AL,[OPCODE]
+ 13CC A08428       806   G4M:    MOV     AL,[OPCODE]
  13CF 3C38         807           CMP     AL,38H
  13D1 B88F00       808           MOV     AX,8FH
  13D4 740E         809           JZ      G4P
- 13D6 A08828       810           MOV     AL,[WADJ]
+ 13D6 A08028       810           MOV     AL,[WADJ]
  13D9 84ED         811           TEST    CH,CH
  13DB 7501         812           JNZ     G4W
  13DD 40           813           INC     AX
  13DE              814   
  13DE              815   ; EVERYTHING ELSE GOES TO FE/FF
  13DE 0CFE         816   G4W:    OR      AL,0FEH
- 13E0 8A268C28     817           MOV     AH,[OPCODE]
- 13E4 A38C28       818   G4P:    MOV     [OPCODE],AX
+ 13E0 8A268428     817           MOV     AH,[OPCODE]
+ 13E4 A38428       818   G4P:    MOV     [OPCODE],AX
  13E7 E954FE       819           JMP     MMODRM
  13EA              820   
  13EA              821   ; ROTATE BY 3, AS CX IS
  13EA              822   ; ALREADY 4
  13EA 49           823   G4S:    DEC     CX
  13EB D2E4         824           SHL     AH,CL
- 13ED A08C28       825           MOV     AL,[OPCODE]
+ 13ED A08428       825           MOV     AL,[OPCODE]
  13F0              826   
  13F0              827   ; SEG PSEUDOINSTRUCTION IS A
  13F0              828   ; SPECIAL CASE
@@ -3818,7 +3818,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  13F6 2401         832           AND     AL,1
  13F8 08E0         833   G4PSR:  OR      AL,AH
  13FA 0C06         834           OR      AL,6
- 13FC A28C28       835           MOV     [OPCODE],AL
+ 13FC A28428       835           MOV     [OPCODE],AL
  13FF C3           836           RET
  1400              837   
  1400              838   ; --------------------------------
@@ -3834,7 +3834,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  1409 743B         848           JZ      G6I
  140B              849   
  140B              850   ; EXPLICITLY SPECIFIED
-R-ASSEMBLER VERSION 1.05C    8086.ASM                     74
+R-ASSEMBLER VERSION 1.05C    8086.ASM                    74
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
@@ -3845,7 +3845,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  140F              855   ; INDIRECT VIA MEMORY
  140F 3C03         856           CMP     AL,3
  1411 756E         857           JNZ     G6F0
- 1413 A09728       858   G6R:    MOV     AL,[SIZES+1]
+ 1413 A08F28       858   G6R:    MOV     AL,[SIZES+1]
  1416 3C08         859           CMP     AL,8
  1418 7467         860           JZ      G6F0
  141A 3C09         861           CMP     AL,9
@@ -3866,18 +3866,18 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  1430              876   
  1430              877   ; AT LEAST SOME ENCODING IS
  1430              878   ; SUFFICIENTLY REGULAR
- 1430 800E8D2808   879   G6RF:   OR      BYTE [MODRM],8
+ 1430 800E852808   879   G6RF:   OR      BYTE [MODRM],8
  1435 B1FF         880   G6RN:   MOV     CL,0FFH
- 1437 860E8C28     881           XCHG    CL,[OPCODE]
+ 1437 860E8428     881           XCHG    CL,[OPCODE]
  143B B010         882           MOV     AL,10H
  143D D2E0         883           SHL     AL,CL
- 143F 08068D28     884           OR      [MODRM],AL
+ 143F 08068528     884           OR      [MODRM],AL
  1443 E9F8FD       885           JMP     MMODRM
  1446              886   
  1446              887   ; FAR AND SHORT JUMPS NEED
  1446              888   ; EXPLICIT OVERRIDES SINCE NEAR
  1446              889   ; JUMP IS THE DEFAULT
- 1446 A09728       890   G6I:    MOV     AL,[SIZES+1]
+ 1446 A08F28       890   G6I:    MOV     AL,[SIZES+1]
  1449 3C00         891           CMP     AL,0
  144B 7439         892           JZ      G6IN
  144D 3C08         893           CMP     AL,8
@@ -3888,38 +3888,38 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  1457 7528         898           JNZ     G6F0
  1459              899   
  1459              900   ; EXPLICIT SEGMENT:OFFSET FORM
-R-ASSEMBLER VERSION 1.05C    8086.ASM                     75
+R-ASSEMBLER VERSION 1.05C    8086.ASM                    75
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
  1459              901   ; NEEDS NO OVERRIDES
- 1459 A19028       902   G6IF:   MOV     AX,[IMM]
- 145C 87068E28     903           XCHG    AX,[DISP]
- 1460 A39028       904           MOV     [IMM],AX
- 1463 800E92280F   905           OR      BYTE [FLAGS],0FH
+ 1459 A18828       902   G6IF:   MOV     AX,[IMM]
+ 145C 87068628     903           XCHG    AX,[DISP]
+ 1460 A38828       904           MOV     [IMM],AX
+ 1463 800E8A280F   905           OR      BYTE [FLAGS],0FH
  1468 B8EA9A       906           MOV     AX,9AEAH
- 146B 86268C28     907           XCHG    AH,[OPCODE]
+ 146B 86268428     907           XCHG    AH,[OPCODE]
  146F 84E4         908           TEST    AH,AH
  1471 7403         909           JZ      G5X
- 1473 A28C28       910           MOV     [OPCODE],AL
+ 1473 A28428       910           MOV     [OPCODE],AL
  1476 C3           911   G5X:    RET
  1477              912   
  1477              913   ; JMP SHORT OVERLAPS WITH OTHER
  1477              914   ; SHORT JUMPS
  1477 B0EB         915   G6IS:   MOV     AL,0EBH
- 1479 86068C28     916           XCHG    AL,[OPCODE]
+ 1479 86068428     916           XCHG    AL,[OPCODE]
  147D 84C0         917           TEST    AL,AL
  147F 7520         918           JNZ     G5S
  1481 B000         919   G6F0:   MOV     AL,0
  1483 E9C7F8       920           JMP     FAIL
  1486              921   
  1486              922   ; REGULAR NEAR JUMP AS WE KNOW
- 1486 A19028       923   G6IN:   MOV     AX,[IMM]
- 1489 2B067E28     924           SUB     AX,[PC]
+ 1486 A18828       923   G6IN:   MOV     AX,[IMM]
+ 1489 2B067628     924           SUB     AX,[PC]
  148D 2D0300       925           SUB     AX,3
- 1490 A39028       926           MOV     [IMM],AX
- 1493 800E922803   927           OR      BYTE [FLAGS],3
- 1498 800E8C28E8   928           OR      BYTE [OPCODE],0E8H
+ 1490 A38828       926           MOV     [IMM],AX
+ 1493 800E8A2803   927           OR      BYTE [FLAGS],3
+ 1498 800E8428E8   928           OR      BYTE [OPCODE],0E8H
  149D C3           929           RET
  149E              930   
  149E              931   ; --------------------------------
@@ -3928,21 +3928,21 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  149E E889FB       934   G5:     CALL    RA
  14A1              935   
  14A1              936   ; ONLY ONE TRAILING BYTE
- 14A1 80269228FE   937   G5S:    AND     BYTE [FLAGS],0FEH
+ 14A1 80268A28FE   937   G5S:    AND     BYTE [FLAGS],0FEH
  14A6              938   
  14A6              939   ; CONVERT ABSOLUTE ADDRESS TO
  14A6              940   ; RELATIVE VALUE
- 14A6 A19028       941           MOV     AX,[IMM]
- 14A9 2B067E28     942           SUB     AX,[PC]
+ 14A6 A18828       941           MOV     AX,[IMM]
+ 14A9 2B067628     942           SUB     AX,[PC]
  14AD 2D0200       943           SUB     AX,2
- 14B0 A39028       944           MOV     [IMM],AX
+ 14B0 A38828       944           MOV     [IMM],AX
  14B3              945   
  14B3              946   ; NEGLECT TO CHECK JUMP LENGTH
  14B3              947   ; UNTIL EVALUATION
- 14B3 F606782802   948           TEST    BYTE [FUNC],2
+ 14B3 F606702802   948           TEST    BYTE [FUNC],2
  14B8 74BC         949           JZ      G5X
  14BA E898F6       950           CALL    AA
-R-ASSEMBLER VERSION 1.05C    8086.ASM                     76
+R-ASSEMBLER VERSION 1.05C    8086.ASM                    76
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
@@ -3996,35 +3996,35 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  1502 B5B0         998           MOV     CH,0B0H
  1504 3C41         999           CMP     AL,41H
  1506 7569         1000          JNZ     G9F0
-R-ASSEMBLER VERSION 1.05C    8086.ASM                     77
+R-ASSEMBLER VERSION 1.05C    8086.ASM                    77
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
- 1508 A08828       1001          MOV     AL,[WADJ]
+ 1508 A08028       1001          MOV     AL,[WADJ]
  150B 49           1002          DEC     CX
  150C D2E0         1003          SHL     AL,CL
  150E EB18         1004          JMP     SHORT G9S
  1510 B502         1005  G9A2:   MOV     CH,2
- 1512 A18E28       1006  G9A:    MOV     AX,[DISP]
- 1515 A39028       1007          MOV     [IMM],AX
- 1518 A09228       1008          MOV     AL,[FLAGS]
+ 1512 A18628       1006  G9A:    MOV     AX,[DISP]
+ 1515 A38828       1007          MOV     [IMM],AX
+ 1518 A08A28       1008          MOV     AL,[FLAGS]
  151B 25E300       1009          AND     AX,0E3H
  151E 0C03         1010          OR      AL,3
- 1520 A29228       1011          MOV     [FLAGS],AL
- 1523 A08828       1012          MOV     AL,[WADJ]
+ 1520 A28A28       1011          MOV     [FLAGS],AL
+ 1523 A08028       1012          MOV     AL,[WADJ]
  1526 0CA0         1013          OR      AL,0A0H
  1528 08E0         1014  G9S:    OR      AL,AH
  152A 08E8         1015          OR      AL,CH
- 152C A28C28       1016          MOV     [OPCODE],AL
+ 152C A28428       1016          MOV     [OPCODE],AL
  152F C3           1017          RET
  1530 B08C         1018  G9SR:   MOV     AL,8CH
- 1532 A28C28       1019          MOV     [OPCODE],AL
+ 1532 A28428       1019          MOV     [OPCODE],AL
  1535 EB08         1020          JMP     SHORT G9M
  1537 B0C6         1021  G9MI:   MOV     AL,0C6H
- 1539 A28C28       1022          MOV     [OPCODE],AL
- 153C A08828       1023  G9MR:   MOV     AL,[WADJ]
+ 1539 A28428       1022          MOV     [OPCODE],AL
+ 153C A08028       1023  G9MR:   MOV     AL,[WADJ]
  153F 08E8         1024  G9M:    OR      AL,CH
- 1541 08068C28     1025          OR      [OPCODE],AL
+ 1541 08068428     1025          OR      [OPCODE],AL
  1545 E9F6FC       1026          JMP     MMODRM
  1548              1027  
  1548              1028  ; --------------------------------
@@ -4035,7 +4035,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  154D 7404         1033          JZ      G0EHRM
  154F 3C34         1034          CMP     AL,34H
  1551 751E         1035          JNZ     G9F0
- 1553 A19028       1036  G0EHRM: MOV     AX,[IMM]
+ 1553 A18828       1036  G0EHRM: MOV     AX,[IMM]
  1556 3D3F00       1037          CMP     AX,3FH
  1559 7733         1038          JA      G0CHF
  155B 88C4         1039          MOV     AH,AL
@@ -4043,14 +4043,14 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  155E D2C8         1041          ROR     AL,CL
  1560 250707       1042          AND     AX,707H
  1563 D2C4         1043          ROL     AH,CL
- 1565 09068C28     1044          OR      [OPCODE],AX
- 1569 80269228FC   1045          AND     BYTE [FLAGS],0FCH
+ 1565 09068428     1044          OR      [OPCODE],AX
+ 1569 80268A28FC   1045          AND     BYTE [FLAGS],0FCH
  156E E9CDFC       1046          JMP     MMODRM
  1571 B000         1047  G9F0:   MOV     AL,0
  1573 E9D7F7       1048          JMP     FAIL
  1576              1049  
  1576              1050  ; --------------------------------
-R-ASSEMBLER VERSION 1.05C    8086.ASM                     78
+R-ASSEMBLER VERSION 1.05C    8086.ASM                    78
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
@@ -4060,8 +4060,8 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  157B              1054  
  157B              1055  ; NO OPERAND MEANS IMPLICIT 10
  157B B80A00       1056          MOV     AX,0AH
- 157E A39028       1057          MOV     [IMM],AX
- 1581 800E922802   1058  G7B:    OR      BYTE [FLAGS],2
+ 157E A38828       1057          MOV     [IMM],AX
+ 1581 800E8A2802   1058  G7B:    OR      BYTE [FLAGS],2
  1586 C3           1059          RET
  1587              1060  
  1587              1061  ; OTHERWISE PROCESS OPERAND
@@ -4080,22 +4080,22 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  1599 740A         1074          JZ      G0CH3
  159B 84E4         1075          TEST    AH,AH
  159D 75EF         1076          JNZ     G0CHF
- 159F 800E922802   1077          OR      BYTE [FLAGS],2
+ 159F 800E8A2802   1077          OR      BYTE [FLAGS],2
  15A4 C3           1078          RET
- 15A5 FE0E8C28     1079  G0CH3:  DEC     BYTE [OPCODE]
+ 15A5 FE0E8428     1079  G0CH3:  DEC     BYTE [OPCODE]
  15A9 C3           1080          RET
  15AA              1081  
  15AA              1082  ; --------------------------------
  15AA              1083  ; IN / OUT
  15AA E87DFA       1084  G0DH:   CALL    RA
- 15AD 80269228FE   1085          AND     BYTE [FLAGS],0FEH
+ 15AD 80268A28FE   1085          AND     BYTE [FLAGS],0FEH
  15B2              1086  
  15B2              1087  ; EXPLICIT PORT FORM
  15B2 3C41         1088          CMP     AL,41H
  15B4 7415         1089          JZ      G0DHI
  15B6 3C14         1090          CMP     AL,14H
  15B8 740F         1091          JZ      G0DHO
- 15BA 800E8C2808   1092          OR      BYTE [OPCODE],8
+ 15BA 800E842808   1092          OR      BYTE [OPCODE],8
  15BF              1093  
  15BF              1094  ; INDIRECT VIA DX
  15BF 3D1120       1095          CMP     AX,2011H
@@ -4104,14 +4104,14 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  15C7 75A8         1098          JNZ     G9F0
  15C9 D2ED         1099  G0DHO:  SHR     CH,CL
  15CB 88E8         1100  G0DHI:  MOV     AL,CH
-R-ASSEMBLER VERSION 1.05C    8086.ASM                     79
+R-ASSEMBLER VERSION 1.05C    8086.ASM                    79
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
  15CD 240F         1101          AND     AL,0FH
  15CF 3C02         1102          CMP     AL,2
  15D1 7204         1103          JC      G0DH0
- 15D3 FE068C28     1104          INC     BYTE [OPCODE]
+ 15D3 FE068428     1104          INC     BYTE [OPCODE]
  15D7 C3           1105  G0DH0:  RET
  15D8              1106  
  15D8              1107  ; --------------------------------
@@ -4124,7 +4124,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  15E4 7415         1114          JZ      G0FHM
  15E6 3C11         1115          CMP     AL,11H
  15E8 7587         1116          JNZ     G9F0
- 15EA A08828       1117          MOV     AL,[WADJ]
+ 15EA A08028       1117          MOV     AL,[WADJ]
  15ED A8FF         1118          TEST    AL,0FFH
  15EF 740A         1119          JZ      G0FHM
  15F1 88E0         1120          MOV     AL,AH
@@ -4132,13 +4132,13 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  15F5 740F         1122          JZ      G0FHAR
  15F7 A8F0         1123          TEST    AL,0F0H
  15F9 740D         1124          JZ      G0FHRA
- 15FB A08828       1125  G0FHM:  MOV     AL,[WADJ]
+ 15FB A08028       1125  G0FHM:  MOV     AL,[WADJ]
  15FE 0C86         1126          OR      AL,86H
- 1600 A28C28       1127          MOV     [OPCODE],AL
+ 1600 A28428       1127          MOV     [OPCODE],AL
  1603 E938FC       1128          JMP     MMODRM
  1606 D2E8         1129  G0FHAR: SHR     AL,CL
  1608 0C90         1130  G0FHRA: OR      AL,90H
- 160A A28C28       1131          MOV     [OPCODE],AL
+ 160A A28428       1131          MOV     [OPCODE],AL
  160D C3           1132          RET
  160E              1133  
  160E              1134  ; --------------------------------
@@ -4151,18 +4151,18 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  1616              1141  ; ADJUST OPCODE ACCORDINGLY
  1616 3C04         1142          CMP     AL,4
  1618 7509         1143          JNZ     G0BH1
- 161A 800E922803   1144          OR      BYTE [FLAGS],3
- 161F FE0E8C28     1145          DEC     BYTE [OPCODE]
- 1623 A09728       1146  G0BH1:  MOV     AL,[ARGS+3]
+ 161A 800E8A2803   1144          OR      BYTE [FLAGS],3
+ 161F FE0E8428     1145          DEC     BYTE [OPCODE]
+ 1623 A08F28       1146  G0BH1:  MOV     AL,[ARGS+3]
  1626 3C09         1147          CMP     AL,9
  1628 7409         1148          JZ      G0
  162A 3C0A         1149          CMP     AL,10
  162C 7505         1150          JNZ     G0
-R-ASSEMBLER VERSION 1.05C    8086.ASM                     80
+R-ASSEMBLER VERSION 1.05C    8086.ASM                    80
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
- 162E 800E8C2808   1151  G0BH2:  OR      BYTE [OPCODE],8
+ 162E 800E842808   1151  G0BH2:  OR      BYTE [OPCODE],8
  1633              1152  
  1633              1153  ; --------------------------------
  1633              1154  ; INSTRUCTIONS WITHOUT OPERANDS
@@ -4178,11 +4178,11 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  163A              1164  
  163A              1165  ; --------------------------------
  163A              1166  ; EVEN DIRECTIVE
- 163A A17E28       1167  D0:     MOV     AX,[PC]
+ 163A A17628       1167  D0:     MOV     AX,[PC]
  163D D0E8         1168          SHR     AL,1
  163F 18C0         1169          SBB     AL,AL
  1641 2420         1170          AND     AL,20H
- 1643 A29228       1171          MOV     [FLAGS],AL
+ 1643 A28A28       1171          MOV     [FLAGS],AL
  1646 31C9         1172          XOR     CX,CX
  1648 C3           1173          RET
  1649              1174  
@@ -4212,7 +4212,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  1669              1198  ; --------------------------------
  1669              1199  ; WRAPPER FOR WRITING
  1669              1200  ; DIRECTIVES
-R-ASSEMBLER VERSION 1.05C    8086.ASM                     81
+R-ASSEMBLER VERSION 1.05C    8086.ASM                    81
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
@@ -4234,7 +4234,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  167D              1216  
  167D              1217  ; IF NOT DATA, DISASSEMBLE
  167D 30E4         1218          XOR     AH,AH
- 167F A08C28       1219          MOV     AL,[OPCODE]
+ 167F A08428       1219          MOV     AL,[OPCODE]
  1682 89C3         1220          MOV     BX,AX
  1684              1221  
  1684              1222  ; PREPARE SIZE ADJUSTMENT FOR
@@ -4245,7 +4245,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  1688 D0E0         1227          SHL     AL,1
  168A D0E0         1228          SHL     AL,1
  168C D0E0         1229          SHL     AL,1
- 168E A38828       1230          MOV     [WADJ],AX
+ 168E A38028       1230          MOV     [WADJ],AX
  1691              1231  
  1691              1232  ; GET MNEMONIC FOR OPCODE
  1691 8A8FBC1A     1233          MOV     CL,[BINTBL+BX]
@@ -4265,22 +4265,22 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  16A4              1247  ; OPERANDS
  16A4 8A9FBC19     1248  DISAS1: MOV     BL,[BX+HDLTBL]
  16A8 D1E3         1249          SHL     BX,1
- 16AA A08C28       1250  DISAS2: MOV     AL,[OPCODE]
-R-ASSEMBLER VERSION 1.05C    8086.ASM                     82
+ 16AA A08428       1250  DISAS2: MOV     AL,[OPCODE]
+R-ASSEMBLER VERSION 1.05C    8086.ASM                    82
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
  16AD FF977E19     1251          CALL    [BX+DHDL]
  16B1 89F0         1252          MOV     AX,SI
- 16B3 2D7823       1253          SUB     AX,BINBUF
- 16B6 A37C28       1254          MOV     [BINLEN],AX
+ 16B3 2D7023       1253          SUB     AX,BINBUF
+ 16B6 A37428       1254          MOV     [BINLEN],AX
  16B9 C3           1255          RET
  16BA              1256  
  16BA              1257  ; --------------------------------
  16BA              1258  ; ACCUMULATOR AND IMMEDIATE
  16BA 30C0         1259  ACCID:  XOR     AL,AL
  16BC E8BE00       1260          CALL    WREG
- 16BF F6068828FF   1261          TEST    BYTE [WADJ],0FFH
+ 16BF F6068028FF   1261          TEST    BYTE [WADJ],0FFH
  16C4 EB18         1262          JMP     SHORT RIMMDW
  16C6              1263  
  16C6              1264  ; --------------------------------
@@ -4320,7 +4320,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  16E4              1298  ; SO RECEDE INPUT BUFFER IF ONLY
  16E4              1299  ; A BYTE IS RELEVANT
  16E4 4E           1300  RIMMDB: DEC     SI
-R-ASSEMBLER VERSION 1.05C    8086.ASM                     83
+R-ASSEMBLER VERSION 1.05C    8086.ASM                    83
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
@@ -4340,9 +4340,9 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  16F0 B02C         1314  G03DT:  MOV     AL,2CH
  16F2 AA           1315          STOSB
  16F3 AD           1316          LODSW
- 16F4 F6068828FF   1317          TEST    BYTE [WADJ],0FFH
+ 16F4 F6068028FF   1317          TEST    BYTE [WADJ],0FFH
  16F9 74E9         1318          JZ      RIMMDB
- 16FB 803E8C2883   1319          CMP     BYTE [OPCODE],83H
+ 16FB 803E842883   1319          CMP     BYTE [OPCODE],83H
  1700 7550         1320          JNZ     WHAX
  1702 4E           1321          DEC     SI
  1703              1322  
@@ -4374,7 +4374,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  1723              1348  ; WHICH NEEDS AN ADDITIONAL
  1723              1349  ; SHORT DIRECTIVE
  1723 3CEB         1350  RELBD:  CMP     AL,0EBH
-R-ASSEMBLER VERSION 1.05C    8086.ASM                     84
+R-ASSEMBLER VERSION 1.05C    8086.ASM                    84
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
@@ -4384,7 +4384,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  172C AC           1354  NOTJMP: LODSB
  172D 98           1355          CBW
  172E 050200       1356          ADD     AX,2
- 1731 03067E28     1357          ADD     AX,[PC]
+ 1731 03067628     1357          ADD     AX,[PC]
  1735 EB1B         1358          JMP     SHORT WHAX
  1737              1359  
  1737              1360  ; --------------------------------
@@ -4428,7 +4428,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  1770              1398  ; LDA HANDLER
  1770 B006         1399  MACCD:  MOV     AL,6
  1772 EB01         1400          JMP     SHORT MRD1
-R-ASSEMBLER VERSION 1.05C    8086.ASM                     85
+R-ASSEMBLER VERSION 1.05C    8086.ASM                    85
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
@@ -4459,7 +4459,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  178D 7315         1425          JNC     WDISP
  178F 50           1426          PUSH    AX
  1790 B115         1427          MOV     CL,21
- 1792 F6068828FF   1428          TEST    BYTE [WADJ],0FFH
+ 1792 F6068028FF   1428          TEST    BYTE [WADJ],0FFH
  1797 7502         1429          JNZ     WSELF
  1799 30C9         1430          XOR     CL,CL
  179B E8CBFE       1431  WSELF:  CALL    WDIR
@@ -4481,8 +4481,8 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  17B0              1447  
  17B0              1448  ; 11XXXXXX AND UP IS REGISTERS
  17B0 81C6F41B     1449  WDISP1: ADD     SI,REGS
- 17B4 03368828     1450          ADD     SI,[WADJ]
-R-ASSEMBLER VERSION 1.05C    8086.ASM                     86
+ 17B4 03368028     1450          ADD     SI,[WADJ]
+R-ASSEMBLER VERSION 1.05C    8086.ASM                    86
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
@@ -4536,7 +4536,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  17F3 4F           1498  WDX:    DEC     DI
  17F4 B05D         1499          MOV     AL,5DH
  17F6 AA           1500          STOSB
-R-ASSEMBLER VERSION 1.05C    8086.ASM                     87
+R-ASSEMBLER VERSION 1.05C    8086.ASM                    87
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
@@ -4566,7 +4566,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  1816              1524  
  1816              1525  ; --------------------------------
  1816              1526  ; MOVE INTO SEGMENT REGISTER
- 1816 C606882810   1527  MSD:    MOV     BYTE [WADJ],10H
+ 1816 C606802810   1527  MSD:    MOV     BYTE [WADJ],10H
  181B AC           1528          LODSB
  181C 50           1529          PUSH    AX
  181D E884FF       1530          CALL    WDISP
@@ -4589,8 +4589,8 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  1835              1547  
  1835              1548  ; --------------------------------
  1835              1549  ; MOVE FROM SEGMENT REGISTER
- 1835 C606882810   1550  SMD:    MOV     BYTE [WADJ],10H
-R-ASSEMBLER VERSION 1.05C    8086.ASM                     88
+ 1835 C606802810   1550  SMD:    MOV     BYTE [WADJ],10H
+R-ASSEMBLER VERSION 1.05C    8086.ASM                    88
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
@@ -4614,7 +4614,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  184F              1568  
  184F              1569  ; --------------------------------
  184F              1570  ; WRITE 16-BIT REGISTER OPERAND
- 184F C606882810   1571  REGWD:  MOV     BYTE [WADJ],10H
+ 184F C606802810   1571  REGWD:  MOV     BYTE [WADJ],10H
  1854 0CC0         1572          OR      AL,0C0H
  1856 E94BFF       1573          JMP     WDISP
  1859              1574  
@@ -4623,7 +4623,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  1859              1577  ; RELATIVE OFFSET, CALL/JMP
  1859 AD           1578  RELWD:  LODSW
  185A 050300       1579          ADD     AX,3
- 185D 03067E28     1580          ADD     AX,[PC]
+ 185D 03067628     1580          ADD     AX,[PC]
  1861 E9EEFE       1581          JMP     WHAX
  1864              1582  
  1864              1583  ; --------------------------------
@@ -4644,7 +4644,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  187B              1598  ; SIMPLE INT+VALUE
  187B AC           1599  INTD:   LODSB
  187C E98EFE       1600          JMP     WHAL
-R-ASSEMBLER VERSION 1.05C    8086.ASM                     89
+R-ASSEMBLER VERSION 1.05C    8086.ASM                    89
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
@@ -4660,7 +4660,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  1883              1610  ; RETURN FAR IS RET+FAR OVERRIDE
  1883 B109         1611  RETFD:  MOV     CL,9
  1885 E8E1FD       1612          CALL    WDIR
- 1888 F6068C2801   1613          TEST    BYTE [OPCODE],1
+ 1888 F606842801   1613          TEST    BYTE [OPCODE],1
  188D 7402         1614          JZ      RETD
  188F 4F           1615          DEC     DI
  1890 C3           1616          RET
@@ -4675,7 +4675,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  1895              1625  ; --------------------------------
  1895              1626  ; IN/OUT INSTRUCTIONS WITH DX
  1895              1627  ; AND ACCUMULATOR
- 1895 A18828       1628  ADIOD:  MOV     AX,[WADJ]
+ 1895 A18028       1628  ADIOD:  MOV     AX,[WADJ]
  1898              1629  
  1898              1630  ; USE THE WORD ADJUST TO GET
  1898              1631  ; CORRECT ACCUMULATOR SIZE
@@ -4688,7 +4688,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  18A3              1638  
  18A3              1639  ; THE DIRECTION BIT IS THE DEAD
  18A3              1640  ; GIVEAWAY OF THE INSTRUCTION
- 18A3 F6068C2802   1641          TEST    BYTE [OPCODE],2
+ 18A3 F606842802   1641          TEST    BYTE [OPCODE],2
  18A8 7401         1642          JZ      ADIOD0
  18AA              1643  
  18AA              1644  ; WRITE THE REGISTERS
@@ -4698,7 +4698,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  18AE AA           1648          STOSB
  18AF 92           1649          XCHG    AX,DX
  18B0 AB           1650          STOSW
-R-ASSEMBLER VERSION 1.05C    8086.ASM                     90
+R-ASSEMBLER VERSION 1.05C    8086.ASM                    90
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
@@ -4752,7 +4752,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  18E0              1698  ; WRITE MNEMONIC AND TAB,
  18E0              1699  ; AS YOU DO
  18E0 E875FD       1700          CALL    WMN
-R-ASSEMBLER VERSION 1.05C    8086.ASM                     91
+R-ASSEMBLER VERSION 1.05C    8086.ASM                    91
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
@@ -4769,7 +4769,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  18ED              1711  
  18ED              1712  ; --------------------------------
  18ED              1713  ; LDS/LES/LEA GROUP
- 18ED C606882810   1714  RWMD:   MOV     BYTE [WADJ],10H
+ 18ED C606802810   1714  RWMD:   MOV     BYTE [WADJ],10H
  18F2              1715  
  18F2              1716  ; --------------------------------
  18F2              1717  ; REGISTER TO R/M
@@ -4790,7 +4790,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  1909 AA           1732          STOSB
  190A              1733  
  190A              1734  ; ONLY CL OR 1 ARE VALID
- 190A F6068C2802   1735          TEST    BYTE [OPCODE],2
+ 190A F606842802   1735          TEST    BYTE [OPCODE],2
  190F 7405         1736          JZ      G02D1
  1911 B8434C       1737          MOV     AX,4C43H
  1914 AB           1738          STOSW
@@ -4806,7 +4806,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  1920              1748  
  1920              1749  ; SOME OF THEM NEED SIZE OR
  1920              1750  ; DISTANCE OVERRIDES FOR
-R-ASSEMBLER VERSION 1.05C    8086.ASM                     92
+R-ASSEMBLER VERSION 1.05C    8086.ASM                    92
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
@@ -4860,7 +4860,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  1978 8A0E280D4916 1794          DW      SETDFS,SETINC,D8
  197E              1795  
  197E              1796  ; --------------------------------
-R-ASSEMBLER VERSION 1.05C    8086.ASM                     93
+R-ASSEMBLER VERSION 1.05C    8086.ASM                    93
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
@@ -4914,7 +4914,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  1A3C 090909090101 1828          DB      9,9,9,9,1,1,1,1
  1A42 0101
  1A44 00000101     1829          DB      0,0,1,1
-R-ASSEMBLER VERSION 1.05C    8086.ASM                     94
+R-ASSEMBLER VERSION 1.05C    8086.ASM                    94
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
@@ -4968,7 +4968,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  1AF8 0D0D6803     1877          DB      0DH,0DH,68H,03H
  1AFC 1A1A1A1A     1878          DB      1AH,1AH,1AH,1AH
  1B00 1A1A1A1A     1879          DB      1AH,1AH,1AH,1AH
-R-ASSEMBLER VERSION 1.05C    8086.ASM                     95
+R-ASSEMBLER VERSION 1.05C    8086.ASM                    95
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
@@ -5022,7 +5022,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  1BBC              1927  ; --------------------------------
  1BBC              1928  ; GROUP MNEMONIC TABLES
  1BBC 05510465     1929  _G01D:  DB      05H,51H,04H,65H
-R-ASSEMBLER VERSION 1.05C    8086.ASM                     96
+R-ASSEMBLER VERSION 1.05C    8086.ASM                    96
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
@@ -5030,7 +5030,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  1BC4 5F605758     1931  _G02D:  DB      5FH,60H,57H,58H
  1BC8 696A6264     1932          DB      69H,6AH,62H,64H
  1BCC 7171504E     1933  _G03D:  DB      71H,71H,50H,4EH
- 1BD0 4F181417     1934          DB      4FH,18H,14H,17H
+ 1BD0 4D181417     1934          DB      4DH,18H,14H,17H
  1BD4 1A130707     1935  _G04D:  DB      1AH,13H,07H,07H
  1BD8 29295580     1936          DB      29H,29H,55H,80H
  1BDC              1937  
@@ -5076,7 +5076,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  1C4F 434257009800 1971          DB      "CBW",0,98H,0
  1C55 434C4300F800 1972          DB      "CLC",0,0F8H,0
  1C5B 434C4400FC00 1973          DB      "CLD",0,0FCH,0
-R-ASSEMBLER VERSION 1.05C    8086.ASM                     97
+R-ASSEMBLER VERSION 1.05C    8086.ASM                    97
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
@@ -5130,7 +5130,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  1D49 4A4E4745007C 2012          DB      "JNGE",0,7CH,5
  1D4F 05
  1D50 4A4E4C007D05 2013          DB      "JNL",0,7DH,5
-R-ASSEMBLER VERSION 1.05C    8086.ASM                     98
+R-ASSEMBLER VERSION 1.05C    8086.ASM                    98
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
@@ -5184,7 +5184,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  1E34 505553480030 2048          DB      "PUSH",0,30H,4
  1E3A 04
  1E3B 505553484600 2049          DB      "PUSHF",0,9CH,0
-R-ASSEMBLER VERSION 1.05C    8086.ASM                     99
+R-ASSEMBLER VERSION 1.05C    8086.ASM                    99
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
@@ -5238,7 +5238,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  1F12              2082  ; --------------------------------
  1F12              2083  ; ASSEMBLER DIRECTIVES
  1F12 1600         2084  DIRTBL: DW      22
-R-ASSEMBLER VERSION 1.05C    8086.ASM                     100
+R-ASSEMBLER VERSION 1.05C    8086.ASM                    100
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
@@ -5276,7 +5276,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  1FA1 FB07
  1FA3 574F52440002 2106          DB      "WORD",0,2,5
  1FA9 05
-R-ASSEMBLER VERSION 1.05C    RA.ASM                       101
+R-ASSEMBLER VERSION 1.05C    RA.ASM                      101
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
@@ -5330,7 +5330,7 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  208A 524553455256 1704          DB      "RESERVED WORD MISUSE",0
  2090 454420574F52
  2096 44204D495355
-R-ASSEMBLER VERSION 1.05C    RA.ASM                       102
+R-ASSEMBLER VERSION 1.05C    RA.ASM                      102
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
@@ -5352,135 +5352,133 @@ R-ASSEMBLER VERSION 1.05C    RA.ASM                       1
  20E7 434F4D00     1710  DOTCOM: DB      "COM",0
  20EB 4C535400     1711  DOTLST: DB      "LST",0
  20EF 53594D00     1712  DOTSYM: DB      "SYM",0
- 20F3 2C2050414745 1713  PAGEM:  DB      ", PAGE ",0
- 20F9 2000
- 20FB 504153532000 1714  PASSM:  DB      "PASS ",0
- 2101 494E3A2000   1715  INM:    DB      "IN: ",0
- 2106 4F55543A2000 1716  OUTM:   DB      "OUT: ",0
- 210C 204144445220 1717  BINLIN: DB      " ADDR BINARY",0
- 2112 42494E415259
- 2118 00
- 2119 4C494E452020 1718  SRCLIN: DB      "LINE  SOURCE",0
- 211F 534F55524345
- 2125 00
- 2126 2053594D424F 1719  SYMLIN: DB      " SYMBOL TABLE",0
- 212C 4C205441424C
- 2132 4500
- 2134 522D41535345 1720  AMSG:   DB      "R-ASSEMBLER"
- 213A 4D424C4552
- 213F 205645525349 1721          DB      " VERSION 1.05C"
- 2145 4F4E20312E30
- 214B 3543
- 214D 0D0A24       1722          DB      13,10,36
- 2150 42414420444F 1723  DOSERR: DB      "BAD DOS VERSION"
- 2156 532056455253
- 215C 494F4E
- 215F 0D0A24       1724          DB      13,10,36
- 2162 4D495353494E 1725  NOPAR:  DB      "MISSING PARAMETER"
- 2168 472050415241
- 216E 4D45544552
- 2173 0D0A24       1726          DB      13,10,36
- 2176 524120494E20 1727  USAGE:  DB      "RA IN [/SWITCH [OUT]"
- 217C 5B2F53574954
- 2182 4348205B4F55
- 2188 545D
-R-ASSEMBLER VERSION 1.05C    RA.ASM                       103
+ 20F3 504153532000 1713  PASSM:  DB      "PASS ",0
+ 20F9 494E3A2000   1714  INM:    DB      "IN: ",0
+ 20FE 4F55543A2000 1715  OUTM:   DB      "OUT: ",0
+ 2104 204144445220 1716  BINLIN: DB      " ADDR BINARY",0
+ 210A 42494E415259
+ 2110 00
+ 2111 4C494E452020 1717  SRCLIN: DB      "LINE  SOURCE",0
+ 2117 534F55524345
+ 211D 00
+ 211E 2053594D424F 1718  SYMLIN: DB      " SYMBOL TABLE",0
+ 2124 4C205441424C
+ 212A 4500
+ 212C 522D41535345 1719  AMSG:   DB      "R-ASSEMBLER"
+ 2132 4D424C4552
+ 2137 205645525349 1720          DB      " VERSION 1.05C"
+ 213D 4F4E20312E30
+ 2143 3543
+ 2145 0D0A24       1721          DB      13,10,36
+ 2148 42414420444F 1722  DOSERR: DB      "BAD DOS VERSION"
+ 214E 532056455253
+ 2154 494F4E
+ 2157 0D0A24       1723          DB      13,10,36
+ 215A 4D495353494E 1724  NOPAR:  DB      "MISSING PARAMETER"
+ 2160 472050415241
+ 2166 4D45544552
+ 216B 0D0A24       1725          DB      13,10,36
+ 216E 524120494E20 1726  USAGE:  DB      "RA IN [/SWITCH [OUT]"
+ 2174 5B2F53574954
+ 217A 4348205B4F55
+ 2180 545D
+ 2182 205B2F535749 1727          DB      " [/SWITCH [OUT]] ...]"
+ 2188 544348205B4F
+R-ASSEMBLER VERSION 1.05C    RA.ASM                      103
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
- 218A 205B2F535749 1728          DB      " [/SWITCH [OUT]] ...]"
- 2190 544348205B4F
- 2196 55545D5D202E
- 219C 2E2E5D
- 219F 0D0A         1729          DB      13,10
- 21A1 2F41205B4F55 1730          DB      "/A [OUT[.COM]]",9
- 21A7 545B2E434F4D
- 21AD 5D5D09
- 21B0 415353454D42 1731          DB      "ASSEMBLE"
- 21B6 4C45
- 21B8 0D0A         1732          DB      13,10
- 21BA 2F44205B4F55 1733          DB      "/D [OUT[.ASM]]",9
- 21C0 545B2E41534D
- 21C6 5D5D09
- 21C9 444953415353 1734          DB      "DISASSEMBLE"
- 21CF 454D424C45
- 21D4 0D0A         1735          DB      13,10
- 21D6 2F4C205B4F55 1736          DB      "/L [OUT[.LST]]",9
- 21DC 545B2E4C5354
- 21E2 5D5D09
- 21E5 415353454D42 1737          DB      "ASSEMBLE TO LISTING"
- 21EB 4C4520544F20
- 21F1 4C495354494E
- 21F7 47
- 21F8 0D0A         1738          DB      13,10
- 21FA 2F4F20313030 1739          DB      "/O 100H",9,9
- 2200 480909
- 2203 534554204F52 1740          DB      "SET ORIGIN"
- 2209 4947494E
- 220D 0D0A         1741          DB      13,10
- 220F 2F53205B4F55 1742          DB      "/S [OUT[.SYM]]",9
- 2215 545B2E53594D
- 221B 5D5D09
- 221E 53544F524520 1743          DB      "STORE OR USE SYMBOLS"
- 2224 4F5220555345
- 222A 2053594D424F
- 2230 4C53
- 2232 0D0A         1744          DB      13,10
- 2234 2F55205B4F55 1745          DB      "/U [OUT[.LST]]",9
- 223A 545B2E4C5354
- 2240 5D5D09
- 2243 444953415353 1746          DB      "DISASSEMBLE TO LISTING"
- 2249 454D424C4520
- 224F 544F204C4953
- 2255 54494E47
- 2259 0D0A         1747          DB      13,10
- 225B 2F5720574944 1748          DB      "/W WIDTH",9
- 2261 544809
- 2264 534554204C49 1749          DB      "SET LISTING WIDTH"
- 226A 5354494E4720
-R-ASSEMBLER VERSION 1.05C    RA.ASM                       104
+ 218E 55545D5D202E
+ 2194 2E2E5D
+ 2197 0D0A         1728          DB      13,10
+ 2199 2F41205B4F55 1729          DB      "/A [OUT[.COM]]",9
+ 219F 545B2E434F4D
+ 21A5 5D5D09
+ 21A8 415353454D42 1730          DB      "ASSEMBLE"
+ 21AE 4C45
+ 21B0 0D0A         1731          DB      13,10
+ 21B2 2F44205B4F55 1732          DB      "/D [OUT[.ASM]]",9
+ 21B8 545B2E41534D
+ 21BE 5D5D09
+ 21C1 444953415353 1733          DB      "DISASSEMBLE"
+ 21C7 454D424C45
+ 21CC 0D0A         1734          DB      13,10
+ 21CE 2F4C205B4F55 1735          DB      "/L [OUT[.LST]]",9
+ 21D4 545B2E4C5354
+ 21DA 5D5D09
+ 21DD 415353454D42 1736          DB      "ASSEMBLE TO LISTING"
+ 21E3 4C4520544F20
+ 21E9 4C495354494E
+ 21EF 47
+ 21F0 0D0A         1737          DB      13,10
+ 21F2 2F4F20313030 1738          DB      "/O 100H",9,9
+ 21F8 480909
+ 21FB 534554204F52 1739          DB      "SET ORIGIN"
+ 2201 4947494E
+ 2205 0D0A         1740          DB      13,10
+ 2207 2F53205B4F55 1741          DB      "/S [OUT[.SYM]]",9
+ 220D 545B2E53594D
+ 2213 5D5D09
+ 2216 53544F524520 1742          DB      "STORE OR USE SYMBOLS"
+ 221C 4F5220555345
+ 2222 2053594D424F
+ 2228 4C53
+ 222A 0D0A         1743          DB      13,10
+ 222C 2F55205B4F55 1744          DB      "/U [OUT[.LST]]",9
+ 2232 545B2E4C5354
+ 2238 5D5D09
+ 223B 444953415353 1745          DB      "DISASSEMBLE TO LISTING"
+ 2241 454D424C4520
+ 2247 544F204C4953
+ 224D 54494E47
+ 2251 0D0A         1746          DB      13,10
+ 2253 2F5720574944 1747          DB      "/W WIDTH",9
+ 2259 544809
+ 225C 534554204C49 1748          DB      "SET LISTING WIDTH"
+ 2262 5354494E4720
+ 2268 5749445448
+ 226D 0D0A24       1749          DB      13,10,36
+R-ASSEMBLER VERSION 1.05C    RA.ASM                      104
 
  ADDR BINARY       LINE  SOURCE
 ----------------------------------------------------------------
- 2270 5749445448
- 2275 0D0A24       1750          DB      13,10,36
- 2278              1751  
- 2278              1752  ; --------------------------------
- 2278              1753  ; HIDDEN BUFFERS
- 2278              1754  TXTBUF: DS      100H
- 2378              1755  BINBUF: DS      100H
- 2478              1756  LSTBUF: DS      100H
- 2578              1757  TEMP:   DS      100H
- 2678              1758  TEMP2:  DS      100H
- 2778              1759  TTLBUF: DS      100H
- 2878              1760  VARS:   DS      100H
- 2978              1761  INCBUF: DS      100H
- 2A78              1762  MAPBUF: DS      100H
- 2B78              1763  SYMBS:
-R-ASSEMBLER VERSION 1.05C    RA.ASM                       105
+ 2270              1750  
+ 2270              1751  ; --------------------------------
+ 2270              1752  ; HIDDEN BUFFERS
+ 2270              1753  TXTBUF: DS      100H
+ 2370              1754  BINBUF: DS      100H
+ 2470              1755  LSTBUF: DS      100H
+ 2570              1756  TEMP:   DS      100H
+ 2670              1757  TEMP2:  DS      100H
+ 2770              1758  TTLBUF: DS      100H
+ 2870              1759  VARS:   DS      100H
+ 2970              1760  INCBUF: DS      100H
+ 2A70              1761  MAPBUF: DS      100H
+ 2B70              1762  SYMBS:
+R-ASSEMBLER VERSION 1.05C    RA.ASM                      105
 
  SYMBOL TABLE
 ----------------------------------------------------------------
        0100  AA     0B55  AA1    0B5C  AAMD   16C6  ACCID  16BA
 ACCMD  18E9  ACCRD  1846  ADDEX  03AA  ADDEX0 03D0  ADDEX1 03BC
 ADDEX2 03C4  ADDEX3 03CC  ADIOD  1895  ADIOD0 18AB  ADIR   1FAC
-AHDL   196C  AMSG   2134  ARGS   2894  ASM    0A3F  ASMCM1 0F2C
+AHDL   196C  AMSG   212C  ARGS   288C  ASM    0A3F  ASMCM1 0F2C
 ASMCM2 0F38  ASMCM3 0F4B  ASMCM4 0F51  ASMCM5 0F61  ASMCM6 0F63
 ASMCMD 0F01  ASMEQU 0AB8  ASMLBL 0A95  ASMLIN 0A98  ASMOER 0AF6
-ASMORG 0ACC  BAH    018E  BINBUF 2378  BINLEN 287C  BINLIN 210C
+ASMORG 0ACC  BAH    018E  BINBUF 2370  BINLEN 2874  BINLIN 2104
 BINTBL 1ABC  BORW   0FF6  BORW1  1010  BORW2  1029  BPD    10E4
 BXD    10E6  CALF   03D6  CALF0  041A  CC     0AFB  CCE    0B53
 CCK    0B3A  CCL    0B37  CCM    0AFD  CCQ    0B4A  CCS    0B41
 CCT    0B45  CCW    0B4E  CLOSE  0194  CLOSE1 01DA  CLOSF  01DD
 CLOSF1 01ED  COL    1166  COMMA  1155  D0     163A  D5     0FE2
-D8     1649  D8X    1655  DECF   041C  DEFFN  2938  DEFORG 0100
+D8     1649  D8X    1655  DECF   041C  DEFFN  2930  DEFORG 0100
 DEFPAG 0032  DHDL   197E  DID    10E2  DIRTBL 1F12  DISAS1 16A4
-DISAS2 16AA  DISASM 1675  DISP   288E  DISPD  193C  DOSERR 2150
+DISAS2 16AA  DISASM 1675  DISP   2886  DISPD  193C  DOSERR 2148
 DOTASM 20E3  DOTCOM 20E7  DOTLST 20EB  DOTSYM 20EF  EQDUM0 088C
 EQDUM1 088F  EQDUM2 08B4  EQDUM3 08BB  EQDUMP 0878  ERR0   1363
 ERR1   0D24  ERR3   0CA2  ERR8   0D20  ERRMES 1FB4  ERROR  0118
-ERRORS 28A4  ESCD   1864  FAIL   0D4D  FAIL1  0D5F  FAIL2  0D62
-FLAGS  2892  FUNC   2878  G0     1633  G01D   16E7  G02D   18FE
+ERRORS 289C  ESCD   1864  FAIL   0D4D  FAIL1  0D5F  FAIL2  0D62
+FLAGS  288A  FUNC   2870  G0     1633  G01D   16E7  G02D   18FE
 G02D1  1916  G03D   1737  G03DT  16F0  G04D   191A  G04DF  1937
 G0AH   1634  G0BH   160E  G0BH1  1623  G0BH2  162E  G0CH   1593
 G0CH3  15A5  G0CHF  158E  G0DH   15AA  G0DH0  15D7  G0DHI  15CB
@@ -5499,82 +5497,82 @@ GV     0D95  GV7    0DE0  GV8    0DE5  GVA    0DC6  GVC    0DBB
 GVHB   0E35  GVL    0DEA  GVL1   0E05  GVL2   0E11  GVL3   0E15
 GVLB   0E3C  GVNS   0E24  GVQ    0DC8  GVV    0E18  GVWO   0E41
 HALL   0BEC  HALN   0BF6  HALX   0BDF  HDLTBL 19BC  HUMBUG 0192
-IBAPD  18B2  IHDL   194C  IMM    2890  INCBUF 2978  INCF   03EE
-INCF0  0416  INCLEV 289E  INFN   28B8  INM    2101  INT3D  187F
+IBAPD  18B2  IHDL   194C  IMM    2888  INCBUF 2970  INCF   03EE
+INCF0  0416  INCLEV 2896  INFN   28B0  INM    20F9  INT3D  187F
 INTD   187B  INVD   1940  LBL    0C64  LBL1   0C85  LBL2   0C91
 LBL3   0CA1  LDDAT  0ED6  LDDAT1 0EE7  LDDAT2 0EF9  LDDAT3 0EFE
-LINEND 08CB  LSTBUF 2478  LSTFN  28F8  LSTHDL 289A  LSTLIN 28A8
-LSTWID 28AA  MACCD  1770  MAIN   0121  MAPBUF 2A78  MM0    12B7
+LINEND 08CB  LSTBUF 2470  LSTFN  28F0  LSTHDL 2892  LSTLIN 28A0
+LSTWID 28A2  MACCD  1770  MAIN   0121  MAPBUF 2A70  MM0    12B7
 MM8    12B3  MMEML  1280  MMEMR  1282  MMODRM 123E  MNMTBL 1C1C
-MODRM  288D  MRD    1774  MRD1   1775  MREGL  12A6  MREGR  12A8
-MSD    1816  NARGS  1140  NOPAR  2162  NOSYM  0A73  NOTJMP 172C
-OLDPC  28A2  OPCODE 288C  OPEN   06B9  OPEN1  0706  OPEN2  070B
-OPEN3  0737  OPENF  073D  OPENF1 074E  OPENF2 0750  OUTFN  28D8
-OUTHDL 2898  OUTM   2106  P2     09D3  P2F    09DA  P3     09DD
-R-ASSEMBLER VERSION 1.05C    RA.ASM                       106
+MODRM  2885  MRD    1774  MRD1   1775  MREGL  12A6  MREGR  12A8
+MSD    1816  NARGS  1140  NOPAR  215A  NOSYM  0A73  NOTJMP 172C
+OLDPC  289A  OPCODE 2884  OPEN   06B9  OPEN1  0706  OPEN2  070B
+OPEN3  0737  OPENF  073D  OPENF1 074E  OPENF2 0750  OUTFN  28D0
+OUTHDL 2890  OUTM   20FE  P2     09D3  P2F    09DA  P3     09DD
+R-ASSEMBLER VERSION 1.05C    RA.ASM                      106
 
  SYMBOL TABLE
 ----------------------------------------------------------------
 P3E    0A1B  P3L    09EA  P3S    0A17  P4     0A2D  P4S    0A39
-P5     0A20  PAGEM  20F3  PAGLEN 1FAA  PAGNUM 28A6  PARAEN 0275
-PARAFN 026A  PARAG  026E  PARAM  0221  PARANO 0265  PARANS 02A2
-PARANX 02D1  PARAO  01EE  PARARG 0260  PARASC 0226  PARAST 0292
-PARAWF 01FE  PARAWN 02C5  PASS   28A0  PASSM  20FB  PC     287E
-PCCHAR 0024  PREFIX 288A  PROCF  02DD  PROCF0 0300  PROCF1 0316
-PROCF2 0332  PROCF3 0338  PROCF4 033F  PROCF5 0357  PRUNT  09BB
-PSRD   1824  RA     102A  RA0D   10D6  RA1    1066  RA2    10DB
-RA8    10F6  RAD    1093  RADB   1123  RADM   10B6  RADP   10B9
-RADR   10BF  RADW   112A  RADX   10FB  RAIB   1055  RAIW   1056
-RAIX   1063  RAL    1040  RAM    108B  RAR    106B  RAS    1032
-RE     0D64  REA    0D6B  READ   05A5  READ1  05D6  READ2  05D9
-READ3  05F2  READ4  060C  READ5  0614  READ6  0619  READ7  0620
-READ8  0638  REB    0D83  REC    0D86  RED    0D8C  REGS   1BF4
-REGWD  184F  RELBD  1723  RELWD  1859  RETD   1891  RETFD  1883
-RFN    0381  RFN1   0394  RFN2   0396  RFN3   03A1  RFN4   03A4
-RFN5   03A5  RIMMD  16CD  RIMMDB 16E4  RIMMDW 16DE  RM     1BE4
-RMD    18F2  RMD1   18F3  RMID   16ED  RN     0BF8  RN0    0C26
-RN1    0C02  RN2    0C10  RN3    0C21  RNC    0F89  RNC1   0FB4
-RNC10  0FBD  RNC16  0FBC  RNC2   0FB9  RNC4   0FBA  RNC8   0FBB
-RNM    0FC9  RNM1   0FE7  RNM2   0FF0  RNMER8 0FF1  RUN    014D
-RWMD   18ED  SCRAM  09B4  SCREAM 0965  SCREG  11B8  SCREG0 11D3
-SCREM  09AD  SCROME 09A8  SCROOM 098D  SCROYM 099E  SCRUM  0997
-SDEF   0B93  SDEF1  0B9D  SDEF2  0BA0  SDEF3  0BBB  SDEF4  0BCC
-SDEF5  0BD1  SDEF6  0BD7  SDEF7  0BD9  SEGOFD 18BE  SEGPRE 288B
-SETDCM 0D03  SETDEN 0D0F  SETDFB 0CA7  SETDFS 0E8A  SETDMA 0CAC
-SETDQU 0CEF  SETDUD 0CE8  SETDVA 0CC3  SETDVW 0CD7  SETEND 0D4A
-SETEQ0 0ACA  SETEQU 0AB9  SETIN1 0D35  SETIN2 0D3D  SETIN3 0D3F
-SETINC 0D28  SETOR1 0AEF  SETOR2 0AF1  SETORG 0AD7  SID    10E0
-SINGD  16CB  SIZES  2896  SL     0B60  SL1    0B64  SL2    0B70
-SL3    0B79  SL4    0B84  SL5    0B89  SL6    0B92  SMD    1835
-SRCLIN 2119  START  0100  STDAT  0E91  STDAT1 0EA2  STDAT2 0EBB
-STDAT3 0EC0  STDAT4 0ECF  STK    2884  SW     0F64  SW1    0F71
-SW2    0F86  SW3    0F88  SYMBS  2B78  SYMDM0 0761  SYMDM1 0762
-SYMDM2 078C  SYMDMP 0758  SYMFLG 2893  SYMFN  2918  SYMHDL 289C
-SYMLIN 2126  SYMLS1 0812  SYMLS2 0814  SYMLS3 0821  SYMLS4 0828
-SYMLS5 082C  SYMLS6 0857  SYMLS7 085A  SYMLS8 0877  SYMLST 0808
-SYMSR1 07AF  SYMSR2 07B3  SYMSR3 07B5  SYMSR4 07C2  SYMSR5 07D3
-SYMSR6 07F7  SYMSRT 07A5  TEMP   2578  TEMP2  2678  TTLBUF 2778
-TXTBUF 2278  TXTLEN 287A  UDDUM0 0900  UDDUM1 0903  UDDUM2 0940
-UDDUM3 0947  UDDUMP 08E1  USAGE  2176  USIZE  2882  VARS   2878
-VORG   2880  WA     11D5  WA0    11FA  WA6    11F5  WA7    1239
-WAB    1221  WADJ   2888  WAE    121E  WAHZ   1201  WALZ   11FF
-WARG   112C  WAZ    1206  WDAL   180F  WDAX   1800  WDB    1807
-WDC    17CF  WDD    17BB  WDIR   1669  WDISP  17A4  WDISP1 17B0
-WDL    17DA  WDW    17F8  WDX    17F3  WFN    036B  WFN1   036D
-WFN2   0378  WHAL   170D  WHAL0  1714  WHAL1  171C  WHAL2  1722
-WHALS  1703  WHAX   1752  WHAX0  1759  WHAX1  1762  WHAX2  176F
-WHAXS  1748  WHEX   0948  WLST   0433  WLSTB  048A  WLSTE  04AA
-WLSTG  04C9  WLSTI  04D9  WLSTL  0464  WLSTM  0488  WLSTN  0484
-R-ASSEMBLER VERSION 1.05C    RA.ASM                       107
+P5     0A20  PAGLEN 1FAA  PAGNUM 289E  PARAEN 0275  PARAFN 026A
+PARAG  026E  PARAM  0221  PARANO 0265  PARANS 02A2  PARANX 02D1
+PARAO  01EE  PARARG 0260  PARASC 0226  PARAST 0292  PARAWF 01FE
+PARAWN 02C5  PASS   2898  PASSM  20F3  PC     2876  PCCHAR 0024
+PREFIX 2882  PROCF  02DD  PROCF0 0300  PROCF1 0316  PROCF2 0332
+PROCF3 0338  PROCF4 033F  PROCF5 0357  PRUNT  09BB  PSRD   1824
+RA     102A  RA0D   10D6  RA1    1066  RA2    10DB  RA8    10F6
+RAD    1093  RADB   1123  RADM   10B6  RADP   10B9  RADR   10BF
+RADW   112A  RADX   10FB  RAIB   1055  RAIW   1056  RAIX   1063
+RAL    1040  RAM    108B  RAR    106B  RAS    1032  RE     0D64
+REA    0D6B  READ   05A5  READ1  05D6  READ2  05D9  READ3  05F2
+READ4  060C  READ5  0614  READ6  0619  READ7  0620  READ8  0638
+REB    0D83  REC    0D86  RED    0D8C  REGS   1BF4  REGWD  184F
+RELBD  1723  RELWD  1859  RETD   1891  RETFD  1883  RFN    0381
+RFN1   0394  RFN2   0396  RFN3   03A1  RFN4   03A4  RFN5   03A5
+RIMMD  16CD  RIMMDB 16E4  RIMMDW 16DE  RM     1BE4  RMD    18F2
+RMD1   18F3  RMID   16ED  RN     0BF8  RN0    0C26  RN1    0C02
+RN2    0C10  RN3    0C21  RNC    0F89  RNC1   0FB4  RNC10  0FBD
+RNC16  0FBC  RNC2   0FB9  RNC4   0FBA  RNC8   0FBB  RNM    0FC9
+RNM1   0FE7  RNM2   0FF0  RNMER8 0FF1  RUN    014D  RWMD   18ED
+SCRAM  09B4  SCREAM 0965  SCREG  11B8  SCREG0 11D3  SCREM  09AD
+SCROME 09A8  SCROOM 098D  SCROYM 099E  SCRUM  0997  SDEF   0B93
+SDEF1  0B9D  SDEF2  0BA0  SDEF3  0BBB  SDEF4  0BCC  SDEF5  0BD1
+SDEF6  0BD7  SDEF7  0BD9  SEGOFD 18BE  SEGPRE 2883  SETDCM 0D03
+SETDEN 0D0F  SETDFB 0CA7  SETDFS 0E8A  SETDMA 0CAC  SETDQU 0CEF
+SETDUD 0CE8  SETDVA 0CC3  SETDVW 0CD7  SETEND 0D4A  SETEQ0 0ACA
+SETEQU 0AB9  SETIN1 0D35  SETIN2 0D3D  SETIN3 0D3F  SETINC 0D28
+SETOR1 0AEF  SETOR2 0AF1  SETORG 0AD7  SID    10E0  SINGD  16CB
+SIZES  288E  SL     0B60  SL1    0B64  SL2    0B70  SL3    0B79
+SL4    0B84  SL5    0B89  SL6    0B92  SMD    1835  SRCLIN 2111
+START  0100  STDAT  0E91  STDAT1 0EA2  STDAT2 0EBB  STDAT3 0EC0
+STDAT4 0ECF  STK    287C  SW     0F64  SW1    0F71  SW2    0F86
+SW3    0F88  SYMBS  2B70  SYMDM0 0761  SYMDM1 0762  SYMDM2 078C
+SYMDMP 0758  SYMFLG 288B  SYMFN  2910  SYMHDL 2894  SYMLIN 211E
+SYMLS1 0812  SYMLS2 0814  SYMLS3 0821  SYMLS4 0828  SYMLS5 082C
+SYMLS6 0857  SYMLS7 085A  SYMLS8 0877  SYMLST 0808  SYMSR1 07AF
+SYMSR2 07B3  SYMSR3 07B5  SYMSR4 07C2  SYMSR5 07D3  SYMSR6 07F7
+SYMSRT 07A5  TEMP   2570  TEMP2  2670  TTLBUF 2770  TXTBUF 2270
+TXTLEN 2872  UDDUM0 0900  UDDUM1 0903  UDDUM2 0940  UDDUM3 0947
+UDDUMP 08E1  USAGE  216E  USIZE  287A  VARS   2870  VORG   2878
+WA     11D5  WA0    11FA  WA6    11F5  WA7    1239  WAB    1221
+WADJ   2880  WAE    121E  WAHZ   1201  WALZ   11FF  WARG   112C
+WAZ    1206  WDAL   180F  WDAX   1800  WDB    1807  WDC    17CF
+WDD    17BB  WDIR   1669  WDISP  17A4  WDISP1 17B0  WDL    17DA
+WDW    17F8  WDX    17F3  WFN    036B  WFN1   036D  WFN2   0378
+WHAL   170D  WHAL0  1714  WHAL1  171C  WHAL2  1722  WHALS  1703
+WHAX   1752  WHAX0  1759  WHAX1  1762  WHAX2  176F  WHAXS  1748
+WHEX   0948  WLST   0433  WLSTB  048A  WLSTE  04AA  WLSTG  04C9
+WLSTI  04D9  WLSTL  0464  WLSTM  0488  WLSTN  0484  WLSTO  0507
+R-ASSEMBLER VERSION 1.05C    RA.ASM                      107
 
  SYMBOL TABLE
 ----------------------------------------------------------------
-WLSTO  0507  WLSTP  04D0  WLSTS  04B0  WLSTT  0457  WLSTX  04D8
-WMN    1658  WMN1   165D  WMN2   1662  WN     0C27  WN0    0C63
-WN1    0C35  WN2    0C37  WN4    0C5B  WN5    0C4F  WPTR   178A
-WREG   177D  WRITE  0642  WRITE1 066A  WRITE2 0674  WRITE3 0688
-WRITE4 0699  WRITE5 069E  WRITE6 06A0  WRITE7 06B1  WRM    0E81
-WROTE  0952  WROTE1 0960  WSELF  179B  WSYMA  0E45  WSYMA1 0E6E
-WSYMA2 0E7A  WSYMA3 0E7D  WSYMA4 0E7F  WTITL1 052F  WTITL2 0542
-WTITL3 0563  WTITL4 0588  WTITL5 059F  WTITLE 050B  _DISP  1BDC
-_G01D  1BBC  _G02D  1BC4  _G03D  1BCC  _G04D  1BD4
+WLSTP  04D0  WLSTS  04B0  WLSTT  0457  WLSTX  04D8  WMN    1658
+WMN1   165D  WMN2   1662  WN     0C27  WN0    0C63  WN1    0C35
+WN2    0C37  WN4    0C5B  WN5    0C4F  WPTR   178A  WREG   177D
+WRITE  0642  WRITE1 066A  WRITE2 0674  WRITE3 0688  WRITE4 0699
+WRITE5 069E  WRITE6 06A0  WRITE7 06B1  WRM    0E81  WROTE  0952
+WROTE1 0960  WSELF  179B  WSYMA  0E45  WSYMA1 0E6E  WSYMA2 0E7A
+WSYMA3 0E7D  WSYMA4 0E7F  WTITL1 052F  WTITL2 0542  WTITL3 0563
+WTITL4 0588  WTITL5 059F  WTITLE 050B  _DISP  1BDC  _G01D  1BBC
+_G02D  1BC4  _G03D  1BCC  _G04D  1BD4
